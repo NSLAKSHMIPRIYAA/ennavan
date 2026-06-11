@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Memories</title>
+
+<style>
+
+body{
+    text-align:center;
+    font-family:Arial;
+    background:#ffe4e1;
+}
+
+img{
+    width:300px;
+    border-radius:20px;
+    margin-top:20px;
+}
+
+button{
+    padding:10px 20px;
+    margin:20px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>📸 Our Memories ❤️</h1>
+
+<img id="photo" src="pic1.jpg">
+
+<br>
+
+<button onclick="prevPhoto()">
+⬅ Previous
+</button>
+
+<button onclick="nextPhoto()">
+Next ➡
+</button>
+
+<br>
+
+<a href="index.html">⬅ Back</a>
+
+<script>
+
+const photos=[
+"pic1.jpg",
+"pic2.jpg",
+"pic3.jpg",
+"pic4.jpg",
+"pic5.jpg"
+];
+
+let current=0;
+
+function nextPhoto(){
+
+current=(current+1)%photos.length;
+
+document.getElementById("photo").src=
+photos[current];
+}
+
+function prevPhoto(){
+
+current=(current-1+photos.length)%photos.length;
+
+document.getElementById("photo").src=
+photos[current];
+}
+
+</script>
+
+</body>
+</html>
