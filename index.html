@@ -1,48 +1,242 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Happy Birthday Akash</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body{
-            font-family: Arial, sans-serif;
-            text-align:center;
-            background: linear-gradient(to right,#ffdde1,#ee9ca7);
-            padding-top:100px;
-        }
+<title>Happy Birthday Akash ❤️</title>
 
-        h1{
-            color:#fff;
-            font-size:3rem;
-        }
+<style>
 
-        button{
-            display:block;
-            margin:20px auto;
-            padding:15px 30px;
-            font-size:1.2rem;
-            border:none;
-            border-radius:15px;
-            cursor:pointer;
-        }
-    </style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+min-height:100vh;
+background:linear-gradient(
+135deg,
+#ffd6e8,
+#ffe8d6,
+#e8d6ff
+);
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+}
+
+.container{
+max-width:800px;
+padding:30px;
+z-index:2;
+}
+
+h1{
+font-size:3rem;
+color:#d63384;
+margin-bottom:20px;
+animation:fadeIn 1.5s ease;
+}
+
+.intro{
+font-size:1.2rem;
+line-height:1.8;
+color:#5a3d5c;
+margin-bottom:30px;
+animation:fadeIn 2s ease;
+}
+
+button{
+padding:15px 35px;
+font-size:1.1rem;
+border:none;
+border-radius:30px;
+cursor:pointer;
+background:white;
+color:#d63384;
+box-shadow:0 4px 15px rgba(0,0,0,0.15);
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+#menu{
+display:none;
+margin-top:40px;
+animation:fadeIn 1s ease;
+}
+
+.card{
+display:block;
+margin:15px auto;
+padding:18px;
+width:280px;
+background:rgba(255,255,255,0.7);
+backdrop-filter:blur(10px);
+border-radius:20px;
+cursor:pointer;
+font-size:1.1rem;
+color:#5a3d5c;
+text-decoration:none;
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+.heart{
+position:fixed;
+bottom:-30px;
+font-size:20px;
+animation:floatUp 8s linear infinite;
+opacity:0.7;
+}
+
+@keyframes floatUp{
+0%{
+transform:translateY(0);
+opacity:0;
+}
+10%{
+opacity:1;
+}
+100%{
+transform:translateY(-120vh);
+opacity:0;
+}
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+#footer{
+position:fixed;
+bottom:15px;
+left:50%;
+transform:translateX(-50%);
+font-size:0.9rem;
+color:#7a5878;
+}
+
+#secret{
+position:fixed;
+bottom:15px;
+right:20px;
+cursor:pointer;
+font-size:20px;
+}
+
+</style>
 </head>
 
 <body>
 
-<h1>Happy Birthday Akash ❤️🎉</h1>
+<div class="container">
 
-<button onclick="location.href='letters.html'">
+<h1>Happy Birthday, Akash ❤️</h1>
+
+<div id="introSection">
+
+<p class="intro">
+Before you explore this little corner of the internet,
+there's something I want you to know...
+<br><br>
+Every photo, memory, letter, and surprise you'll find here
+was made with love, just for you.
+<br><br>
+Thank you for being such a special part of my life.
+</p>
+
+<button onclick="beginJourney()">
+❤️ Begin Your Birthday Surprise
+</button>
+
+</div>
+
+<div id="menu">
+
+<a class="card" href="letters.html">
 💌 Open When Letters
-</button>
+</a>
 
-<button onclick="location.href='awards.html'">
+<a class="card" href="awards.html">
 🏆 Akash Awards 2026
-</button>
+</a>
 
-<button onclick="location.href='memories.html'">
+<a class="card" href="memories.html">
 📸 Memories
-</button>
+</a>
+
+</div>
+
+</div>
+
+<div id="footer">
+Made with ❤️ by Priyaa
+</div>
+
+<div id="secret" onclick="secretMessage()">
+❤️
+</div>
+
+<script>
+
+function beginJourney(){
+
+document.getElementById("introSection").style.display="none";
+
+document.getElementById("menu").style.display="block";
+
+}
+
+function secretMessage(){
+
+alert(
+"You found a secret ❤️\n\nFun fact:\nYou make me smile more than you'd like to admit."
+);
+
+}
+
+function createHeart(){
+
+const heart=document.createElement("div");
+
+heart.classList.add("heart");
+
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"vw";
+
+heart.style.fontSize=
+(Math.random()*15+15)+"px";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},8000);
+
+}
+
+setInterval(createHeart,700);
+
+</script>
 
 </body>
 </html>
