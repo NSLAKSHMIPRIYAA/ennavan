@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Open When Letters</title>
+
+<style>
+body{
+    text-align:center;
+    font-family:Arial;
+    background:#fff5f5;
+}
+
+.letter{
+    margin:20px;
+}
+</style>
+
+<script>
+function showLetter(id){
+
+    const letters = document.querySelectorAll(".content");
+
+    letters.forEach(letter=>{
+        letter.style.display="none";
+    });
+
+    document.getElementById(id).style.display="block";
+}
+</script>
+
+</head>
+
+<body>
+
+<h1>💌 Open When Letters</h1>
+
+<div class="letter">
+<button onclick="showLetter('happy')">
+Open When You're Happy
+</button>
+
+<div id="happy" class="content" style="display:none;">
+<p>
+I'm smiling because you're smiling ❤️
+</p>
+</div>
+</div>
+
+<div class="letter">
+<button onclick="showLetter('sad')">
+Open When You're Sad
+</button>
+
+<div id="sad" class="content" style="display:none;">
+<p>
+No matter what happens, I'm always here for you ❤️
+</p>
+</div>
+</div>
+
+<div class="letter">
+<button onclick="showLetter('miss')">
+Open When You Miss Me
+</button>
+
+<div id="miss" class="content" style="display:none;">
+<p>
+Imagine me giving you the biggest hug right now ❤️
+</p>
+</div>
+</div>
+
+<br>
+
+<a href="index.html">⬅ Back</a>
+
+</body>
+</html>
