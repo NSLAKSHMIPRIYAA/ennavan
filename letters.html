@@ -5,14 +5,88 @@
 
 <style>
 body{
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    background: linear-gradient(135deg,#ffe6f0,#fff5f5,#ffe9ff);
     text-align:center;
-    font-family:Arial;
-    background:#fff5f5;
+    min-height:100vh;
 }
 
-.letter{
-    margin:20px;
+/* page title */
+h1{
+    margin-top:30px;
+    color:#d63384;
+    font-size:2.5rem;
 }
+
+/* letter container */
+.letter{
+    margin:25px auto;
+    width:320px;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(10px);
+    padding:20px;
+    border-radius:20px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.letter:hover{
+    transform: translateY(-5px);
+}
+
+/* button styling */
+button{
+    padding:12px 18px;
+    border:none;
+    border-radius:25px;
+    cursor:pointer;
+    background:#fff;
+    color:#d63384;
+    font-size:1rem;
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+button:hover{
+    transform: scale(1.05);
+}
+
+/* letter content */
+.content{
+    display:none;
+    margin-top:15px;
+    padding:15px;
+    background: rgba(255,255,255,0.8);
+    border-radius:15px;
+    color:#5a3d5c;
+    animation: fadeOpen 0.5s ease;
+}
+
+/* smooth reveal animation */
+@keyframes fadeOpen{
+    from{
+        opacity:0;
+        transform: translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform: translateY(0);
+    }
+}
+
+/* back link */
+a{
+    display:inline-block;
+    margin:30px;
+    text-decoration:none;
+    color:#d63384;
+    font-weight:bold;
+}
+a:hover{
+    text-decoration:underline;
+}
+
 </style>
 
 <script>
@@ -39,10 +113,8 @@ function showLetter(id){
 Open When You're Happy
 </button>
 
-<div id="happy" class="content" style="display:none;">
-<p>
-I'm smiling because you're smiling ❤️
-</p>
+<div id="happy" class="content">
+<p>I'm smiling because you're smiling ❤️</p>
 </div>
 </div>
 
@@ -51,10 +123,8 @@ I'm smiling because you're smiling ❤️
 Open When You're Sad
 </button>
 
-<div id="sad" class="content" style="display:none;">
-<p>
-No matter what happens, I'm always here for you ❤️
-</p>
+<div id="sad" class="content">
+<p>No matter what happens, I'm always here for you ❤️</p>
 </div>
 </div>
 
@@ -63,14 +133,10 @@ No matter what happens, I'm always here for you ❤️
 Open When You Miss Me
 </button>
 
-<div id="miss" class="content" style="display:none;">
-<p>
-Imagine me giving you the biggest hug right now ❤️
-</p>
+<div id="miss" class="content">
+<p>Imagine me giving you the biggest hug right now ❤️</p>
 </div>
 </div>
-
-<br>
 
 <a href="index.html">⬅ Back</a>
 
