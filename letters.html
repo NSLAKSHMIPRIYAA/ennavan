@@ -235,9 +235,13 @@ function openLetter(type){
     sound.currentTime = 0;
     sound.volume = 1.0;
 
-    sound.play().catch(err => {
-        console.log("Audio blocked:", err);
-    });
+    sound.play()
+.then(() => {
+    alert("Sound started!");
+})
+.catch(err => {
+    alert("ERROR: " + err);
+});
 
     /* hearts */
     for(let i=0;i<10;i++){
