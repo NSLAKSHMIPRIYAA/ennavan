@@ -14,13 +14,11 @@ body{
     text-align:center;
 }
 
-/* title */
 h1{
     margin:25px 0;
     color:#d63384;
 }
 
-/* GRID */
 .grid{
     display:grid;
     grid-template-columns: repeat(2, 160px);
@@ -29,7 +27,6 @@ h1{
     padding:20px;
 }
 
-/* ✉️ 3D ENVELOPE */
 .envelope-card{
     width:160px;
     height:120px;
@@ -59,7 +56,6 @@ h1{
     z-index:1;
 }
 
-/* flap */
 .flap{
     position:absolute;
     top:0;
@@ -71,7 +67,6 @@ h1{
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-/* badge */
 .badge{
     position:absolute;
     top:8px;
@@ -83,7 +78,6 @@ h1{
     border-radius:50%;
 }
 
-/* label */
 .tag{
     position:absolute;
     bottom:10px;
@@ -92,12 +86,10 @@ h1{
     color:#333;
 }
 
-/* hover */
 .envelope-card:hover{
     transform: translateY(-6px) scale(1.02);
 }
 
-/* POPUP */
 .overlay{
     position:fixed;
     top:0;
@@ -110,7 +102,6 @@ h1{
     align-items:center;
 }
 
-/* opened card */
 .open-envelope{
     width:340px;
     background:#fff;
@@ -120,7 +111,6 @@ h1{
     animation: pop 0.4s ease;
 }
 
-/* paper */
 .paper{
     font-family:'Dancing Script', cursive;
     font-size:1.4rem;
@@ -131,7 +121,6 @@ h1{
     animation: fadeIn 0.5s ease;
 }
 
-/* close */
 .close{
     position:absolute;
     top:10px;
@@ -140,7 +129,6 @@ h1{
     font-size:18px;
 }
 
-/* animations */
 @keyframes pop{
     from{transform:scale(0.6); opacity:0;}
     to{transform:scale(1); opacity:1;}
@@ -151,15 +139,6 @@ h1{
     to{opacity:1; transform:translateY(0);}
 }
 
-a{
-    display:inline-block;
-    margin:20px;
-    color:#333;
-    text-decoration:none;
-    font-weight:bold;
-}
-
-/* heart burst */
 .heart{
     position:fixed;
     font-size:16px;
@@ -169,6 +148,14 @@ a{
 @keyframes floatUp{
     0%{transform:translateY(0);opacity:1;}
     100%{transform:translateY(-120px);opacity:0;}
+}
+
+a{
+    display:inline-block;
+    margin:20px;
+    color:#333;
+    text-decoration:none;
+    font-weight:bold;
 }
 
 </style>
@@ -206,7 +193,11 @@ a{
 
 </div>
 
-<!-- POPUP -->
+<!-- ✅ WORKING AUDIO (BRAVE FRIENDLY) -->
+<audio id="paperSound" preload="auto">
+    <source src="https://actions.google.com/sounds/v1/office/paper_rustle.ogg" type="audio/ogg">
+</audio>
+
 <div class="overlay" id="overlay" onclick="closeLetter(event)">
     <div class="open-envelope">
 
@@ -216,11 +207,6 @@ a{
 
     </div>
 </div>
-
-<!-- 🔊 FIXED AUDIO -->
-<audio id="paperSound" preload="auto">
-    <source src="https://assets.mixkit.co/sfx/preview/mixkit-soft-paper-page-turn-1029.mp3" type="audio/mpeg">
-</audio>
 
 <a href="index.html">⬅ Back</a>
 
@@ -238,7 +224,7 @@ function openLetter(type){
     document.getElementById("paperText").innerText = messages[type];
     document.getElementById("overlay").style.display = "flex";
 
-    /* 🔊 AUDIO FIX */
+    /* AUDIO FIX FOR BRAVE */
     const sound = document.getElementById("paperSound");
 
     try {
@@ -253,7 +239,7 @@ function openLetter(type){
             });
         }
     } catch (e) {
-        console.log("Audio error:", e);
+        console.log(e);
     }
 
     /* HEART BURST */
