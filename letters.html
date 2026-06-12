@@ -217,9 +217,9 @@ a{
     </div>
 </div>
 
-<!-- AUDIO (FIXED + LOUDER) -->
+<!-- 🔊 FIXED AUDIO -->
 <audio id="paperSound" preload="auto">
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_6c4b0a1c0e.mp3" type="audio/mpeg">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-soft-paper-page-turn-1029.mp3" type="audio/mpeg">
 </audio>
 
 <a href="index.html">⬅ Back</a>
@@ -238,16 +238,23 @@ function openLetter(type){
     document.getElementById("paperText").innerText = messages[type];
     document.getElementById("overlay").style.display = "flex";
 
-    /* AUDIO FIXED */
+    /* 🔊 AUDIO FIX */
     const sound = document.getElementById("paperSound");
 
-    sound.pause();
-    sound.currentTime = 0;
-    sound.volume = 1.0;
+    try {
+        sound.pause();
+        sound.currentTime = 0;
+        sound.volume = 1.0;
 
-    sound.play().catch(err => {
-        console.log("Audio blocked:", err);
-    });
+        const playPromise = sound.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(err => {
+                console.log("Audio blocked:", err);
+            });
+        }
+    } catch (e) {
+        console.log("Audio error:", e);
+    }
 
     /* HEART BURST */
     for(let i=0;i<10;i++){
