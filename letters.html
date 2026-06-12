@@ -209,7 +209,7 @@ a{
 
 <!-- 🔊 YOUR LOCAL MP3 -->
 <audio id="paperSound" preload="auto">
-    <source src="paper.mp3" type="audio/mpeg">
+    <source src="paper2.mp3" type="audio/mpeg">
 </audio>
 
 <a href="index.html">⬅ Back</a>
@@ -228,31 +228,26 @@ function openLetter(type){
     document.getElementById("paperText").innerText = messages[type];
     document.getElementById("overlay").style.display = "flex";
 
-    /* 🔊 REAL PAPER SOUND */
+    /* 🔊 PAPER SOUND */
     const sound = document.getElementById("paperSound");
 
-    sound.pause();
     sound.currentTime = 0;
-    sound.volume = 1.0;
 
-    sound.play()
-.then(() => {
-    alert("Sound started!");
-})
-.catch(err => {
-    alert("ERROR: " + err);
-});
+    sound.play().catch(err => {
+        console.log("Audio error:", err);
+    });
 
-    /* hearts */
+    /* ❤️ hearts */
     for(let i=0;i<10;i++){
-        const h=document.createElement("div");
-        h.className="heart";
-        h.innerHTML="❤️";
-        h.style.left=Math.random()*100+"vw";
-        h.style.top="60%";
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.innerHTML = "❤️";
+        h.style.left = Math.random()*100 + "vw";
+        h.style.top = "60%";
+
         document.body.appendChild(h);
 
-        setTimeout(()=>h.remove(),1500);
+        setTimeout(() => h.remove(), 1500);
     }
 }
 
