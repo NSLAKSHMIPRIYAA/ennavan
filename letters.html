@@ -29,7 +29,7 @@ h1{
     padding:20px;
 }
 
-/* ✉️ 3D ENVELOPE (UPDATED DESIGN) */
+/* ✉️ 3D ENVELOPE */
 .envelope-card{
     width:160px;
     height:120px;
@@ -42,7 +42,6 @@ h1{
     overflow:hidden;
 }
 
-/* inner paper fold lines */
 .envelope-card::before,
 .envelope-card::after{
     content:"";
@@ -57,9 +56,10 @@ h1{
 
 .envelope-card::after{
     transform: rotate(-35deg);
+    z-index:1;
 }
 
-/* REALISTIC TOP FLAP */
+/* flap */
 .flap{
     position:absolute;
     top:0;
@@ -71,12 +71,7 @@ h1{
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-/* subtle inner pocket illusion */
-.envelope-card::after{
-    z-index:1;
-}
-
-/* heart badge */
+/* badge */
 .badge{
     position:absolute;
     top:8px;
@@ -97,7 +92,7 @@ h1{
     color:#333;
 }
 
-/* hover lift */
+/* hover */
 .envelope-card:hover{
     transform: translateY(-6px) scale(1.02);
 }
@@ -222,9 +217,9 @@ a{
     </div>
 </div>
 
-<!-- audio -->
+<!-- AUDIO (FIXED + LOUDER) -->
 <audio id="paperSound" preload="auto">
-<source src="https://assets.mixkit.co/sfx/preview/mixkit-paper-slide-1531.mp3" type="audio/mpeg">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_6c4b0a1c0e.mp3" type="audio/mpeg">
 </audio>
 
 <a href="index.html">⬅ Back</a>
@@ -243,10 +238,18 @@ function openLetter(type){
     document.getElementById("paperText").innerText = messages[type];
     document.getElementById("overlay").style.display = "flex";
 
+    /* AUDIO FIXED */
     const sound = document.getElementById("paperSound");
-    sound.currentTime = 0;
-    sound.play().catch(()=>{});
 
+    sound.pause();
+    sound.currentTime = 0;
+    sound.volume = 1.0;
+
+    sound.play().catch(err => {
+        console.log("Audio blocked:", err);
+    });
+
+    /* HEART BURST */
     for(let i=0;i<10;i++){
         const h=document.createElement("div");
         h.className="heart";
