@@ -27,6 +27,7 @@ h1{
     padding:20px;
 }
 
+/* envelope */
 .envelope-card{
     width:160px;
     height:120px;
@@ -90,6 +91,7 @@ h1{
     transform: translateY(-6px) scale(1.02);
 }
 
+/* popup */
 .overlay{
     position:fixed;
     top:0;
@@ -129,6 +131,7 @@ h1{
     font-size:18px;
 }
 
+/* animations */
 @keyframes pop{
     from{transform:scale(0.6); opacity:0;}
     to{transform:scale(1); opacity:1;}
@@ -193,16 +196,11 @@ a{
 
 </div>
 
-<!-- ✅ WORKING AUDIO (BRAVE FRIENDLY) -->
-<audio id="paperSound" preload="auto">
-    <source src="https://actions.google.com/sounds/v1/office/paper_rustle.ogg" type="audio/ogg">
-</audio>
-
+<!-- popup -->
 <div class="overlay" id="overlay" onclick="closeLetter(event)">
     <div class="open-envelope">
 
         <div class="close" onclick="closeLetter(event)">✖</div>
-
         <div class="paper" id="paperText"></div>
 
     </div>
@@ -219,30 +217,46 @@ const messages = {
     tired: "Rest okay? You mean everything to me ❤️"
 };
 
+/* 🎧 BRAVE-PROOF AUDIO (Web Audio API) */
+let audioCtx;
+
+function playPaperSound() {
+    try {
+        if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+
+        oscillator.type = "triangle";
+        oscillator.frequency.value = 600; // soft click sound
+
+        gainNode.gain.value = 0.05;
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        oscillator.start();
+
+        setTimeout(() => {
+            oscillator.stop();
+        }, 120);
+
+    } catch (e) {
+        console.log("Audio error:", e);
+    }
+}
+
 function openLetter(type){
 
     document.getElementById("paperText").innerText = messages[type];
     document.getElementById("overlay").style.display = "flex";
 
-    /* AUDIO FIX FOR BRAVE */
-    const sound = document.getElementById("paperSound");
+    /* 🔊 GUARANTEED SOUND */
+    playPaperSound();
 
-    try {
-        sound.pause();
-        sound.currentTime = 0;
-        sound.volume = 1.0;
-
-        const playPromise = sound.play();
-        if (playPromise !== undefined) {
-            playPromise.catch(err => {
-                console.log("Audio blocked:", err);
-            });
-        }
-    } catch (e) {
-        console.log(e);
-    }
-
-    /* HEART BURST */
+    /* heart burst */
     for(let i=0;i<10;i++){
         const h=document.createElement("div");
         h.className="heart";
