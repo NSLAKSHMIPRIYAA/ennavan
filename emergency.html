@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Emergency</title>
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#ffebee;
+font-family:'Segoe UI',sans-serif;
+text-align:center;
+overflow:hidden;
+}
+
+.container{
+padding:30px;
+}
+
+h1{
+color:#c62828;
+font-size:3rem;
+margin-bottom:20px;
+}
+
+p{
+font-size:1.3rem;
+line-height:1.8;
+}
+
+button{
+margin-top:30px;
+padding:15px 30px;
+border:none;
+border-radius:20px;
+font-size:1.1rem;
+cursor:pointer;
+background:#c62828;
+color:white;
+}
+
+#verdict{
+display:none;
+margin-top:30px;
+font-size:1.5rem;
+color:#d63384;
+font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🚨 EMERGENCY ALERT 🚨</h1>
+
+<p>
+You are being charged with:
+<br><br>
+1. Being too cute
+<br>
+2. Making Priyaa smile randomly
+<br>
+3. Stealing her heart
+</p>
+
+<button onclick="acceptCharges()">
+Accept Charges
+</button>
+
+<div id="verdict">
+❤️ Convicted ❤️
+<br><br>
+Sentence:
+Lifetime imprisonment in Priyaa's heart.
+</div>
+
+</div>
+
+<script>
+
+function acceptCharges(){
+document.querySelector("button").style.display="none";
+document.getElementById("verdict").style.display="block";
+}
+
+</script>
+
+</body>
+</html>
