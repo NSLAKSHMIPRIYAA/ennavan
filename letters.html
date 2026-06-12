@@ -14,38 +14,59 @@ body{
 
 /* title */
 h1{
-    margin:30px 0;
+    margin:25px 0;
     color:#d63384;
 }
 
-/* GRID layout */
+/* GRID of envelopes */
 .grid{
     display:grid;
-    grid-template-columns: repeat(2, minmax(150px, 1fr));
-    gap:20px;
-    max-width:600px;
-    margin:0 auto;
+    grid-template-columns: repeat(2, 180px);
+    gap:25px;
+    justify-content:center;
     padding:20px;
 }
 
-/* letter cards */
-.card{
-    background: rgba(255,255,255,0.7);
-    backdrop-filter: blur(10px);
-    padding:25px;
-    border-radius:20px;
+/* ENVELOPE DESIGN */
+.envelope-card{
+    width:180px;
+    height:120px;
+    background:#fff;
+    border-radius:10px;
+    position:relative;
     cursor:pointer;
-    box-shadow:0 6px 15px rgba(0,0,0,0.1);
+    box-shadow:0 8px 18px rgba(0,0,0,0.15);
     transition:0.3s;
-    font-size:1rem;
+    overflow:hidden;
+}
+
+/* flap */
+.envelope-card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:50%;
+    background:#ffd6e8;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+/* label */
+.tag{
+    position:absolute;
+    bottom:10px;
+    width:100%;
+    font-size:0.9rem;
     color:#5a3d5c;
 }
 
-.card:hover{
+/* hover */
+.envelope-card:hover{
     transform: translateY(-5px);
 }
 
-/* POPUP overlay */
+/* POPUP */
 .overlay{
     position:fixed;
     top:0;
@@ -58,26 +79,40 @@ h1{
     align-items:center;
 }
 
-/* envelope */
-.envelope{
+/* envelope open animation container */
+.open-envelope{
     width:320px;
     background:#fff;
-    border-radius:15px;
-    padding:20px;
-    position:relative;
-    animation: pop 0.4s ease;
-}
-
-/* paper inside */
-.paper{
-    background:#fff5f5;
-    padding:15px;
     border-radius:10px;
-    color:#5a3d5c;
-    animation: fadeIn 0.5s ease;
+    position:relative;
+    animation: openAnim 0.6s ease;
+    overflow:hidden;
 }
 
-/* close button */
+/* top flap animation */
+.open-envelope::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:50%;
+    background:#ffd6e8;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    animation: flapOpen 0.6s ease forwards;
+}
+
+/* paper */
+.paper{
+    margin-top:60px;
+    padding:20px;
+    background:#fff5f5;
+    color:#5a3d5c;
+    border-radius:10px;
+    animation: fadeIn 0.8s ease;
+}
+
+/* close */
 .close{
     position:absolute;
     top:10px;
@@ -87,15 +122,14 @@ h1{
 }
 
 /* animations */
-@keyframes pop{
-    from{
-        transform:scale(0.6);
-        opacity:0;
-    }
-    to{
-        transform:scale(1);
-        opacity:1;
-    }
+@keyframes openAnim{
+    from{transform:scale(0.6); opacity:0;}
+    to{transform:scale(1); opacity:1;}
+}
+
+@keyframes flapOpen{
+    from{transform: rotateX(0);}
+    to{transform: rotateX(180deg);}
 }
 
 @keyframes fadeIn{
@@ -112,7 +146,6 @@ a{
 }
 
 </style>
-
 </head>
 
 <body>
@@ -121,32 +154,31 @@ a{
 
 <div class="grid">
 
-<div class="card" onclick="openLetter('happy')">
-Open When You're Happy
+<div class="envelope-card" onclick="openLetter('happy')">
+    <div class="tag">Open when you're happy</div>
 </div>
 
-<div class="card" onclick="openLetter('sad')">
-Open When You're Sad
+<div class="envelope-card" onclick="openLetter('sad')">
+    <div class="tag">Open when you're sad</div>
 </div>
 
-<div class="card" onclick="openLetter('miss')">
-Open When You Miss Me
+<div class="envelope-card" onclick="openLetter('miss')">
+    <div class="tag">Open when you miss me</div>
 </div>
 
-<div class="card" onclick="openLetter('tired')">
-Open When You're Tired
+<div class="envelope-card" onclick="openLetter('tired')">
+    <div class="tag">Open when you're tired</div>
 </div>
 
 </div>
 
 <!-- POPUP -->
 <div class="overlay" id="overlay" onclick="closeLetter(event)">
-    <div class="envelope">
+    <div class="open-envelope">
 
         <div class="close" onclick="closeLetter(event)">✖</div>
 
-        <div class="paper" id="paperText">
-        </div>
+        <div class="paper" id="paperText"></div>
 
     </div>
 </div>
