@@ -3,22 +3,25 @@
 <head>
 <title>Open When Letters</title>
 
+<!-- handwriting font -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
+
 <style>
 
 body{
     margin:0;
     font-family:'Segoe UI', sans-serif;
-    background: linear-gradient(135deg,#ffe6f0,#fff5f5,#ffe9ff);
+    background:#f6f6f6;
     text-align:center;
 }
 
 /* title */
 h1{
     margin:25px 0;
-    color:#d63384;
+    color:#333;
 }
 
-/* GRID of envelopes */
+/* GRID */
 .grid{
     display:grid;
     grid-template-columns: repeat(2, 180px);
@@ -27,29 +30,40 @@ h1{
     padding:20px;
 }
 
-/* ENVELOPE DESIGN */
+/* REALISTIC ENVELOPE */
 .envelope-card{
     width:180px;
     height:120px;
     background:#fff;
-    border-radius:10px;
+    border-radius:6px;
     position:relative;
     cursor:pointer;
-    box-shadow:0 8px 18px rgba(0,0,0,0.15);
-    transition:0.3s;
+    box-shadow:0 6px 15px rgba(0,0,0,0.15);
     overflow:hidden;
+    transition:0.3s;
 }
 
-/* flap */
+/* yellow flap */
 .envelope-card::before{
     content:"";
     position:absolute;
     top:0;
     left:0;
     width:100%;
-    height:50%;
-    background:#ffd6e8;
+    height:55%;
+    background:#f4d03f;
     clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+/* subtle inner fold line */
+.envelope-card::after{
+    content:"";
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:2px;
+    background:rgba(0,0,0,0.08);
 }
 
 /* label */
@@ -57,13 +71,13 @@ h1{
     position:absolute;
     bottom:10px;
     width:100%;
-    font-size:0.9rem;
-    color:#5a3d5c;
+    font-size:0.85rem;
+    color:#333;
 }
 
 /* hover */
 .envelope-card:hover{
-    transform: translateY(-5px);
+    transform: translateY(-4px);
 }
 
 /* POPUP */
@@ -79,37 +93,39 @@ h1{
     align-items:center;
 }
 
-/* envelope open animation container */
+/* opened envelope */
 .open-envelope{
-    width:320px;
+    width:340px;
     background:#fff;
-    border-radius:10px;
+    border-radius:8px;
     position:relative;
-    animation: openAnim 0.6s ease;
-    overflow:hidden;
+    padding-top:40px;
+    animation: pop 0.4s ease;
 }
 
-/* top flap animation */
+/* flap animation */
 .open-envelope::before{
     content:"";
     position:absolute;
     top:0;
     left:0;
     width:100%;
-    height:50%;
-    background:#ffd6e8;
+    height:60px;
+    background:#f4d03f;
     clip-path: polygon(0 0, 100% 0, 50% 100%);
-    animation: flapOpen 0.6s ease forwards;
+    animation: flap 0.5s ease forwards;
 }
 
-/* paper */
+/* letter paper */
 .paper{
-    margin-top:60px;
-    padding:20px;
-    background:#fff5f5;
-    color:#5a3d5c;
-    border-radius:10px;
-    animation: fadeIn 0.8s ease;
+    font-family:'Dancing Script', cursive;
+    font-size:1.3rem;
+    color:#2c2c2c;
+    padding:25px;
+    background:#fafafa;
+    border-radius:8px;
+    margin:20px;
+    animation: fadeIn 0.6s ease;
 }
 
 /* close */
@@ -122,14 +138,14 @@ h1{
 }
 
 /* animations */
-@keyframes openAnim{
+@keyframes pop{
     from{transform:scale(0.6); opacity:0;}
     to{transform:scale(1); opacity:1;}
 }
 
-@keyframes flapOpen{
-    from{transform: rotateX(0);}
-    to{transform: rotateX(180deg);}
+@keyframes flap{
+    from{transform:rotateX(0deg);}
+    to{transform:rotateX(180deg);}
 }
 
 @keyframes fadeIn{
@@ -140,7 +156,7 @@ h1{
 a{
     display:inline-block;
     margin:20px;
-    color:#d63384;
+    color:#333;
     text-decoration:none;
     font-weight:bold;
 }
@@ -183,6 +199,9 @@ a{
     </div>
 </div>
 
+<!-- audio -->
+<audio id="paperSound" src="https://www.soundjay.com/paper/sounds/paper-rustle-1.mp3"></audio>
+
 <a href="index.html">⬅ Back</a>
 
 <script>
@@ -194,11 +213,47 @@ const messages = {
     tired: "Rest okay? You mean everything to me ❤️"
 };
 
-function openLetter(type){
-    document.getElementById("paperText").innerText = messages[type];
-    document.getElementById("overlay").style.display = "flex";
+/* HEART PARTICLES */
+function createHearts(){
+    for(let i=0;i<12;i++){
+        const h = document.createElement("div");
+        h.innerHTML="❤️";
+        h.style.position="fixed";
+        h.style.left=Math.random()*100+"vw";
+        h.style.top="50%";
+        h.style.fontSize=(Math.random()*12+10)+"px";
+        h.style.animation="floatUp 1.5s linear forwards";
+        document.body.appendChild(h);
+
+        setTimeout(()=>h.remove(),1500);
+    }
 }
 
+/* float animation injected */
+const style = document.createElement("style");
+style.innerHTML=`
+@keyframes floatUp{
+    0%{transform:translateY(0);opacity:1;}
+    100%{transform:translateY(-120px);opacity:0;}
+}`;
+document.head.appendChild(style);
+
+/* OPEN LETTER */
+function openLetter(type){
+
+    document.getElementById("paperText").innerText = messages[type];
+    document.getElementById("overlay").style.display = "flex";
+
+    /* sound */
+    const sound = document.getElementById("paperSound");
+    sound.currentTime = 0;
+    sound.play();
+
+    /* hearts */
+    createHearts();
+}
+
+/* CLOSE */
 function closeLetter(e){
     if(e.target.id === "overlay" || e.target.className === "close"){
         document.getElementById("overlay").style.display = "none";
