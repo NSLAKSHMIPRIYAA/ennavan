@@ -3,7 +3,6 @@
 <head>
 <title>Open When Letters</title>
 
-<!-- handwriting font -->
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
@@ -11,41 +10,56 @@
 body{
     margin:0;
     font-family:'Segoe UI', sans-serif;
-    background:#f6f6f6;
+    background: linear-gradient(135deg,#ffd6e8,#ffe8d6,#e8d6ff);
     text-align:center;
 }
 
 /* title */
 h1{
     margin:25px 0;
-    color:#333;
+    color:#d63384;
 }
 
 /* GRID */
 .grid{
     display:grid;
-    grid-template-columns: repeat(2, 180px);
+    grid-template-columns: repeat(2, 160px);
     gap:25px;
     justify-content:center;
     padding:20px;
 }
 
-/* REALISTIC ENVELOPE */
+/* ✉️ MODERN ENVELOPE (like your image) */
 .envelope-card{
-    width:180px;
+    width:160px;
     height:120px;
     background:#fff;
-    border-radius:6px;
+    border-radius:12px;
     position:relative;
     cursor:pointer;
-    box-shadow:0 6px 15px rgba(0,0,0,0.15);
-    overflow:hidden;
+    box-shadow:0 6px 18px rgba(0,0,0,0.12);
     transition:0.3s;
+    overflow:hidden;
 }
 
-/* yellow flap */
-.envelope-card::before{
+/* envelope lines */
+.envelope-card::before,
+.envelope-card::after{
     content:"";
+    position:absolute;
+    width:100%;
+    height:2px;
+    background:#e0e0e0;
+    top:50%;
+    transform:rotate(35deg);
+}
+
+.envelope-card::after{
+    transform:rotate(-35deg);
+}
+
+/* top flap triangle */
+.flap{
     position:absolute;
     top:0;
     left:0;
@@ -55,15 +69,16 @@ h1{
     clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
 
-/* subtle inner fold line */
-.envelope-card::after{
-    content:"";
+/* heart badge */
+.badge{
     position:absolute;
-    bottom:0;
-    left:0;
-    width:100%;
-    height:2px;
-    background:rgba(0,0,0,0.08);
+    top:8px;
+    right:8px;
+    background:#ff6b81;
+    color:white;
+    font-size:12px;
+    padding:4px 6px;
+    border-radius:50%;
 }
 
 /* label */
@@ -77,7 +92,7 @@ h1{
 
 /* hover */
 .envelope-card:hover{
-    transform: translateY(-4px);
+    transform: translateY(-5px);
 }
 
 /* POPUP */
@@ -93,39 +108,25 @@ h1{
     align-items:center;
 }
 
-/* opened envelope */
+/* opened card */
 .open-envelope{
     width:340px;
     background:#fff;
-    border-radius:8px;
+    border-radius:10px;
     position:relative;
-    padding-top:40px;
+    padding:25px;
     animation: pop 0.4s ease;
 }
 
-/* flap animation */
-.open-envelope::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:60px;
-    background:#f4d03f;
-    clip-path: polygon(0 0, 100% 0, 50% 100%);
-    animation: flap 0.5s ease forwards;
-}
-
-/* letter paper */
+/* paper */
 .paper{
     font-family:'Dancing Script', cursive;
-    font-size:1.3rem;
+    font-size:1.4rem;
     color:#2c2c2c;
-    padding:25px;
     background:#fafafa;
-    border-radius:8px;
-    margin:20px;
-    animation: fadeIn 0.6s ease;
+    padding:20px;
+    border-radius:10px;
+    animation: fadeIn 0.5s ease;
 }
 
 /* close */
@@ -143,11 +144,6 @@ h1{
     to{transform:scale(1); opacity:1;}
 }
 
-@keyframes flap{
-    from{transform:rotateX(0deg);}
-    to{transform:rotateX(180deg);}
-}
-
 @keyframes fadeIn{
     from{opacity:0; transform:translateY(10px);}
     to{opacity:1; transform:translateY(0);}
@@ -161,6 +157,18 @@ a{
     font-weight:bold;
 }
 
+/* heart burst */
+.heart{
+    position:fixed;
+    font-size:16px;
+    animation: floatUp 1.5s linear forwards;
+}
+
+@keyframes floatUp{
+    0%{transform:translateY(0);opacity:1;}
+    100%{transform:translateY(-120px);opacity:0;}
+}
+
 </style>
 </head>
 
@@ -171,19 +179,27 @@ a{
 <div class="grid">
 
 <div class="envelope-card" onclick="openLetter('happy')">
-    <div class="tag">Open when you're happy</div>
+    <div class="flap"></div>
+    <div class="badge">❤</div>
+    <div class="tag">Happy</div>
 </div>
 
 <div class="envelope-card" onclick="openLetter('sad')">
-    <div class="tag">Open when you're sad</div>
+    <div class="flap"></div>
+    <div class="badge">❤</div>
+    <div class="tag">Sad</div>
 </div>
 
 <div class="envelope-card" onclick="openLetter('miss')">
-    <div class="tag">Open when you miss me</div>
+    <div class="flap"></div>
+    <div class="badge">❤</div>
+    <div class="tag">Miss me</div>
 </div>
 
 <div class="envelope-card" onclick="openLetter('tired')">
-    <div class="tag">Open when you're tired</div>
+    <div class="flap"></div>
+    <div class="badge">❤</div>
+    <div class="tag">Tired</div>
 </div>
 
 </div>
@@ -199,8 +215,10 @@ a{
     </div>
 </div>
 
-<!-- audio -->
-<audio id="paperSound" src="https://www.soundjay.com/paper/sounds/paper-rustle-1.mp3"></audio>
+<!-- safer audio -->
+<audio id="paperSound" preload="auto">
+<source src="https://assets.mixkit.co/sfx/preview/mixkit-paper-slide-1531.mp3" type="audio/mpeg">
+</audio>
 
 <a href="index.html">⬅ Back</a>
 
@@ -213,50 +231,32 @@ const messages = {
     tired: "Rest okay? You mean everything to me ❤️"
 };
 
-/* HEART PARTICLES */
-function createHearts(){
-    for(let i=0;i<12;i++){
-        const h = document.createElement("div");
+function openLetter(type){
+
+    document.getElementById("paperText").innerText = messages[type];
+    document.getElementById("overlay").style.display = "flex";
+
+    /* SOUND FIX */
+    const sound = document.getElementById("paperSound");
+    sound.currentTime = 0;
+    sound.play().catch(()=>{console.log("sound blocked");});
+
+    /* HEART BURST */
+    for(let i=0;i<10;i++){
+        const h=document.createElement("div");
+        h.className="heart";
         h.innerHTML="❤️";
-        h.style.position="fixed";
         h.style.left=Math.random()*100+"vw";
-        h.style.top="50%";
-        h.style.fontSize=(Math.random()*12+10)+"px";
-        h.style.animation="floatUp 1.5s linear forwards";
+        h.style.top="60%";
         document.body.appendChild(h);
 
         setTimeout(()=>h.remove(),1500);
     }
 }
 
-/* float animation injected */
-const style = document.createElement("style");
-style.innerHTML=`
-@keyframes floatUp{
-    0%{transform:translateY(0);opacity:1;}
-    100%{transform:translateY(-120px);opacity:0;}
-}`;
-document.head.appendChild(style);
-
-/* OPEN LETTER */
-function openLetter(type){
-
-    document.getElementById("paperText").innerText = messages[type];
-    document.getElementById("overlay").style.display = "flex";
-
-    /* sound */
-    const sound = document.getElementById("paperSound");
-    sound.currentTime = 0;
-    sound.play();
-
-    /* hearts */
-    createHearts();
-}
-
-/* CLOSE */
 function closeLetter(e){
-    if(e.target.id === "overlay" || e.target.className === "close"){
-        document.getElementById("overlay").style.display = "none";
+    if(e.target.id==="overlay" || e.target.className==="close"){
+        document.getElementById("overlay").style.display="none";
     }
 }
 
