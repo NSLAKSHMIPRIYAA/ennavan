@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -67,10 +68,19 @@ button:hover{
 transform:scale(1.05);
 }
 
+/* UPDATED MENU (smooth reveal) */
 #menu{
-display:none;
 margin-top:40px;
-animation:fadeIn 1s ease;
+opacity:0;
+transform:translateY(20px);
+pointer-events:none;
+transition:all 0.8s ease;
+}
+
+#menu.show{
+opacity:1;
+transform:translateY(0);
+pointer-events:auto;
 }
 
 .card{
@@ -114,6 +124,7 @@ opacity:0;
 }
 }
 
+/* FADE IN */
 @keyframes fadeIn{
 from{
 opacity:0;
@@ -140,6 +151,33 @@ bottom:15px;
 right:20px;
 cursor:pointer;
 font-size:20px;
+}
+
+/* ✨ SPARKLES */
+.sparkle {
+position: fixed;
+width: 6px;
+height: 6px;
+background: white;
+border-radius: 50%;
+pointer-events: none;
+opacity: 0;
+animation: sparkleAnim 2s linear forwards;
+box-shadow: 0 0 10px rgba(255,255,255,0.8);
+}
+
+@keyframes sparkleAnim {
+0% {
+transform: scale(0) translateY(0);
+opacity: 0;
+}
+20% {
+opacity: 1;
+}
+100% {
+transform: scale(1.5) translateY(-30px);
+opacity: 0;
+}
 }
 
 </style>
@@ -210,43 +248,51 @@ Made with ❤️ by Priyaa
 <script>
 
 function beginJourney(){
-
 document.getElementById("introSection").style.display="none";
-
-document.getElementById("menu").style.display="block";
-
+document.getElementById("menu").classList.add("show");
 }
 
 function secretMessage(){
-
 alert(
 "You found a secret ❤️\n\nFun fact:\nYou make me smile more than you'd like to admit."
 );
-
 }
 
 function createHeart(){
-
 const heart=document.createElement("div");
-
 heart.classList.add("heart");
-
 heart.innerHTML="❤️";
-
 heart.style.left=Math.random()*100+"vw";
-
-heart.style.fontSize=
-(Math.random()*15+15)+"px";
-
+heart.style.fontSize=(Math.random()*15+15)+"px";
 document.body.appendChild(heart);
 
 setTimeout(()=>{
 heart.remove();
 },8000);
-
 }
 
 setInterval(createHeart,700);
+
+/* ✨ SPARKLES JS */
+function createSparkle(){
+const sparkle = document.createElement("div");
+sparkle.classList.add("sparkle");
+
+sparkle.style.left = Math.random() * 100 + "vw";
+sparkle.style.top = Math.random() * 100 + "vh";
+
+const size = Math.random() * 4 + 3;
+sparkle.style.width = size + "px";
+sparkle.style.height = size + "px";
+
+document.body.appendChild(sparkle);
+
+setTimeout(() => {
+sparkle.remove();
+}, 2000);
+}
+
+setInterval(createSparkle, 120);
 
 </script>
 
