@@ -131,7 +131,6 @@ h1{
     font-size:18px;
 }
 
-/* animations */
 @keyframes pop{
     from{transform:scale(0.6); opacity:0;}
     to{transform:scale(1); opacity:1;}
@@ -196,7 +195,7 @@ a{
 
 </div>
 
-<!-- popup -->
+<!-- POPUP -->
 <div class="overlay" id="overlay" onclick="closeLetter(event)">
     <div class="open-envelope">
 
@@ -205,6 +204,11 @@ a{
 
     </div>
 </div>
+
+<!-- 🔊 YOUR LOCAL MP3 -->
+<audio id="paperSound" preload="auto">
+    <source src="paper.mp3" type="audio/mpeg">
+</audio>
 
 <a href="index.html">⬅ Back</a>
 
@@ -217,46 +221,23 @@ const messages = {
     tired: "Rest okay? You mean everything to me ❤️"
 };
 
-/* 🎧 BRAVE-PROOF AUDIO (Web Audio API) */
-let audioCtx;
-
-function playPaperSound() {
-    try {
-        if (!audioCtx) {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        }
-
-        const oscillator = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-
-        oscillator.type = "triangle";
-        oscillator.frequency.value = 600; // soft click sound
-
-        gainNode.gain.value = 0.05;
-
-        oscillator.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-
-        oscillator.start();
-
-        setTimeout(() => {
-            oscillator.stop();
-        }, 120);
-
-    } catch (e) {
-        console.log("Audio error:", e);
-    }
-}
-
 function openLetter(type){
 
     document.getElementById("paperText").innerText = messages[type];
     document.getElementById("overlay").style.display = "flex";
 
-    /* 🔊 GUARANTEED SOUND */
-    playPaperSound();
+    /* 🔊 REAL PAPER SOUND */
+    const sound = document.getElementById("paperSound");
 
-    /* heart burst */
+    sound.pause();
+    sound.currentTime = 0;
+    sound.volume = 1.0;
+
+    sound.play().catch(err => {
+        console.log("Audio blocked:", err);
+    });
+
+    /* hearts */
     for(let i=0;i<10;i++){
         const h=document.createElement("div");
         h.className="heart";
