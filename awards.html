@@ -10,53 +10,54 @@ body {
     text-align: center;
     color: white;
 
-    /* 🎭 Stage background */
-    background: radial-gradient(circle at top, #3b0a45, #120016 70%);
+    /* 🎬 BLACK + GOLD CINEMATIC BACKGROUND */
+    background: radial-gradient(circle at top, #1a1a1a 0%, #000000 70%);
     overflow-x: hidden;
 }
 
-/* 🎬 Curtains effect */
-.curtain {
+/* ✨ floating cinema icons */
+.icon {
     position: fixed;
-    top: 0;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(to bottom, #8b0000, #4b0000);
-    z-index: -1;
+    font-size: 28px;
+    opacity: 0.15;
+    animation: float 6s infinite linear;
 }
 
-.curtain.left { left: 0; }
-.curtain.right { right: 0; }
+@keyframes float {
+    0% { transform: translateY(100vh) rotate(0deg); }
+    100% { transform: translateY(-10vh) rotate(360deg); }
+}
 
-/* Title */
+/* 🎬 Title */
 h1 {
     margin-top: 40px;
-    font-size: 38px;
-    text-shadow: 0 0 15px gold;
+    font-size: 40px;
+    color: gold;
+    text-shadow: 0 0 20px gold, 0 0 40px rgba(255,215,0,0.4);
 }
 
-/* Award cards */
+/* 🏆 Cards */
 .card {
-    background: rgba(255, 215, 0, 0.08);
-    border: 2px solid gold;
-    border-radius: 15px;
-    padding: 20px;
+    background: rgba(255, 215, 0, 0.06);
+    border: 1px solid gold;
+    border-radius: 16px;
+    padding: 22px;
     margin: 20px auto;
-    width: 300px;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-    transition: transform 0.2s, box-shadow 0.2s;
-    position: relative;
+    width: 320px;
+    box-shadow: 0 0 20px rgba(255,215,0,0.2);
+    transition: 0.3s;
+    backdrop-filter: blur(6px);
 }
 
 .card:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 25px gold;
+    box-shadow: 0 0 30px gold;
 }
 
-/* Button inside card */
+/* 🎬 Button */
 button {
     margin-top: 10px;
-    padding: 10px 15px;
+    padding: 10px 16px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -64,94 +65,78 @@ button {
     font-weight: bold;
 }
 
-/* Confetti piece */
+/* 🎉 Confetti */
 .confetti {
     position: absolute;
     width: 8px;
     height: 8px;
     background: gold;
-    top: 50%;
-    left: 50%;
     animation: fall 1s ease-out forwards;
 }
 
 @keyframes fall {
-    0% {
-        transform: translate(0,0) rotate(0deg);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(calc(-50px + 100px * var(--x)), 200px) rotate(360deg);
-        opacity: 0;
-    }
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(180px); opacity: 0; }
 }
 
 a {
-    color: white;
+    color: gold;
+    text-decoration: none;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🎭 Curtains -->
-<div class="curtain left"></div>
-<div class="curtain right"></div>
+<!-- 🎥 Floating cinema icons -->
+<div class="icon" style="left:10%">📽️</div>
+<div class="icon" style="left:30%">🎥</div>
+<div class="icon" style="left:60%">📽️</div>
+<div class="icon" style="left:80%">🎬</div>
 
-<h1>🏆 Akash Awards 2026</h1>
+<h1>🏆 Akash Awards 2026 🎬</h1>
 
 <!-- 🏆 CARD 1 -->
 <div class="card" id="card1">
     <h2>🏆 Best Boyfriend Award</h2>
-    <button onclick="playAward('award1', 'card1')">Reveal Award</button>
+    <button onclick="playAward('award1','card1')">Reveal Award</button>
     <audio id="award1" src="award1.mp3"></audio>
 </div>
 
 <!-- 🏆 CARD 2 -->
 <div class="card" id="card2">
     <h2>🏆 Professional Mood Lifter Award</h2>
-    <button onclick="playAward('award2', 'card2')">Reveal Award</button>
+    <button onclick="playAward('award2','card2')">Reveal Award</button>
     <audio id="award2" src="award2.mp3"></audio>
 </div>
 
 <!-- 🏆 CARD 3 -->
 <div class="card" id="card3">
     <h2>🏆 World's Luckiest Boyfriend Award</h2>
-    <button onclick="playAward('award3', 'card3')">Reveal Award</button>
+    <button onclick="playAward('award3','card3')">Reveal Award</button>
     <audio id="award3" src="award3.mp3"></audio>
 </div>
 
 <br>
-<a href="index.html">⬅ Back</a>
+<a href="index.html">⬅ Back to Stage</a>
 
 <script>
 function playAward(audioId, cardId) {
     document.getElementById(audioId).play();
 
-    // 🎉 confetti burst near card
     let card = document.getElementById(cardId);
 
     for (let i = 0; i < 12; i++) {
         let confetti = document.createElement("div");
         confetti.classList.add("confetti");
 
-        confetti.style.left = (50 + Math.random() * 100 - 50) + "%";
+        confetti.style.left = Math.random() * 100 + "%";
         confetti.style.top = "40%";
-        confetti.style.setProperty("--x", Math.random());
-
-        confetti.style.background = randomColor();
 
         card.appendChild(confetti);
 
-        setTimeout(() => {
-            confetti.remove();
-        }, 1000);
+        setTimeout(() => confetti.remove(), 1000);
     }
-}
-
-function randomColor() {
-    const colors = ["gold", "white", "#ff4d6d", "#7df9ff", "#ffcc00"];
-    return colors[Math.floor(Math.random() * colors.length)];
 }
 </script>
 
