@@ -284,6 +284,16 @@ a{
 
     </div>
 </div>
+<div class="envelope-card"
+     id="secretEnvelope"
+     onclick="openLetter('secret')"
+     style="display:none;">
+
+    <div class="flap"></div>
+    <div class="badge">✨</div>
+    <div class="tag">Final Letter</div>
+
+</div>
 
 <!-- 🔊 YOUR LOCAL MP3 -->
 <audio id="paperSound" preload="auto">
@@ -293,6 +303,7 @@ a{
 <a href="index.html">⬅ Back</a>
 
 <script>
+let openedLetters = new Set();
 
 const messages = {
     happy: "I'm so glad you're smiling right now. You deserve every bit of happiness that's coming your way. Please take a moment to be proud of yourself. And if possible, save one of those cute smiles for me too. ❤️",
@@ -325,6 +336,8 @@ const messages = {
 
     smile: "Quick reminder: you've survived every embarrassing thing you've ever done. Including that one thing you're thinking about right now. See? Life isn't that bad. Now smile, you goofball. 😂❤️"
 
+    secret: "If you're reading this, you've opened every letter. Maybe you were curious. Maybe you were bored. Or maybe you just wanted to see everything I wrote for you. Whatever the reason, thank you. Out of all the people I could have met, I met you. Out of all the memories I could have made, some of my favorites include you. And if there's one thing I hope you take away from this little gift, it's this: You are loved. More than you know. More than these letters can ever fully say. ❤️"
+
     
 };
 function openLetter(type){
@@ -332,7 +345,7 @@ function openLetter(type){
     document.getElementById("paperText").innerText = messages[type];
     document.getElementById("overlay").style.display = "flex";
 
-    /* 🔊 PAPER SOUND */
+    /* PAPER SOUND */
     const sound = document.getElementById("paperSound");
 
     sound.currentTime = 0;
@@ -341,11 +354,26 @@ function openLetter(type){
         console.log("Audio error:", err);
     });
 
-    /* ❤️ hearts */
+    /* Track opened letters */
+    if(type !== "secret"){
+        openedLetters.add(type);
+
+        if(openedLetters.size === 15){
+            document.getElementById("secretEnvelope").style.display = "block";
+
+            setTimeout(() => {
+                alert("❤️ You've opened every letter. One final letter has appeared.");
+            }, 300);
+        }
+    }
+
+    /* Hearts */
     for(let i=0;i<10;i++){
         const h = document.createElement("div");
+
         h.className = "heart";
         h.innerHTML = "❤️";
+
         h.style.left = Math.random()*100 + "vw";
         h.style.top = "60%";
 
@@ -354,7 +382,6 @@ function openLetter(type){
         setTimeout(() => h.remove(), 1500);
     }
 }
-
 function closeLetter(e){
     if(e.target.id==="overlay" || e.target.className==="close"){
         document.getElementById("overlay").style.display="none";
