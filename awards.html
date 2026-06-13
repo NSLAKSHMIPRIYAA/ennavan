@@ -163,26 +163,44 @@ window.onload = function () {
     const flashLayer = document.getElementById("flashLayer");
     const cameraSound = document.getElementById("cameraSound");
 
+    let soundLocked = false;
+
     function flashOnce() {
+        // 📸 stronger flash
         flashLayer.style.opacity = "1";
 
         setTimeout(() => {
             flashLayer.style.opacity = "0";
-        }, 120);
+        }, 90); // faster flash = more camera-like
 
-        cameraSound.currentTime = 0;
-        cameraSound.play().catch(() => {});
+        // 🔊 controlled short click
+        if (!soundLocked) {
+            soundLocked = true;
+
+            cameraSound.currentTime = 0;
+            cameraSound.volume = 0.8;
+
+            cameraSound.play().catch(() => {});
+
+            // unlock quickly so no overlap
+            setTimeout(() => {
+                soundLocked = false;
+            }, 120);
+        }
     }
 
+    // 🎬 REALISTIC PAPARAZZI BURST
+    let flashes = 12; // more flashes than before
     let count = 0;
-    let total = 6;
 
     let interval = setInterval(() => {
         flashOnce();
         count++;
 
-        if (count >= total) clearInterval(interval);
-    }, 300);
+        if (count >= flashes) {
+            clearInterval(interval);
+        }
+    }, 120 + Math.random() * 80); // 🔥 random timing = realistic chaos
 };
 
 
