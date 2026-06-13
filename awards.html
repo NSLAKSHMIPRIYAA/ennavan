@@ -7,65 +7,96 @@
 body {
     margin: 0;
     font-family: Arial;
-    text-align: center;
     color: white;
-
-    /* 🎬 BLACK + GOLD CINEMATIC BACKGROUND */
-    background: radial-gradient(circle at top, #1a1a1a 0%, #000000 70%);
+    background: radial-gradient(circle at center, #111 0%, #000 70%);
     overflow-x: hidden;
 }
 
-/* ✨ floating cinema icons */
-.icon {
+/* 🎭 STAGE FLOOR */
+.stage {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    background: linear-gradient(to top, #2b1b0f, #000);
+    border-top: 3px solid gold;
+    box-shadow: 0 -10px 40px rgba(255,215,0,0.2);
+}
+
+/* 🎤 MIC */
+.mic {
+    position: absolute;
+    left: 50%;
+    top: 40px;
+    transform: translateX(-50%);
+    font-size: 60px;
+    filter: drop-shadow(0 0 10px gold);
+}
+
+/* 💡 SPOTLIGHT */
+.spotlight {
     position: fixed;
-    font-size: 28px;
-    opacity: 0.15;
-    animation: float 6s infinite linear;
+    top: -50%;
+    left: 50%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255,255,200,0.15), transparent 60%);
+    transform: translateX(-50%);
+    animation: swing 4s infinite ease-in-out;
+    pointer-events: none;
 }
 
-@keyframes float {
-    0% { transform: translateY(100vh) rotate(0deg); }
-    100% { transform: translateY(-10vh) rotate(360deg); }
+@keyframes swing {
+    0% { transform: translateX(-50%) rotate(-10deg); }
+    50% { transform: translateX(-50%) rotate(10deg); }
+    100% { transform: translateX(-50%) rotate(-10deg); }
 }
 
-/* 🎬 Title */
+/* 🏆 TITLE */
 h1 {
-    margin-top: 40px;
+    text-align: center;
+    margin-top: 30px;
     font-size: 40px;
     color: gold;
-    text-shadow: 0 0 20px gold, 0 0 40px rgba(255,215,0,0.4);
+    text-shadow: 0 0 20px gold;
 }
 
-/* 🏆 Cards */
+/* 🏅 AWARD CARDS ON STAGE */
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
 .card {
-    background: rgba(255, 215, 0, 0.06);
+    width: 250px;
+    padding: 18px;
+    border-radius: 15px;
+    background: rgba(255,215,0,0.07);
     border: 1px solid gold;
-    border-radius: 16px;
-    padding: 22px;
-    margin: 20px auto;
-    width: 320px;
+    backdrop-filter: blur(6px);
     box-shadow: 0 0 20px rgba(255,215,0,0.2);
     transition: 0.3s;
-    backdrop-filter: blur(6px);
+    text-align: center;
 }
 
 .card:hover {
-    transform: scale(1.05);
+    transform: translateY(-10px);
     box-shadow: 0 0 30px gold;
 }
 
-/* 🎬 Button */
 button {
     margin-top: 10px;
-    padding: 10px 16px;
+    padding: 10px 14px;
+    background: gold;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    background: gold;
     font-weight: bold;
 }
 
-/* 🎉 Confetti */
+/* 🎉 CONFETTI */
 .confetti {
     position: absolute;
     width: 8px;
@@ -78,47 +109,42 @@ button {
     0% { transform: translateY(0); opacity: 1; }
     100% { transform: translateY(180px); opacity: 0; }
 }
-
-a {
-    color: gold;
-    text-decoration: none;
-}
 </style>
 </head>
 
 <body>
 
-<!-- 🎥 Floating cinema icons -->
-<div class="icon" style="left:10%">📽️</div>
-<div class="icon" style="left:30%">🎥</div>
-<div class="icon" style="left:60%">📽️</div>
-<div class="icon" style="left:80%">🎬</div>
+<div class="spotlight"></div>
 
 <h1>🏆 Akash Awards 2026 🎬</h1>
 
-<!-- 🏆 CARD 1 -->
-<div class="card" id="card1">
-    <h2>🏆 Best Boyfriend Award</h2>
-    <button onclick="playAward('award1','card1')">Reveal Award</button>
-    <audio id="award1" src="award1.mp3"></audio>
+<!-- 🎭 STAGE -->
+<div class="stage">
+    <div class="mic">🎤</div>
 </div>
 
-<!-- 🏆 CARD 2 -->
-<div class="card" id="card2">
-    <h2>🏆 Professional Mood Lifter Award</h2>
-    <button onclick="playAward('award2','card2')">Reveal Award</button>
-    <audio id="award2" src="award2.mp3"></audio>
-</div>
+<!-- 🏅 AWARDS ON STAGE -->
+<div class="container">
 
-<!-- 🏆 CARD 3 -->
-<div class="card" id="card3">
-    <h2>🏆 World's Luckiest Boyfriend Award</h2>
-    <button onclick="playAward('award3','card3')">Reveal Award</button>
-    <audio id="award3" src="award3.mp3"></audio>
-</div>
+    <div class="card" id="card1">
+        <h3>🏆 Best Boyfriend</h3>
+        <button onclick="playAward('award1','card1')">Reveal</button>
+        <audio id="award1" src="award1.mp3"></audio>
+    </div>
 
-<br>
-<a href="index.html">⬅ Back to Stage</a>
+    <div class="card" id="card2">
+        <h3>🏆 Mood Lifter</h3>
+        <button onclick="playAward('award2','card2')">Reveal</button>
+        <audio id="award2" src="award2.mp3"></audio>
+    </div>
+
+    <div class="card" id="card3">
+        <h3>🏆 Luckiest Boyfriend</h3>
+        <button onclick="playAward('award3','card3')">Reveal</button>
+        <audio id="award3" src="award3.mp3"></audio>
+    </div>
+
+</div>
 
 <script>
 function playAward(audioId, cardId) {
@@ -126,12 +152,12 @@ function playAward(audioId, cardId) {
 
     let card = document.getElementById(cardId);
 
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 15; i++) {
         let confetti = document.createElement("div");
         confetti.classList.add("confetti");
 
         confetti.style.left = Math.random() * 100 + "%";
-        confetti.style.top = "40%";
+        confetti.style.top = "50%";
 
         card.appendChild(confetti);
 
