@@ -1,53 +1,159 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <title>Akash Awards 2026</title>
 
 <style>
-body{
-    text-align:center;
-    font-family:Arial;
-    background:#fff8dc;
+body {
+    margin: 0;
+    font-family: Arial;
+    text-align: center;
+    color: white;
+
+    /* 🎭 Stage background */
+    background: radial-gradient(circle at top, #3b0a45, #120016 70%);
+    overflow-x: hidden;
 }
 
-button{
-    margin:20px;
-    padding:15px;
+/* 🎬 Curtains effect */
+.curtain {
+    position: fixed;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to bottom, #8b0000, #4b0000);
+    z-index: -1;
+}
+
+.curtain.left { left: 0; }
+.curtain.right { right: 0; }
+
+/* Title */
+h1 {
+    margin-top: 40px;
+    font-size: 38px;
+    text-shadow: 0 0 15px gold;
+}
+
+/* Award cards */
+.card {
+    background: rgba(255, 215, 0, 0.08);
+    border: 2px solid gold;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px auto;
+    width: 300px;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px gold;
+}
+
+/* Button inside card */
+button {
+    margin-top: 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: gold;
+    font-weight: bold;
+}
+
+/* Confetti piece */
+.confetti {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: gold;
+    top: 50%;
+    left: 50%;
+    animation: fall 1s ease-out forwards;
+}
+
+@keyframes fall {
+    0% {
+        transform: translate(0,0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(calc(-50px + 100px * var(--x)), 200px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+a {
+    color: white;
 }
 </style>
-
 </head>
 
 <body>
 
+<!-- 🎭 Curtains -->
+<div class="curtain left"></div>
+<div class="curtain right"></div>
+
 <h1>🏆 Akash Awards 2026</h1>
 
-<button onclick="document.getElementById('award1').play()">
-🏆 Best Boyfriend Award
-</button>
+<!-- 🏆 CARD 1 -->
+<div class="card" id="card1">
+    <h2>🏆 Best Boyfriend Award</h2>
+    <button onclick="playAward('award1', 'card1')">Reveal Award</button>
+    <audio id="award1" src="award1.mp3"></audio>
+</div>
 
-<audio id="award1" src="award1.mp3"></audio>
+<!-- 🏆 CARD 2 -->
+<div class="card" id="card2">
+    <h2>🏆 Professional Mood Lifter Award</h2>
+    <button onclick="playAward('award2', 'card2')">Reveal Award</button>
+    <audio id="award2" src="award2.mp3"></audio>
+</div>
+
+<!-- 🏆 CARD 3 -->
+<div class="card" id="card3">
+    <h2>🏆 World's Luckiest Boyfriend Award</h2>
+    <button onclick="playAward('award3', 'card3')">Reveal Award</button>
+    <audio id="award3" src="award3.mp3"></audio>
+</div>
 
 <br>
-
-<button onclick="document.getElementById('award2').play()">
-🏆 Professional Mood Lifter Award
-</button>
-
-<audio id="award2" src="award2.mp3"></audio>
-
-<br>
-
-<button onclick="document.getElementById('award3').play()">
-🏆 World's Luckiest Boyfriend Award
-</button>
-
-<audio id="award3" src="award3.mp3"></audio>
-
-<br><br>
-
 <a href="index.html">⬅ Back</a>
+
+<script>
+function playAward(audioId, cardId) {
+    document.getElementById(audioId).play();
+
+    // 🎉 confetti burst near card
+    let card = document.getElementById(cardId);
+
+    for (let i = 0; i < 12; i++) {
+        let confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+
+        confetti.style.left = (50 + Math.random() * 100 - 50) + "%";
+        confetti.style.top = "40%";
+        confetti.style.setProperty("--x", Math.random());
+
+        confetti.style.background = randomColor();
+
+        card.appendChild(confetti);
+
+        setTimeout(() => {
+            confetti.remove();
+        }, 1000);
+    }
+}
+
+function randomColor() {
+    const colors = ["gold", "white", "#ff4d6d", "#7df9ff", "#ffcc00"];
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+</script>
 
 </body>
 </html>
