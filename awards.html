@@ -1,228 +1,46 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Akash Awards 2026</title>
-
-<style>
-body {
-    margin: 0;
-    font-family: Arial;
-    color: white;
-    background: #000;
-    overflow: hidden;
-}
-
-/* 🌑 FLOOR GLOW */
-.stage-floor {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 35%;
-    background: radial-gradient(circle at center, rgba(255,255,255,0.05), transparent 70%);
-}
-
-/* 🏛️ PODIUM */
-.podium {
-    position: absolute;
-    bottom: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 160px;
-    height: 120px;
-    background: linear-gradient(145deg, #111, #000);
-    border: 1px solid gold;
-    border-radius: 10px 10px 0 0;
-    box-shadow: 0 0 25px rgba(255,215,0,0.2);
-}
-
-.podium::before {
-    content: "🏆";
-    position: absolute;
-    top: -55px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 40px;
-    filter: drop-shadow(0 0 10px gold);
-}
-
-/* 🏆 TITLE */
-h1 {
-    text-align: center;
-    margin-top: 40px;
-    font-size: 42px;
-    color: gold;
-    text-shadow: 0 0 20px gold;
-}
-
-/* 🏅 AWARDS */
-.container {
-    display: flex;
-    justify-content: center;
-    gap: 25px;
-    margin-top: 80px;
-    flex-wrap: wrap;
-}
-
-/* 🪄 CARDS */
-.card {
-    width: 260px;
-    padding: 18px;
-    border-radius: 14px;
-    background: rgba(255,215,0,0.06);
-    border: 1px solid gold;
-    backdrop-filter: blur(6px);
-    box-shadow: 0 0 20px rgba(255,215,0,0.15);
-    transition: 0.3s;
-    text-align: center;
-}
-
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 0 30px gold;
-}
-
-button {
-    margin-top: 12px;
-    padding: 10px 14px;
-    background: gold;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-/* 🎉 CONFETTI */
-.confetti {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: gold;
-    animation: fall 1s ease-out forwards;
-}
-
-@keyframes fall {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(200px); opacity: 0; }
-}
-
-/* 📸 FLASH OVERLAY */
-#flashLayer {
-    position: fixed;
-    inset: 0;
-    background: white;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 9999;
-}
-</style>
-</head>
-
-<body>
-
-<h1>🏆 Akash Awards 2026 🎬</h1>
-
-<!-- 📸 FLASH LAYER -->
-<div id="flashLayer"></div>
-
-<!-- 🔊 CAMERA SOUND -->
-<audio id="cameraSound" src="camera-click.mp3" preload="auto"></audio>
-
-<!-- 🏅 AWARDS -->
-<div class="container">
-
-    <div class="card" id="card1">
-        <h3>🏆 Best Boyfriend</h3>
-        <button onclick="playAward('award1','card1')">Reveal</button>
-        <audio id="award1" src="award1.mp3"></audio>
-    </div>
-
-    <div class="card" id="card2">
-        <h3>🏆 Mood Lifter</h3>
-        <button onclick="playAward('award2','card2')">Reveal</button>
-        <audio id="award2" src="award2.mp3"></audio>
-    </div>
-
-    <div class="card" id="card3">
-        <h3>🏆 Luckiest Boyfriend</h3>
-        <button onclick="playAward('award3','card3')">Reveal</button>
-        <audio id="award3" src="award3.mp3"></audio>
-    </div>
-
-</div>
-
-<!-- 🏛️ PODIUM -->
-<div class="podium"></div>
-
-<!-- 🌑 FLOOR -->
-<div class="stage-floor"></div>
-
-<script>
-
-/* 📸 OPENING FLASH + CAMERA SOUND */
 window.onload = function () {
     const flashLayer = document.getElementById("flashLayer");
     const cameraSound = document.getElementById("cameraSound");
 
-    let soundLocked = false;
+    let running = true;
 
     function flashOnce() {
-        // 📸 stronger flash
+        // 📸 flash
         flashLayer.style.opacity = "1";
 
         setTimeout(() => {
             flashLayer.style.opacity = "0";
-        }, 90); // faster flash = more camera-like
+        }, 70); // shorter = sharper camera flash
 
-        // 🔊 controlled short click
-        if (!soundLocked) {
-            soundLocked = true;
-
+        // 🔊 FIX: force crisp short click behavior
+        try {
+            cameraSound.pause();       // stop any overlap
             cameraSound.currentTime = 0;
-            cameraSound.volume = 0.8;
-
+            cameraSound.volume = 0.7;
             cameraSound.play().catch(() => {});
-
-            // unlock quickly so no overlap
-            setTimeout(() => {
-                soundLocked = false;
-            }, 120);
-        }
+        } catch (e) {}
     }
 
-    // 🎬 REALISTIC PAPARAZZI BURST
-    let flashes = 12; // more flashes than before
-    let count = 0;
+    // 🎬 LONGER + MORE REALISTIC BURST SEQUENCE
+    let totalDuration = 5000; // 5 seconds of paparazzi chaos
+    let start = Date.now();
 
-    let interval = setInterval(() => {
+    function burstLoop() {
+        if (!running) return;
+
+        let now = Date.now();
+        if (now - start > totalDuration) {
+            running = false;
+            return;
+        }
+
         flashOnce();
-        count++;
 
-        if (count >= flashes) {
-            clearInterval(interval);
-        }
-    }, 120 + Math.random() * 80); // 🔥 random timing = realistic chaos
-};
+        // 🔥 irregular timing = REAL camera crowd feel
+        let delay = 80 + Math.random() * 120;
 
-
-/* 🏆 AWARD CONFETTI (UNCHANGED) */
-function playAward(audioId, cardId) {
-    document.getElementById(audioId).play();
-
-    let card = document.getElementById(cardId);
-
-    for (let i = 0; i < 18; i++) {
-        let confetti = document.createElement("div");
-        confetti.classList.add("confetti");
-
-        confetti.style.left = Math.random() * 100 + "%";
-        confetti.style.top = "50%";
-
-        card.appendChild(confetti);
-
-        setTimeout(() => confetti.remove(), 1000);
+        setTimeout(burstLoop, delay);
     }
-}
-</script>
 
-</body>
-</html>
+    burstLoop();
+};
