@@ -21,7 +21,7 @@ h1{
 
 .grid{
     display:grid;
-    grid-template-columns: repeat(2, 160px);
+    grid-template-columns: repeat(3, 160px);
     gap:25px;
     justify-content:center;
     padding:20px;
@@ -195,6 +195,72 @@ a{
     <div class="tag">Tired</div>
 </div>
 
+<div class="envelope-card" onclick="openLetter('angry')">
+    <div class="flap"></div>
+    <div class="badge">❤</div>
+    <div class="tag">Angry</div>
+</div>
+
+<div class="envelope-card" onclick="openLetter('stressed')">
+    <div class="flap"></div>
+    <div class="badge">❤</div>
+    <div class="tag">Stressed</div>
+</div>
+
+<div class="envelope-card" onclick="openLetter('motivation')">
+    <div class="flap"></div>
+    <div class="badge">❤</div>
+    <div class="tag">Motivation</div>
+</div>
+
+<div class="envelope-card" onclick="openLetter('sleep')">
+    <div class="flap"></div>
+    <div class="badge">❤</div>
+    <div class="tag">Can't Sleep</div>
+</div>
+
+<div class="envelope-card" onclick="openLetter('lonely')">
+    <div class="flap"></div>
+    <div class="badge">❤</div>
+    <div class="tag">Lonely</div>
+</div>
+
+<div class="envelope-card" onclick="openLetter('hug')">
+    <div class="flap"></div>
+    <div class="badge">❤</div>
+    <div class="tag">Need A Hug</div>
+</div>
+
+<div class="envelope-card" onclick="openLetter('doubt')">
+    <div class="flap"></div>
+    <div class="badge">❤</div>
+    <div class="tag">Doubt Yourself</div>
+</div>
+
+<div class="envelope-card" onclick="openLetter('fight')">
+    <div class="flap"></div>
+    <div class="badge">❤</div>
+    <div class="tag">We Had A Fight</div>
+</div>
+
+<div class="envelope-card" onclick="openLetter('birthday')">
+    <div class="flap"></div>
+    <div class="badge">❤</div>
+    <div class="tag">Birthday</div>
+</div>
+
+<div class="envelope-card" onclick="openLetter('insecure')">
+    <div class="flap"></div>
+    <div class="badge">❤</div>
+    <div class="tag">Insecure</div>
+</div>
+
+<div class="envelope-card" onclick="openLetter('smile')">
+    <div class="flap"></div>
+    <div class="badge">❤</div>
+    <div class="tag">Need A Smile</div>
+</div>
+
 </div>
 
 <!-- POPUP -->
@@ -217,10 +283,22 @@ a{
 <script>
 
 const messages = {
-    happy: "I'm smiling because you're smiling ❤️",
+    happy: "Seeing you happy makes my heart happy too ❤️",
     sad: "No matter what happens, I'm always here for you ❤️",
     miss: "Imagine me giving you the biggest hug right now ❤️",
-    tired: "Rest okay? You mean everything to me ❤️"
+    tired: "Rest okay? You mean everything to me ❤️",
+
+    angry: "Take a deep breath, my love. This feeling will pass ❤️",
+    stressed: "One thing at a time. You've got this ❤️",
+    motivation: "You are stronger and more capable than you think ❤️",
+    sleep: "Close your eyes and imagine me beside you ❤️",
+    lonely: "You're never truly alone because my love is always with you ❤️",
+    hug: "Consider this letter a warm hug from me ❤️",
+    doubt: "Don't doubt yourself; I believe in you completely ❤️",
+    fight: "No fight can ever change how much I love you ❤️",
+    birthday: "Happy Birthday to the most special person in my life ❤️",
+    insecure: "You are enough exactly as you are ❤️",
+    smile: "Here's your reminder to smile because you look adorable when you do ❤️"
 };
 
 function openLetter(type){
