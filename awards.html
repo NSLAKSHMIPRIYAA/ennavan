@@ -163,26 +163,47 @@ window.onload = function () {
     const flashLayer = document.getElementById("flashLayer");
     const cameraSound = document.getElementById("cameraSound");
 
+    let running = true;
+
     function flashOnce() {
+        // 📸 flash
         flashLayer.style.opacity = "1";
 
         setTimeout(() => {
             flashLayer.style.opacity = "0";
-        }, 120);
+        }, 70); // shorter = sharper camera flash
 
-        cameraSound.currentTime = 0;
-        cameraSound.play().catch(() => {});
+        // 🔊 FIX: force crisp short click behavior
+        try {
+            cameraSound.pause();       // stop any overlap
+            cameraSound.currentTime = 0;
+            cameraSound.volume = 0.7;
+            cameraSound.play().catch(() => {});
+        } catch (e) {}
     }
 
-    let count = 0;
-    let total = 6;
+    // 🎬 LONGER + MORE REALISTIC BURST SEQUENCE
+    let totalDuration = 5000; // 5 seconds of paparazzi chaos
+    let start = Date.now();
 
-    let interval = setInterval(() => {
+    function burstLoop() {
+        if (!running) return;
+
+        let now = Date.now();
+        if (now - start > totalDuration) {
+            running = false;
+            return;
+        }
+
         flashOnce();
-        count++;
 
-        if (count >= total) clearInterval(interval);
-    }, 300);
+        // 🔥 irregular timing = REAL camera crowd feel
+        let delay = 80 + Math.random() * 120;
+
+        setTimeout(burstLoop, delay);
+    }
+
+    burstLoop();
 };
 
 
