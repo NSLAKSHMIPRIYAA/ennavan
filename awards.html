@@ -8,66 +8,55 @@ body {
     margin: 0;
     font-family: Arial;
     color: white;
-    background: radial-gradient(circle at center, #111 0%, #000 70%);
+    background: #000; /* pure black stage */
     overflow: hidden;
 }
 
-/* 🎭 FULL STAGE BACKDROP */
-.stage-bg {
+/* 🌑 SUBTLE STAGE GLOW (VERY MINIMAL) */
+.stage-floor {
     position: fixed;
-    inset: 0;
-    z-index: 0;
-    background:
-        radial-gradient(circle at 50% 20%, rgba(255,255,200,0.08), transparent 40%),
-        linear-gradient(to top, #120b06, #000 70%);
+    bottom: 0;
+    width: 100%;
+    height: 35%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.05), transparent 70%);
 }
 
-/* 🎤 SMALL MIC (now decorative, not layout-breaking) */
-.mic {
+/* 🏛️ PODIUM */
+.podium {
     position: absolute;
     bottom: 60px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 50px;
-    opacity: 0.6;
-    filter: drop-shadow(0 0 10px gold);
+    width: 160px;
+    height: 120px;
+    background: linear-gradient(145deg, #111, #000);
+    border: 1px solid gold;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 0 25px rgba(255,215,0,0.2);
 }
 
-/* 💡 MOVING SPOTLIGHT */
-.spotlight {
-    position: fixed;
-    top: -30%;
+/* podium top shine */
+.podium::before {
+    content: "🏆";
+    position: absolute;
+    top: -55px;
     left: 50%;
-    width: 700px;
-    height: 700px;
-    background: radial-gradient(circle, rgba(255,255,200,0.18), transparent 60%);
     transform: translateX(-50%);
-    animation: swing 5s infinite ease-in-out;
-    pointer-events: none;
-    z-index: 0;
-}
-
-@keyframes swing {
-    0% { transform: translateX(-50%) rotate(-12deg); }
-    50% { transform: translateX(-50%) rotate(12deg); }
-    100% { transform: translateX(-50%) rotate(-12deg); }
+    font-size: 40px;
+    filter: drop-shadow(0 0 10px gold);
 }
 
 /* 🏆 TITLE */
 h1 {
-    position: relative;
-    z-index: 2;
     text-align: center;
     margin-top: 40px;
     font-size: 42px;
     color: gold;
-    text-shadow: 0 0 25px gold;
+    text-shadow: 0 0 20px gold;
 }
 
-/* 🏅 AWARDS FLOATING CENTER STAGE */
+/* 🏅 AWARDS AREA */
 .container {
-    position: relative;
-    z-index: 2;
     display: flex;
     justify-content: center;
     gap: 25px;
@@ -75,22 +64,22 @@ h1 {
     flex-wrap: wrap;
 }
 
-/* 🪄 CARDS BECOME "SPOTLIGHT OBJECTS" */
+/* 🪄 CARDS */
 .card {
     width: 260px;
     padding: 18px;
-    border-radius: 16px;
-    background: rgba(255,215,0,0.08);
+    border-radius: 14px;
+    background: rgba(255,215,0,0.06);
     border: 1px solid gold;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 0 25px rgba(255,215,0,0.2);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 0 20px rgba(255,215,0,0.15);
     transition: 0.3s;
     text-align: center;
 }
 
 .card:hover {
-    transform: translateY(-12px) scale(1.03);
-    box-shadow: 0 0 35px gold;
+    transform: translateY(-10px);
+    box-shadow: 0 0 30px gold;
 }
 
 button {
@@ -121,13 +110,9 @@ button {
 
 <body>
 
-<!-- 🌌 BACKDROP -->
-<div class="stage-bg"></div>
-<div class="spotlight"></div>
-
 <h1>🏆 Akash Awards 2026 🎬</h1>
 
-<!-- 🏅 AWARDS (CENTER FOCUS) -->
+<!-- 🏅 AWARDS -->
 <div class="container">
 
     <div class="card" id="card1">
@@ -150,8 +135,11 @@ button {
 
 </div>
 
-<!-- 🎤 MIC (NOW SUBTLE DECOR) -->
-<div class="mic">🎤</div>
+<!-- 🏛️ PODIUM -->
+<div class="podium"></div>
+
+<!-- 🌑 FLOOR -->
+<div class="stage-floor"></div>
 
 <script>
 function playAward(audioId, cardId) {
@@ -164,7 +152,7 @@ function playAward(audioId, cardId) {
         confetti.classList.add("confetti");
 
         confetti.style.left = Math.random() * 100 + "%";
-        confetti.style.top = "40%";
+        confetti.style.top = "50%";
 
         card.appendChild(confetti);
 
