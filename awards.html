@@ -8,11 +8,11 @@ body {
     margin: 0;
     font-family: Arial;
     color: white;
-    background: #000; /* pure black stage */
+    background: #000;
     overflow: hidden;
 }
 
-/* 🌑 SUBTLE STAGE GLOW (VERY MINIMAL) */
+/* 🌑 FLOOR GLOW */
 .stage-floor {
     position: fixed;
     bottom: 0;
@@ -35,7 +35,6 @@ body {
     box-shadow: 0 0 25px rgba(255,215,0,0.2);
 }
 
-/* podium top shine */
 .podium::before {
     content: "🏆";
     position: absolute;
@@ -55,7 +54,7 @@ h1 {
     text-shadow: 0 0 20px gold;
 }
 
-/* 🏅 AWARDS AREA */
+/* 🏅 AWARDS */
 .container {
     display: flex;
     justify-content: center;
@@ -105,12 +104,28 @@ button {
     0% { transform: translateY(0); opacity: 1; }
     100% { transform: translateY(200px); opacity: 0; }
 }
+
+/* 📸 FLASH OVERLAY */
+#flashLayer {
+    position: fixed;
+    inset: 0;
+    background: white;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
 </style>
 </head>
 
 <body>
 
 <h1>🏆 Akash Awards 2026 🎬</h1>
+
+<!-- 📸 FLASH LAYER -->
+<div id="flashLayer"></div>
+
+<!-- 🔊 CAMERA SOUND -->
+<audio id="cameraSound" src="camera-click.mp3" preload="auto"></audio>
 
 <!-- 🏅 AWARDS -->
 <div class="container">
@@ -142,6 +157,36 @@ button {
 <div class="stage-floor"></div>
 
 <script>
+
+/* 📸 OPENING FLASH + CAMERA SOUND */
+window.onload = function () {
+    const flashLayer = document.getElementById("flashLayer");
+    const cameraSound = document.getElementById("cameraSound");
+
+    function flashOnce() {
+        flashLayer.style.opacity = "1";
+
+        setTimeout(() => {
+            flashLayer.style.opacity = "0";
+        }, 120);
+
+        cameraSound.currentTime = 0;
+        cameraSound.play().catch(() => {});
+    }
+
+    let count = 0;
+    let total = 6;
+
+    let interval = setInterval(() => {
+        flashOnce();
+        count++;
+
+        if (count >= total) clearInterval(interval);
+    }, 300);
+};
+
+
+/* 🏆 AWARD CONFETTI (UNCHANGED) */
 function playAward(audioId, cardId) {
     document.getElementById(audioId).play();
 
