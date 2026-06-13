@@ -9,85 +9,92 @@ body {
     font-family: Arial;
     color: white;
     background: radial-gradient(circle at center, #111 0%, #000 70%);
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
-/* 🎭 STAGE FLOOR */
-.stage {
-    position: relative;
-    width: 100%;
-    height: 250px;
-    background: linear-gradient(to top, #2b1b0f, #000);
-    border-top: 3px solid gold;
-    box-shadow: 0 -10px 40px rgba(255,215,0,0.2);
+/* 🎭 FULL STAGE BACKDROP */
+.stage-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+        radial-gradient(circle at 50% 20%, rgba(255,255,200,0.08), transparent 40%),
+        linear-gradient(to top, #120b06, #000 70%);
 }
 
-/* 🎤 MIC */
+/* 🎤 SMALL MIC (now decorative, not layout-breaking) */
 .mic {
     position: absolute;
+    bottom: 60px;
     left: 50%;
-    top: 40px;
     transform: translateX(-50%);
-    font-size: 60px;
+    font-size: 50px;
+    opacity: 0.6;
     filter: drop-shadow(0 0 10px gold);
 }
 
-/* 💡 SPOTLIGHT */
+/* 💡 MOVING SPOTLIGHT */
 .spotlight {
     position: fixed;
-    top: -50%;
+    top: -30%;
     left: 50%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(255,255,200,0.15), transparent 60%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(255,255,200,0.18), transparent 60%);
     transform: translateX(-50%);
-    animation: swing 4s infinite ease-in-out;
+    animation: swing 5s infinite ease-in-out;
     pointer-events: none;
+    z-index: 0;
 }
 
 @keyframes swing {
-    0% { transform: translateX(-50%) rotate(-10deg); }
-    50% { transform: translateX(-50%) rotate(10deg); }
-    100% { transform: translateX(-50%) rotate(-10deg); }
+    0% { transform: translateX(-50%) rotate(-12deg); }
+    50% { transform: translateX(-50%) rotate(12deg); }
+    100% { transform: translateX(-50%) rotate(-12deg); }
 }
 
 /* 🏆 TITLE */
 h1 {
+    position: relative;
+    z-index: 2;
     text-align: center;
-    margin-top: 30px;
-    font-size: 40px;
+    margin-top: 40px;
+    font-size: 42px;
     color: gold;
-    text-shadow: 0 0 20px gold;
+    text-shadow: 0 0 25px gold;
 }
 
-/* 🏅 AWARD CARDS ON STAGE */
+/* 🏅 AWARDS FLOATING CENTER STAGE */
 .container {
+    position: relative;
+    z-index: 2;
     display: flex;
     justify-content: center;
-    gap: 20px;
-    margin-top: 40px;
+    gap: 25px;
+    margin-top: 80px;
     flex-wrap: wrap;
 }
 
+/* 🪄 CARDS BECOME "SPOTLIGHT OBJECTS" */
 .card {
-    width: 250px;
+    width: 260px;
     padding: 18px;
-    border-radius: 15px;
-    background: rgba(255,215,0,0.07);
+    border-radius: 16px;
+    background: rgba(255,215,0,0.08);
     border: 1px solid gold;
-    backdrop-filter: blur(6px);
-    box-shadow: 0 0 20px rgba(255,215,0,0.2);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 25px rgba(255,215,0,0.2);
     transition: 0.3s;
     text-align: center;
 }
 
 .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 0 30px gold;
+    transform: translateY(-12px) scale(1.03);
+    box-shadow: 0 0 35px gold;
 }
 
 button {
-    margin-top: 10px;
+    margin-top: 12px;
     padding: 10px 14px;
     background: gold;
     border: none;
@@ -107,23 +114,20 @@ button {
 
 @keyframes fall {
     0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(180px); opacity: 0; }
+    100% { transform: translateY(200px); opacity: 0; }
 }
 </style>
 </head>
 
 <body>
 
+<!-- 🌌 BACKDROP -->
+<div class="stage-bg"></div>
 <div class="spotlight"></div>
 
 <h1>🏆 Akash Awards 2026 🎬</h1>
 
-<!-- 🎭 STAGE -->
-<div class="stage">
-    <div class="mic">🎤</div>
-</div>
-
-<!-- 🏅 AWARDS ON STAGE -->
+<!-- 🏅 AWARDS (CENTER FOCUS) -->
 <div class="container">
 
     <div class="card" id="card1">
@@ -146,18 +150,21 @@ button {
 
 </div>
 
+<!-- 🎤 MIC (NOW SUBTLE DECOR) -->
+<div class="mic">🎤</div>
+
 <script>
 function playAward(audioId, cardId) {
     document.getElementById(audioId).play();
 
     let card = document.getElementById(cardId);
 
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 18; i++) {
         let confetti = document.createElement("div");
         confetti.classList.add("confetti");
 
         confetti.style.left = Math.random() * 100 + "%";
-        confetti.style.top = "50%";
+        confetti.style.top = "40%";
 
         card.appendChild(confetti);
 
