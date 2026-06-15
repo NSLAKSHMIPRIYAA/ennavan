@@ -320,13 +320,51 @@ scratchCards.forEach(canvas => {
     let scratching = false;
 
     function scratch(x,y){
-        ctx.globalCompositeOperation = "destination-out";
 
-        ctx.beginPath();
-        ctx.arc(x,y,25,0,Math.PI*2);
-        ctx.fill();
+    ctx.globalCompositeOperation = "destination-out";
+
+    ctx.beginPath();
+    ctx.arc(x,y,25,0,Math.PI*2);
+    ctx.fill();
+
+    checkReveal();
+}
+
+    function checkReveal(){
+
+    const imageData = ctx.getImageData(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    const pixels = imageData.data;
+
+    let transparentPixels = 0;
+
+    for(let i = 3; i < pixels.length; i += 4){
+
+        if(pixels[i] === 0){
+            transparentPixels++;
+        }
     }
 
+    const percentage =
+        transparentPixels /
+        (canvas.width * canvas.height);
+
+    // 🎉 Auto reveal at 60%
+    if(percentage > 0.60){
+
+        canvas.style.transition = "0.5s";
+        canvas.style.opacity = "0";
+
+        setTimeout(() => {
+            canvas.style.display = "none";
+        }, 500);
+    }
+}
     canvas.addEventListener("mousedown", () => {
         scratching = true;
     });
