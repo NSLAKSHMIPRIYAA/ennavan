@@ -129,6 +129,47 @@ button {
     z-index: 9999;
     transition: opacity 0.2s ease;
 }
+#hallOfFame{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.92);
+
+    display:none;
+
+    justify-content:center;
+    align-items:center;
+
+    z-index:10000;
+}
+
+.hallBox{
+    width:550px;
+    max-width:90%;
+
+    padding:35px;
+
+    text-align:center;
+
+    background:#111;
+
+    border:2px solid gold;
+    border-radius:20px;
+
+    box-shadow:0 0 40px gold;
+}
+
+.hallBox h2{
+    color:gold;
+}
+
+.hallBox p{
+    line-height:1.6;
+}
+
+.hallBox button{
+    margin-top:20px;
+}
+
 </style>
 </head>
 
@@ -332,7 +373,7 @@ window.onload = function () {
 };
 
 
-
+let revealedAwards = 0;
 const scratchCards = document.querySelectorAll(".scratchCanvas");
 
 scratchCards.forEach(canvas => {
@@ -403,13 +444,31 @@ ctx.fillText(
     // 🎉 Auto reveal at 60%
     if(percentage > 0.60){
 
-        canvas.style.transition = "0.5s";
-        canvas.style.opacity = "0";
+    if(canvas.dataset.done) return;
+    canvas.dataset.done = "true";
+
+    canvas.style.transition = "0.5s";
+    canvas.style.opacity = "0";
+
+    setTimeout(() => {
+        canvas.style.display = "none";
+    }, 500);
+
+    revealedAwards++;
+
+    if(revealedAwards === 9){
 
         setTimeout(() => {
-            canvas.style.display = "none";
-        }, 500);
+
+            document.getElementById(
+                "hallOfFame"
+            ).style.display = "flex";
+            document.body.style.overflow = "hidden";
+
+        }, 9000);
+
     }
+}
 }
     canvas.addEventListener("mousedown", () => {
         scratching = true;
@@ -447,8 +506,71 @@ ctx.fillText(
 
 });
 });
+function closeHall(){
+
+    document.getElementById(
+        "hallOfFame"
+    ).style.display = "none";
+
+    document.body.style.overflow = "auto";
+}
 
 </script>
+<div id="hallOfFame">
 
+   <div class="hallBox">
+
+    <h2>✨ ONE LAST THING... ✨</h2>
+
+    <p>
+        Every award on this page had a different name.
+    </p>
+
+    <p>
+        But every one of them led back to you.
+    </p>
+
+    <p>
+        Thank you for the laughs,
+        the comfort,
+        the patience,
+        and all the little moments that became
+        some of my favorite memories.
+    </p>
+
+    <p>
+        Thank you for being the person I can
+        talk to for hours,
+        be completely myself around,
+        and miss even when we've just said goodbye.
+    </p>
+
+    <p>
+        And most of all,
+        thank you for being you.
+    </p>
+
+    <h2>❤️ LOVE OF MY LIFE ❤️</h2>
+
+    <p>
+    Awarded to Akash.
+</p>
+
+<p>
+    Not for one year.
+</p>
+
+<p>
+    Not for one ceremony.
+</p>
+
+<p>
+    But for every day you choose to stay.
+</p>
+    <button onclick="closeHall()">❤️</button>
+
+</div>
+
+</div>
 </body>
 </html>
