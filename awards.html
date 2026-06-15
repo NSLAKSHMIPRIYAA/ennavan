@@ -38,7 +38,8 @@ h1 {
 
 /* 🪄 CARDS */
 .card {
-    
+    position: relative;
+    min-height: 250px;
     padding: 18px;
     border-radius: 14px;
     background: rgba(255,215,0,0.06);
@@ -47,11 +48,31 @@ h1 {
     box-shadow: 0 0 12px rgba(255,215,0,0.4);
     transition: 0.3s;
     text-align: center;
+    overflow: hidden;
 }
 
 .card:hover {
     transform: translateY(-10px);
     box-shadow: 0 0 30px gold;
+}
+.awardContent{
+    position:absolute;
+    inset:0;
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.scratchCanvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:10;
+    cursor:pointer;
 }
 
 button {
@@ -113,11 +134,25 @@ button {
 <!-- 🏅 AWARDS -->
 <div class="container">
 
-    <div class="card" id="card1">
-        <h3>🏆 Best Boyfriend Ever</h3>
-        <button onclick="playAward('award1','card1')">Reveal</button>
-        <audio id="award1" src="award1.mp3"></audio>
+    <div class="card">
+
+    <div class="awardContent">
+        <h3>🏆 BEST BOYFRIEND AWARD</h3>
+
+        <p><strong>Awarded To</strong></p>
+
+        <p>AKASH</p>
+
+        <p>
+            For demonstrating exceptional boyfriend qualities,
+            unwavering support and premium-level cuteness
+            throughout the year.
+        </p>
     </div>
+
+    <canvas class="scratchCanvas"></canvas>
+
+</div>
 
     <div class="card" id="card2">
         <h3>🏆 Most Likely To Annoy Priyaa</h3>
@@ -254,6 +289,68 @@ function playAward(audioId, cardId) {
         setTimeout(() => confetti.remove(), 2000);
     }
 }
+const scratchCards = document.querySelectorAll(".scratchCanvas");
+
+scratchCards.forEach(canvas => {
+
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+
+    ctx.fillStyle = "#d4af37";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle = "#000";
+    ctx.font = "bold 24px Arial";
+    ctx.textAlign = "center";
+
+    ctx.fillText(
+        "SCRATCH",
+        canvas.width/2,
+        canvas.height/2 - 15
+    );
+
+    ctx.fillText(
+        "TO REVEAL",
+        canvas.width/2,
+        canvas.height/2 + 20
+    );
+
+    let scratching = false;
+
+    function scratch(x,y){
+        ctx.globalCompositeOperation = "destination-out";
+
+        ctx.beginPath();
+        ctx.arc(x,y,25,0,Math.PI*2);
+        ctx.fill();
+    }
+
+    canvas.addEventListener("mousedown", () => {
+        scratching = true;
+    });
+
+    canvas.addEventListener("mouseup", () => {
+        scratching = false;
+    });
+
+    canvas.addEventListener("mouseleave", () => {
+        scratching = false;
+    });
+
+    canvas.addEventListener("mousemove", e => {
+
+        if(!scratching) return;
+
+        const rect = canvas.getBoundingClientRect();
+
+        scratch(
+            e.clientX - rect.left,
+            e.clientY - rect.top
+        );
+    });
+});
 
 </script>
 
