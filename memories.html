@@ -6,72 +6,288 @@
 
 <style>
 
+<style>
+
 body{
-    text-align:center;
+    margin:0;
     font-family:Arial;
-    background:#ffe4e1;
+    background:#fdf0f5;
+    overflow-x:hidden;
 }
 
-img{
-    width:300px;
+h1{
+    text-align:center;
+    margin-top:30px;
+    color:#d85a7f;
+}
+
+/* 📸 POLAROID WALL */
+
+#wall{
+    position:relative;
+    width:100%;
+    min-height:100vh;
+    padding-bottom:100px;
+}
+
+.polaroid{
+    position:absolute;
+    width:180px;
+    background:white;
+    padding:12px 12px 40px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.25);
+    cursor:pointer;
+    transition:.3s;
+}
+
+.polaroid:hover{
+    transform:scale(1.08) rotate(0deg);
+    z-index:100;
+}
+
+.polaroid img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+}
+
+.polaroid p{
+    text-align:center;
+    font-weight:bold;
+}
+
+/* random positions */
+
+.p1{top:80px;left:8%;transform:rotate(-8deg);}
+.p2{top:150px;left:35%;transform:rotate(7deg);}
+.p3{top:100px;right:10%;transform:rotate(-5deg);}
+.p4{top:420px;left:18%;transform:rotate(6deg);}
+.p5{top:420px;right:20%;transform:rotate(-7deg);}
+.p6{top:700px;left:5%;transform:rotate(4deg);}
+.p7{top:650px;left:40%;transform:rotate(-6deg);}
+.p8{top:720px;right:8%;transform:rotate(8deg);}
+.p9{top:1000px;left:20%;transform:rotate(-8deg);}
+.p10{top:980px;right:20%;transform:rotate(5deg);}
+.p11{top:1300px;left:8%;transform:rotate(7deg);}
+.p12{top:1280px;left:40%;transform:rotate(-4deg);}
+.p13{top:1350px;right:10%;transform:rotate(6deg);}
+.p14{top:1650px;left:22%;transform:rotate(-7deg);}
+.p15{top:1650px;right:18%;transform:rotate(5deg);}
+
+/* 📖 SCRAPBOOK */
+
+#scrapbook{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.8);
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.page{
+    position:relative;
+    width:750px;
+    max-width:90%;
+    background:#fffaf0;
+    padding:35px;
     border-radius:20px;
+    text-align:center;
+}
+
+#memoryPhoto{
+    width:75%;
+    border-radius:12px;
+    box-shadow:0 0 20px rgba(0,0,0,.2);
+}
+
+/* tape */
+
+.tape{
+    position:absolute;
+    width:90px;
+    height:25px;
+    background:rgba(255,255,200,.7);
+}
+
+.t1{
+    top:20px;
+    left:170px;
+    transform:rotate(-15deg);
+}
+
+.t2{
+    top:20px;
+    right:170px;
+    transform:rotate(15deg);
+}
+
+/* doodles */
+
+.doodle{
+    position:absolute;
+    font-size:28px;
+}
+
+.d1{top:30px;left:30px;}
+.d2{top:90px;right:40px;}
+.d3{bottom:70px;left:60px;}
+.d4{bottom:50px;right:80px;}
+
+#memoryTitle{
+    color:#d85a7f;
+}
+
+#memoryCaption{
+    line-height:1.8;
+    margin-top:15px;
+}
+
+.backBtn{
     margin-top:20px;
+    padding:12px 20px;
+    border:none;
+    background:#ffb6c1;
+    border-radius:10px;
+    cursor:pointer;
 }
 
-button{
-    padding:10px 20px;
-    margin:20px;
-}
 </style>
-
 </head>
 
 <body>
 
 <h1>📸 Our Memories ❤️</h1>
 
-<img id="photo" src="pic1.jpg">
+<div id="wall">
 
-<br>
+<div class="polaroid p1" onclick="openMemory(0)">
+<img src="pic1.jpg">
+<p>Memory 1</p>
+</div>
 
-<button onclick="prevPhoto()">
-⬅ Previous
+<div class="polaroid p2" onclick="openMemory(1)">
+<img src="pic2.jpg">
+<p>Memory 2</p>
+</div>
+
+<div class="polaroid p3" onclick="openMemory(2)">
+<img src="pic3.jpg">
+<p>Memory 3</p>
+</div>
+
+<div class="polaroid p4" onclick="openMemory(3)">
+<img src="pic4.jpg">
+<p>Memory 4</p>
+</div>
+
+<div class="polaroid p5" onclick="openMemory(4)">
+<img src="pic5.jpg">
+<p>Memory 5</p>
+</div>
+
+<div class="polaroid p6"><img src="pic1.jpg"><p>Memory 6</p></div>
+<div class="polaroid p7"><img src="pic1.jpg"><p>Memory 7</p></div>
+<div class="polaroid p8"><img src="pic1.jpg"><p>Memory 8</p></div>
+<div class="polaroid p9"><img src="pic1.jpg"><p>Memory 9</p></div>
+<div class="polaroid p10"><img src="pic1.jpg"><p>Memory 10</p></div>
+<div class="polaroid p11"><img src="pic1.jpg"><p>Memory 11</p></div>
+<div class="polaroid p12"><img src="pic1.jpg"><p>Memory 12</p></div>
+<div class="polaroid p13"><img src="pic1.jpg"><p>Memory 13</p></div>
+<div class="polaroid p14"><img src="pic1.jpg"><p>Memory 14</p></div>
+
+<div class="polaroid p15">
+<img src="pic1.jpg">
+<p>More Memories Soon ❤️</p>
+</div>
+
+</div>
+
+<div id="scrapbook">
+
+<div class="page">
+
+<div class="tape t1"></div>
+<div class="tape t2"></div>
+
+<div class="doodle d1">❤️</div>
+<div class="doodle d2">✨</div>
+<div class="doodle d3">🌸</div>
+<div class="doodle d4">☁️</div>
+
+<img id="memoryPhoto">
+
+<h2 id="memoryTitle"></h2>
+
+<p id="memoryCaption"></p>
+
+<button class="backBtn"
+onclick="closeMemory()">
+⬅ Back To Memory Wall
 </button>
 
-<button onclick="nextPhoto()">
-Next ➡
-</button>
+</div>
 
-<br>
-
-<a href="index.html">⬅ Back</a>
+</div>
 
 <script>
 
-const photos=[
-"pic1.jpg",
-"pic2.jpg",
-"pic3.jpg",
-"pic4.jpg",
-"pic5.jpg"
-];
+const memories=[
 
-let current=0;
+{
+photo:"pic1.jpg",
+title:"Memory 1 ❤️",
+caption:"Write your memory here."
+},
 
-function nextPhoto(){
+{
+photo:"pic2.jpg",
+title:"Memory 2 ❤️",
+caption:"Write your memory here."
+},
 
-current=(current+1)%photos.length;
+{
+photo:"pic3.jpg",
+title:"Memory 3 ❤️",
+caption:"Write your memory here."
+},
 
-document.getElementById("photo").src=
-photos[current];
+{
+photo:"pic4.jpg",
+title:"Memory 4 ❤️",
+caption:"Write your memory here."
+},
+
+{
+photo:"pic5.jpg",
+title:"Memory 5 ❤️",
+caption:"Write your memory here."
 }
 
-function prevPhoto(){
+];
 
-current=(current-1+photos.length)%photos.length;
+function openMemory(index){
 
-document.getElementById("photo").src=
-photos[current];
+document.getElementById("wall").style.display="none";
+
+document.getElementById("scrapbook").style.display="flex";
+
+document.getElementById("memoryPhoto").src=
+memories[index].photo;
+
+document.getElementById("memoryTitle").innerText=
+memories[index].title;
+
+document.getElementById("memoryCaption").innerText=
+memories[index].caption;
+}
+
+function closeMemory(){
+
+document.getElementById("scrapbook").style.display="none";
+
+document.getElementById("wall").style.display="block";
 }
 
 </script>
