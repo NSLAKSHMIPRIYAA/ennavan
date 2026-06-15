@@ -65,7 +65,17 @@ h1 {
     align-items:center;
     text-align:center;
 }
+.awardContent h3{
+    color: gold;
+    margin-bottom: 12px;
+    text-shadow: 0 0 10px rgba(255,215,0,0.6);
+}
 
+.awardContent p{
+    margin: 5px 0;
+    line-height: 1.5;
+    font-size: 14px;
+}
 .scratchCanvas{
     position:absolute;
     inset:0;
@@ -154,51 +164,115 @@ button {
 
 </div>
 
-    <div class="card" id="card2">
-        <h3>🏆 Most Likely To Annoy Priyaa</h3>
-        <button onclick="playAward('award2','card2')">Reveal</button>
-        <audio id="award2" src="award2.mp3"></audio>
+    <div class="card">
+    <div class="awardContent">
+        <h3>🏆 MOST LIKELY TO ANNOY PRIYAA</h3>
+        <p><strong>Awarded To</strong></p>
+        <p>AKASH</p>
+        <p>
+            For repeatedly testing Priyaa's patience,
+            while somehow remaining adorable enough
+            to avoid all consequences.
+        </p>
     </div>
+    <canvas class="scratchCanvas"></canvas>
+</div>
 
-    <div class="card" id="card3">
-        <h3>🏆 Cutest Human</h3>
-        <button onclick="playAward('award3','card3')">Reveal</button>
-        <audio id="award3" src="award3.mp3"></audio>
+<div class="card">
+    <div class="awardContent">
+        <h3>🏆 CUTEST HUMAN</h3>
+        <p><strong>Awarded To</strong></p>
+        <p>AKASH</p>
+        <p>
+            For possessing an unfair amount of cuteness
+            and making Priyaa smile without even trying.
+        </p>
     </div>
-    <div class="card" id="card4">
-    <h3>🏆 Softie Of The Year</h3>
-    <button onclick="playAward('award4','card4')">Reveal</button>
-    <audio id="award4" src="award4.mp3"></audio>
+    <canvas class="scratchCanvas"></canvas>
 </div>
 
-<div class="card" id="card5">
-    <h3>🏆 Mood Lifter</h3>
-    <button onclick="playAward('award5','card5')">Reveal</button>
-    <audio id="award5" src="award5.mp3"></audio>
+<div class="card">
+    <div class="awardContent">
+        <h3>🏆 SOFTIE OF THE YEAR</h3>
+        <p><strong>Awarded To</strong></p>
+        <p>AKASH</p>
+        <p>
+            For acting tough when required,
+            but secretly being a giant softie
+            with a golden heart.
+        </p>
+    </div>
+    <canvas class="scratchCanvas"></canvas>
 </div>
 
-<div class="card" id="card6">
-    <h3>🏆 Best Hug Provider</h3>
-    <button onclick="playAward('award6','card6')">Reveal</button>
-    <audio id="award6" src="award6.mp3"></audio>
+<div class="card">
+    <div class="awardContent">
+        <h3>🏆 MOOD LIFTER</h3>
+        <p><strong>Awarded To</strong></p>
+        <p>AKASH</p>
+        <p>
+            For turning bad days into good ones
+            and making Priyaa laugh when she
+            needed it most.
+        </p>
+    </div>
+    <canvas class="scratchCanvas"></canvas>
 </div>
 
-<div class="card" id="card7">
-    <h3>🏆 Greenest Flag</h3>
-    <button onclick="playAward('award7','card7')">Reveal</button>
-    <audio id="award7" src="award7.mp3"></audio>
+<div class="card">
+    <div class="awardContent">
+        <h3>🏆 BEST HUG PROVIDER</h3>
+        <p><strong>Awarded To</strong></p>
+        <p>AKASH</p>
+        <p>
+            For providing world-class hugs
+            capable of solving approximately
+            99% of all problems.
+        </p>
+    </div>
+    <canvas class="scratchCanvas"></canvas>
 </div>
 
-<div class="card" id="card8">
-    <h3>🏆 Reliability Award</h3>
-    <button onclick="playAward('award8','card8')">Reveal</button>
-    <audio id="award8" src="award8.mp3"></audio>
+<div class="card">
+    <div class="awardContent">
+        <h3>🏆 GREENEST FLAG</h3>
+        <p><strong>Awarded To</strong></p>
+        <p>AKASH</p>
+        <p>
+            For consistently setting boyfriend
+            standards so high that competition
+            became impossible.
+        </p>
+    </div>
+    <canvas class="scratchCanvas"></canvas>
 </div>
 
-<div class="card" id="card9">
-    <h3>🏆 Best Memory Maker</h3>
-    <button onclick="playAward('award9','card9')">Reveal</button>
-    <audio id="award9" src="award9.mp3"></audio>
+<div class="card">
+    <div class="awardContent">
+        <h3>🏆 RELIABILITY AWARD</h3>
+        <p><strong>Awarded To</strong></p>
+        <p>AKASH</p>
+        <p>
+            For always being someone Priyaa
+            could count on, no matter the
+            situation.
+        </p>
+    </div>
+    <canvas class="scratchCanvas"></canvas>
+</div>
+
+<div class="card">
+    <div class="awardContent">
+        <h3>🏆 BEST MEMORY MAKER</h3>
+        <p><strong>Awarded To</strong></p>
+        <p>AKASH</p>
+        <p>
+            For creating countless moments,
+            memories and reasons for Priyaa
+            to smile every day.
+        </p>
+    </div>
+    <canvas class="scratchCanvas"></canvas>
 </div>
 
 </div>
@@ -257,38 +331,7 @@ window.onload = function () {
 };
 
 
-/* 🏆 AWARD CONFETTI (UNCHANGED) */
-function playAward(audioId, cardId) {
 
-    document.getElementById(audioId).play();
-
-    let card = document.getElementById(cardId);
-
-    for (let i = 0; i < 20; i++) {
-
-        let confetti = document.createElement("div");
-        confetti.classList.add("confetti");
-
-        confetti.style.left = "50%";
-        confetti.style.top = "50%";
-
-        let size = Math.random() * 8 + 4;
-        confetti.style.width = size + "px";
-        confetti.style.height = size + "px";
-
-        if (i % 2 === 0) {
-            confetti.style.animation =
-                `burstLeft ${0.8 + Math.random()}s forwards`;
-        } else {
-            confetti.style.animation =
-                `burstRight ${0.8 + Math.random()}s forwards`;
-        }
-
-        card.appendChild(confetti);
-
-        setTimeout(() => confetti.remove(), 2000);
-    }
-}
 const scratchCards = document.querySelectorAll(".scratchCanvas");
 
 scratchCards.forEach(canvas => {
@@ -305,17 +348,19 @@ scratchCards.forEach(canvas => {
     ctx.font = "bold 24px Arial";
     ctx.textAlign = "center";
 
-    ctx.fillText(
-        "SCRATCH",
-        canvas.width/2,
-        canvas.height/2 - 15
-    );
+    ctx.font = "bold 28px Arial";
 
-    ctx.fillText(
-        "TO REVEAL",
-        canvas.width/2,
-        canvas.height/2 + 20
-    );
+ctx.fillText(
+    "🪙 SCRATCH",
+    canvas.width/2,
+    canvas.height/2 - 15
+);
+
+ctx.fillText(
+    "YOUR AWARD",
+    canvas.width/2,
+    canvas.height/2 + 25
+);
 
     let scratching = false;
 
@@ -388,6 +433,18 @@ scratchCards.forEach(canvas => {
             e.clientY - rect.top
         );
     });
+    canvas.addEventListener("touchmove", e => {
+
+    const rect = canvas.getBoundingClientRect();
+
+    const touch = e.touches[0];
+
+    scratch(
+        touch.clientX - rect.left,
+        touch.clientY - rect.top
+    );
+
+});
 });
 
 </script>
