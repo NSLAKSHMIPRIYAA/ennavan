@@ -9,41 +9,10 @@ body {
     font-family: Arial;
     color: white;
     background: #000;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
-/* 🌑 FLOOR GLOW */
-.stage-floor {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 35%;
-    background: radial-gradient(circle at center, rgba(255,255,255,0.05), transparent 70%);
-}
 
-/* 🏛️ PODIUM */
-.podium {
-    position: absolute;
-    bottom: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 160px;
-    height: 120px;
-    background: linear-gradient(145deg, #111, #000);
-    border: 1px solid gold;
-    border-radius: 10px 10px 0 0;
-    box-shadow: 0 0 25px rgba(255,215,0,0.2);
-}
-
-.podium::before {
-    content: "🏆";
-    position: absolute;
-    top: -55px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 40px;
-    filter: drop-shadow(0 0 10px gold);
-}
 
 /* 🏆 TITLE */
 h1 {
@@ -195,11 +164,8 @@ button {
 
 </div>
 
-<!-- 🏛️ PODIUM -->
-<div class="podium"></div>
 
-<!-- 🌑 FLOOR -->
-<div class="stage-floor"></div>
+
 
 <script>
 
