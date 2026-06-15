@@ -23,16 +23,14 @@ body{
 }
 
 body::before{
-    content:"❤️ ✨ 🌸 💌 ⭐ 🎀";
-
+    content:"";
     position:fixed;
     inset:0;
 
-    font-size:28px;
-    opacity:0.08;
+    background-image:
+    radial-gradient(circle, rgba(255,182,193,.18) 2px, transparent 2px);
 
-    line-height:120px;
-    word-spacing:60px;
+    background-size:80px 80px;
 
     pointer-events:none;
 }
