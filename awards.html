@@ -56,11 +56,11 @@ h1 {
 
 /* 🏅 AWARDS */
 .container {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(3, 260px);
     gap: 25px;
-    margin-top: 80px;
-    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 60px;
 }
 
 /* 🪄 CARDS */
@@ -97,12 +97,22 @@ button {
     width: 8px;
     height: 8px;
     background: gold;
-    animation: fall 1s ease-out forwards;
+    border-radius: 50%;
+    pointer-events: none;
 }
 
-@keyframes fall {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(200px); opacity: 0; }
+@keyframes burstLeft {
+    to {
+        transform: translate(-200px, -80px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+@keyframes burstRight {
+    to {
+        transform: translate(200px, -80px) rotate(720deg);
+        opacity: 0;
+    }
 }
 
 /* 📸 FLASH OVERLAY */
@@ -147,6 +157,41 @@ button {
         <button onclick="playAward('award3','card3')">Reveal</button>
         <audio id="award3" src="award3.mp3"></audio>
     </div>
+    <div class="card" id="card4">
+    <h3>🏆 Best Smile</h3>
+    <button onclick="playAward('award4','card4')">Reveal</button>
+    <audio id="award4" src="award4.mp3"></audio>
+</div>
+
+<div class="card" id="card5">
+    <h3>🏆 Cutest Human</h3>
+    <button onclick="playAward('award5','card5')">Reveal</button>
+    <audio id="award5" src="award5.mp3"></audio>
+</div>
+
+<div class="card" id="card6">
+    <h3>🏆 Best Hug Provider</h3>
+    <button onclick="playAward('award6','card6')">Reveal</button>
+    <audio id="award6" src="award6.mp3"></audio>
+</div>
+
+<div class="card" id="card7">
+    <h3>🏆 Greenest Flag</h3>
+    <button onclick="playAward('award7','card7')">Reveal</button>
+    <audio id="award7" src="award7.mp3"></audio>
+</div>
+
+<div class="card" id="card8">
+    <h3>🏆 Professional Yapster</h3>
+    <button onclick="playAward('award8','card8')">Reveal</button>
+    <audio id="award8" src="award8.mp3"></audio>
+</div>
+
+<div class="card" id="card9">
+    <h3>🏆 Love Of My Life</h3>
+    <button onclick="playAward('award9','card9')">Reveal</button>
+    <audio id="award9" src="award9.mp3"></audio>
+</div>
 
 </div>
 
@@ -209,22 +254,37 @@ window.onload = function () {
 
 /* 🏆 AWARD CONFETTI (UNCHANGED) */
 function playAward(audioId, cardId) {
+
     document.getElementById(audioId).play();
 
     let card = document.getElementById(cardId);
 
-    for (let i = 0; i < 18; i++) {
+    for (let i = 0; i < 20; i++) {
+
         let confetti = document.createElement("div");
         confetti.classList.add("confetti");
 
-        confetti.style.left = Math.random() * 100 + "%";
+        confetti.style.left = "50%";
         confetti.style.top = "50%";
+
+        let size = Math.random() * 8 + 4;
+        confetti.style.width = size + "px";
+        confetti.style.height = size + "px";
+
+        if (i % 2 === 0) {
+            confetti.style.animation =
+                `burstLeft ${0.8 + Math.random()}s forwards`;
+        } else {
+            confetti.style.animation =
+                `burstRight ${0.8 + Math.random()}s forwards`;
+        }
 
         card.appendChild(confetti);
 
-        setTimeout(() => confetti.remove(), 1000);
+        setTimeout(() => confetti.remove(), 2000);
     }
 }
+
 </script>
 
 </body>
