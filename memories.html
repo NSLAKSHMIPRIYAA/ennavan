@@ -237,7 +237,43 @@ h1{
     font-size:18px;
     opacity:0.8;
 }
+/* 🌸 STICKERS */
+.sticker{
+    position:absolute;
+    font-size:28px;
+    z-index:3;
+    pointer-events:none;
+}
 
+/* ✨ DOODLES */
+.doodle-wall{
+    position:absolute;
+    color:#fff8dc;
+    font-size:22px;
+    font-style:italic;
+    text-shadow:1px 1px 4px rgba(0,0,0,0.3);
+    z-index:3;
+    pointer-events:none;
+}
+
+/* 📝 STICKY NOTES */
+.sticky{
+    position:absolute;
+    width:120px;
+    padding:10px;
+
+    background:#fff4a8;
+
+    color:#444;
+    font-size:14px;
+    font-weight:bold;
+
+    box-shadow:3px 3px 10px rgba(0,0,0,0.25);
+
+    transform:rotate(-5deg);
+
+    z-index:3;
+}
 
 
 </style>
@@ -248,7 +284,53 @@ h1{
 <h1>📸 Our Little Memory Wall ❤️</h1>
 
 <div id="wall">
+<!-- 🌸 STICKERS -->
 
+<div class="sticker" style="top:250px;left:4%;">🌸</div>
+
+<div class="sticker" style="top:600px;right:5%;">🌷</div>
+
+<div class="sticker" style="top:980px;left:25%;">🦋</div>
+
+<div class="sticker" style="top:1350px;right:10%;">🌼</div>
+
+<div class="sticker" style="top:1700px;left:12%;">💖</div>
+
+
+<!-- ✨ DOODLES -->
+
+<div class="doodle-wall"
+     style="top:340px;left:72%;">
+     Forever Us ❤️
+</div>
+
+<div class="doodle-wall"
+     style="top:1040px;left:8%;">
+     Best Moments ✨
+</div>
+
+<div class="doodle-wall"
+     style="top:1660px;right:12%;">
+     You & Me 🌷
+</div>
+
+
+<!-- 📝 STICKY NOTES -->
+
+<div class="sticky"
+     style="top:300px;left:28%;">
+     First selfie together ❤️
+</div>
+
+<div class="sticky"
+     style="top:920px;right:20%;transform:rotate(4deg);">
+     Couldn't stop laughing 😂
+</div>
+
+<div class="sticky"
+     style="top:1500px;left:35%;transform:rotate(-8deg);">
+     One of my favorite memories ✨
+</div>
 
 
 <div class="polaroid p1" onclick="openMemory(0)"><img src="pic1.jpg"><p>Memory 1</p></div>
