@@ -26,14 +26,38 @@ body::before{
     inset:0;
     pointer-events:none;
 
-    background-image:
-    radial-gradient(rgba(0,0,0,0.08) 1px, transparent 2px),
-    radial-gradient(rgba(255,255,255,0.05) 1px, transparent 2px);
+    /* 🎯 cork grain + scratches + holes combined */
+    background:
 
-    background-size:6px 6px;
-    opacity:0.4;
+    /* cork holes */
+    radial-gradient(circle at 20% 20%, rgba(0,0,0,0.08) 1px, transparent 2px),
+    radial-gradient(circle at 80% 30%, rgba(0,0,0,0.06) 1px, transparent 2px),
+    radial-gradient(circle at 40% 80%, rgba(0,0,0,0.05) 1px, transparent 2px),
+
+    /* scratches */
+    linear-gradient(115deg,
+        transparent 48%,
+        rgba(0,0,0,0.07) 49%,
+        transparent 50%),
+
+    linear-gradient(65deg,
+        transparent 48%,
+        rgba(255,255,255,0.04) 49%,
+        transparent 50%),
+
+    /* fine grain */
+    radial-gradient(rgba(0,0,0,0.06) 1px, transparent 2px);
+
+    background-size:
+    140px 140px,
+    200px 200px,
+    160px 160px,
+    90px 90px,
+    100px 100px,
+    6px 6px;
+
+    opacity:0.35;
 }
-
 /* vignette for depth */
 body::after{
     content:"";
@@ -47,6 +71,7 @@ body::after{
         rgba(0,0,0,0.35) 100%
     );
 }
+
 h1{
     text-align:center;
     margin-top:30px;
@@ -211,12 +236,39 @@ h1{
     font-size:18px;
     opacity:0.8;
 }
+.string-lights{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    display:flex;
+    justify-content:space-around;
+    padding:10px 20px;
+    z-index:50;
+    pointer-events:none;
+}
 
+.string-lights span{
+    font-size:18px;
+    animation: glow 2s infinite ease-in-out;
+    filter: drop-shadow(0 0 6px rgba(255,255,200,0.6));
+}
+
+.string-lights span:nth-child(odd){
+    animation-delay:0.5s;
+}
+
+@keyframes glow{
+    0%,100%{opacity:0.5; transform:translateY(0);}
+    50%{opacity:1; transform:translateY(5px);}
+}
 </style>
 </head>
 
 <body>
-
+<div class="string-lights">
+  <span>✨</span><span>💡</span><span>✨</span><span>💡</span><span>✨</span><span>💡</span><span>✨</span>
+</div>
 <h1>📸 Our Little Memory Wall ❤️</h1>
 
 <div id="wall">
