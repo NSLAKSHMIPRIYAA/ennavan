@@ -4,8 +4,6 @@
 
 <title>Memories</title>
 
-
-
 <style>
 
 body{
@@ -13,34 +11,36 @@ body{
     font-family:Arial;
     overflow-x:hidden;
 
+    /* 📔 vintage diary pink paper */
     background:
-    linear-gradient(
-        135deg,
-        #ffe4ec,
-        #fff5e6,
-        #ffe4ec
-    );
+    linear-gradient(135deg, #ffe1ec, #fff1dc);
 }
 
+/* faint paper texture lines */
 body::before{
     content:"";
     position:fixed;
     inset:0;
 
-    background-image:
-    radial-gradient(circle, rgba(255,182,193,.18) 2px, transparent 2px);
-
-    background-size:80px 80px;
+    background:
+    repeating-linear-gradient(
+        0deg,
+        rgba(0,0,0,0.03),
+        rgba(0,0,0,0.03) 1px,
+        transparent 1px,
+        transparent 28px
+    );
 
     pointer-events:none;
 }
+
 h1{
     text-align:center;
     margin-top:30px;
-    color:#d85a7f;
+    color:#c94f7c;
 }
 
-/* 📸 POLAROID WALL */
+/* WALL */
 
 #wall{
     position:relative;
@@ -48,6 +48,7 @@ h1{
     min-height:1900px;
 }
 
+/* polaroids */
 .polaroid{
     position:absolute;
     width:180px;
@@ -57,22 +58,7 @@ h1{
     cursor:pointer;
     transition:.3s;
 }
-.polaroid::before{
-    content:"";
-    position:absolute;
 
-    width:70px;
-    height:18px;
-
-    background:rgba(255,255,210,0.75);
-
-    top:-10px;
-    left:50%;
-
-    transform:
-    translateX(-50%)
-    rotate(-6deg);
-}
 .polaroid:hover{
     transform:scale(1.08) rotate(0deg);
     z-index:100;
@@ -89,39 +75,36 @@ h1{
     font-weight:bold;
 }
 
-/* random positions */
-
+/* positions */
 .p1{top:80px;left:8%;transform:rotate(-6deg);}
 .p2{top:120px;left:38%;transform:rotate(5deg);}
 .p3{top:80px;right:8%;transform:rotate(-4deg);}
-
 .p4{top:420px;left:10%;transform:rotate(6deg);}
 .p5{top:460px;left:40%;transform:rotate(-5deg);}
 .p6{top:420px;right:10%;transform:rotate(4deg);}
-
 .p7{top:760px;left:8%;transform:rotate(-7deg);}
 .p8{top:800px;left:38%;transform:rotate(6deg);}
 .p9{top:760px;right:8%;transform:rotate(-5deg);}
-
 .p10{top:1100px;left:10%;transform:rotate(5deg);}
 .p11{top:1140px;left:40%;transform:rotate(-6deg);}
 .p12{top:1100px;right:10%;transform:rotate(4deg);}
-
 .p13{top:1450px;left:12%;transform:rotate(-5deg);}
 .p14{top:1490px;left:42%;transform:rotate(6deg);}
 .p15{top:1450px;right:12%;transform:rotate(-4deg);}
 
-/* 📖 SCRAPBOOK */
+/* SCRAPBOOK */
 
 #scrapbook{
     display:none;
     position:fixed;
     inset:0;
+
     background:linear-gradient(
-    135deg,
-    rgba(255,228,236,0.95),
-    rgba(255,245,230,0.95)
-);
+        135deg,
+        rgba(255,225,236,0.97),
+        rgba(255,241,220,0.97)
+    );
+
     justify-content:center;
     align-items:center;
     z-index:999;
@@ -131,53 +114,46 @@ h1{
     position:relative;
     width:750px;
     max-width:90%;
-    background:#fff8e7;
+
+    background:
+    repeating-linear-gradient(
+        0deg,
+        #fff8e7,
+        #fff8e7 24px,
+        #f3e7d3 25px
+    );
+
     padding:35px;
     border-radius:20px;
     text-align:center;
+
+    overflow:hidden;
 }
 
-#memoryPhoto{
-    width:75%;
-    border-radius:12px;
-    box-shadow:0 0 20px rgba(0,0,0,.2);
-}
-
-/* tape */
-
+/* tape FIXED (now visible above everything) */
 .tape{
     position:absolute;
     width:90px;
     height:25px;
-    background:rgba(255,255,200,.7);
+    background:rgba(255,255,180,0.85);
+    z-index:5;
+    box-shadow:0 2px 5px rgba(0,0,0,0.2);
 }
 
-.t1{
-    top:20px;
-    left:170px;
-    transform:rotate(-15deg);
+.t1{top:10px;left:140px;transform:rotate(-15deg);}
+.t2{top:10px;right:140px;transform:rotate(15deg);}
+
+/* photo */
+#memoryPhoto{
+    width:75%;
+    border-radius:12px;
+    box-shadow:0 0 20px rgba(0,0,0,.2);
+    margin-top:20px;
 }
 
-.t2{
-    top:20px;
-    right:170px;
-    transform:rotate(15deg);
-}
-
-/* doodles */
-
-.doodle{
-    position:absolute;
-    font-size:28px;
-}
-
-.d1{top:30px;left:30px;}
-.d2{top:90px;right:40px;}
-.d3{bottom:70px;left:60px;}
-.d4{bottom:50px;right:80px;}
-
+/* text */
 #memoryTitle{
-    color:#d85a7f;
+    color:#c94f7c;
 }
 
 #memoryCaption{
@@ -185,6 +161,7 @@ h1{
     margin-top:15px;
 }
 
+/* button */
 .backBtn{
     margin-top:20px;
     padding:12px 20px;
@@ -192,6 +169,13 @@ h1{
     background:#ffb6c1;
     border-radius:10px;
     cursor:pointer;
+}
+
+/* doodles container (now dynamic, not fixed emojis) */
+.doodle{
+    position:absolute;
+    font-size:18px;
+    opacity:0.8;
 }
 
 </style>
@@ -203,45 +187,22 @@ h1{
 
 <div id="wall">
 
-<div class="polaroid p1" onclick="openMemory(0)">
-<img src="pic1.jpg">
-<p>Memory 1</p>
-</div>
+<div class="polaroid p1" onclick="openMemory(0)"><img src="pic1.jpg"><p>Memory 1</p></div>
+<div class="polaroid p2" onclick="openMemory(1)"><img src="pic2.jpg"><p>Memory 2</p></div>
+<div class="polaroid p3" onclick="openMemory(2)"><img src="pic3.jpg"><p>Memory 3</p></div>
+<div class="polaroid p4" onclick="openMemory(3)"><img src="pic4.jpg"><p>Memory 4</p></div>
+<div class="polaroid p5" onclick="openMemory(4)"><img src="pic5.jpg"><p>Memory 5</p></div>
 
-<div class="polaroid p2" onclick="openMemory(1)">
-<img src="pic2.jpg">
-<p>Memory 2</p>
-</div>
-
-<div class="polaroid p3" onclick="openMemory(2)">
-<img src="pic3.jpg">
-<p>Memory 3</p>
-</div>
-
-<div class="polaroid p4" onclick="openMemory(3)">
-<img src="pic4.jpg">
-<p>Memory 4</p>
-</div>
-
-<div class="polaroid p5" onclick="openMemory(4)">
-<img src="pic5.jpg">
-<p>Memory 5</p>
-</div>
-
-<div class="polaroid p6"><img src="pic1.jpg"><p>Memory 6</p></div>
-<div class="polaroid p7"><img src="pic1.jpg"><p>Memory 7</p></div>
-<div class="polaroid p8"><img src="pic1.jpg"><p>Memory 8</p></div>
-<div class="polaroid p9"><img src="pic1.jpg"><p>Memory 9</p></div>
-<div class="polaroid p10"><img src="pic1.jpg"><p>Memory 10</p></div>
-<div class="polaroid p11"><img src="pic1.jpg"><p>Memory 11</p></div>
-<div class="polaroid p12"><img src="pic1.jpg"><p>Memory 12</p></div>
-<div class="polaroid p13"><img src="pic1.jpg"><p>Memory 13</p></div>
-<div class="polaroid p14"><img src="pic1.jpg"><p>Memory 14</p></div>
-
-<div class="polaroid p15">
-<img src="pic1.jpg">
-<p>More Memories Soon ❤️</p>
-</div>
+<div class="polaroid p6" onclick="openMemory(5)"><img src="pic1.jpg"><p>Memory 6</p></div>
+<div class="polaroid p7" onclick="openMemory(6)"><img src="pic1.jpg"><p>Memory 7</p></div>
+<div class="polaroid p8" onclick="openMemory(7)"><img src="pic1.jpg"><p>Memory 8</p></div>
+<div class="polaroid p9" onclick="openMemory(8)"><img src="pic1.jpg"><p>Memory 9</p></div>
+<div class="polaroid p10" onclick="openMemory(9)"><img src="pic1.jpg"><p>Memory 10</p></div>
+<div class="polaroid p11" onclick="openMemory(10)"><img src="pic1.jpg"><p>Memory 11</p></div>
+<div class="polaroid p12" onclick="openMemory(11)"><img src="pic1.jpg"><p>Memory 12</p></div>
+<div class="polaroid p13" onclick="openMemory(12)"><img src="pic1.jpg"><p>Memory 13</p></div>
+<div class="polaroid p14" onclick="openMemory(13)"><img src="pic1.jpg"><p>Memory 14</p></div>
+<div class="polaroid p15" onclick="openMemory(14)"><img src="pic1.jpg"><p>More ❤️</p></div>
 
 </div>
 
@@ -252,82 +213,68 @@ h1{
 <div class="tape t1"></div>
 <div class="tape t2"></div>
 
-<div class="doodle d1">❤️</div>
-<div class="doodle d2">✨</div>
-<div class="doodle d3">🌸</div>
-<div class="doodle d4">☁️</div>
+<div id="doodlesContainer"></div>
 
 <img id="memoryPhoto">
 
 <h2 id="memoryTitle"></h2>
-
 <p id="memoryCaption"></p>
 
-<button class="backBtn"
-onclick="closeMemory()">
-⬅ Back To Memory Wall
-</button>
+<button class="backBtn" onclick="closeMemory()">⬅ Back</button>
 
 </div>
-
 </div>
 
 <script>
 
-const memories=[
+/* 15 memories now supported */
+const memories = Array.from({length:15}, (_,i)=>({
+    photo:`pic${(i%5)+1}.jpg`,
+    title:`Memory ${i+1} ❤️`,
+    caption:`A beautiful little moment we shared ✨`
+}));
 
-{
-photo:"pic1.jpg",
-title:"Memory 1 ❤️",
-caption:"Write your memory here."
-},
-
-{
-photo:"pic2.jpg",
-title:"Memory 2 ❤️",
-caption:"Write your memory here."
-},
-
-{
-photo:"pic3.jpg",
-title:"Memory 3 ❤️",
-caption:"Write your memory here."
-},
-
-{
-photo:"pic4.jpg",
-title:"Memory 4 ❤️",
-caption:"Write your memory here."
-},
-
-{
-photo:"pic5.jpg",
-title:"Memory 5 ❤️",
-caption:"Write your memory here."
-}
-
+/* 🎀 different doodle styles per memory */
+const doodleSets = [
+["✦","✿","❀","✧"],
+["♡","☁","✦","✿"],
+["🌷","✨","♡","☾"],
+["✧","❀","✦","♡"],
+["☁","✿","🌸","✧"]
 ];
 
 function openMemory(index){
 
 document.getElementById("wall").style.display="none";
-
 document.getElementById("scrapbook").style.display="flex";
 
-document.getElementById("memoryPhoto").src=
-memories[index].photo;
+document.getElementById("memoryPhoto").src = memories[index].photo;
+document.getElementById("memoryTitle").innerText = memories[index].title;
+document.getElementById("memoryCaption").innerText = memories[index].caption;
 
-document.getElementById("memoryTitle").innerText=
-memories[index].title;
+/* 🌸 generate unique doodles each time */
+const container = document.getElementById("doodlesContainer");
+container.innerHTML = "";
 
-document.getElementById("memoryCaption").innerText=
-memories[index].caption;
+const set = doodleSets[index % doodleSets.length];
+
+set.forEach((d,i)=>{
+    const el = document.createElement("div");
+    el.className="doodle";
+    el.innerText=d;
+
+    el.style.top = (40 + i*60) + "px";
+    el.style.left = (30 + (i%2)*600) + "px";
+    el.style.fontSize = (18 + (i%3)*6) + "px";
+    el.style.transform = `rotate(${(i*10)-15}deg)`;
+
+    container.appendChild(el);
+});
+
 }
 
 function closeMemory(){
-
 document.getElementById("scrapbook").style.display="none";
-
 document.getElementById("wall").style.display="block";
 }
 
