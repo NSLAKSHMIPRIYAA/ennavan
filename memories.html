@@ -11,48 +11,42 @@ body{
     font-family:Arial;
     overflow-x:hidden;
 
-    /* richer pink vintage base */
+    /* corkboard base */
     background:
-    radial-gradient(circle at top left, #ffb6c1 0%, transparent 55%),
-    radial-gradient(circle at bottom right, #ffd6a5 0%, transparent 60%),
-    linear-gradient(135deg, #f7c6d9, #f3d6b5, #e8a9c1);
+    radial-gradient(circle at 20% 20%, #c68b59 0%, transparent 40%),
+    radial-gradient(circle at 80% 30%, #b97a4a 0%, transparent 45%),
+    radial-gradient(circle at 40% 80%, #a86b3d 0%, transparent 50%),
+    linear-gradient(135deg, #d49a6a, #b87445);
 }
 
-/* vignette + depth overlay */
+/* cork texture grain */
 body::before{
     content:"";
     position:fixed;
     inset:0;
     pointer-events:none;
 
-    /* darkened edges so center pops */
-    background:
-    radial-gradient(
-        circle at center,
-        rgba(255,255,255,0) 40%,
-        rgba(0,0,0,0.18) 100%
-    );
-    mix-blend-mode:multiply;
+    background-image:
+    radial-gradient(rgba(0,0,0,0.08) 1px, transparent 2px),
+    radial-gradient(rgba(255,255,255,0.05) 1px, transparent 2px);
+
+    background-size:6px 6px;
+    opacity:0.4;
 }
 
-/* subtle grain so it doesn’t look flat */
+/* vignette for depth */
 body::after{
     content:"";
     position:fixed;
     inset:0;
     pointer-events:none;
 
-    background-image:
-    repeating-radial-gradient(
-        circle,
-        rgba(0,0,0,0.03) 1px,
-        transparent 2px
+    background:radial-gradient(
+        circle at center,
+        transparent 40%,
+        rgba(0,0,0,0.35) 100%
     );
-    background-size:3px 3px;
-
-    opacity:0.25;
 }
-
 h1{
     text-align:center;
     margin-top:30px;
@@ -73,14 +67,35 @@ h1{
     width:180px;
     background:#fffdf8;
     padding:12px 12px 40px;
-    box-shadow:0 4px 15px rgba(0,0,0,0.25);
+    box-shadow:0 8px 20px rgba(0,0,0,0.35);
     cursor:pointer;
-    transition:.3s;
+    transition:.25s;
+
+    transform-origin: top center;
 }
 
+/* 📌 PIN (new top center dot) */
+.polaroid::before{
+    content:"";
+    position:absolute;
+    top:-8px;
+    left:50%;
+    transform:translateX(-50%);
+
+    width:14px;
+    height:14px;
+    border-radius:50%;
+
+    background:radial-gradient(circle at 30% 30%, #ff4d6d, #7a0018);
+
+    box-shadow:
+    0 3px 6px rgba(0,0,0,0.5),
+    inset -2px -2px 3px rgba(0,0,0,0.25);
+}
 .polaroid:hover{
-    transform:scale(1.08) rotate(0deg);
+    transform:scale(1.06) rotate(0deg);
     z-index:100;
+    box-shadow:0 15px 30px rgba(0,0,0,0.45);
 }
 
 .polaroid img{
