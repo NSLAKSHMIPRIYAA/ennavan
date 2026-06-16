@@ -236,43 +236,70 @@ h1{
     font-size:18px;
     opacity:0.8;
 }
-.string-lights{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    display:flex;
-    justify-content:space-around;
-    padding:10px 20px;
-    z-index:50;
+
+.fairy-wire{
+    position:absolute;
+    inset:0;
     pointer-events:none;
+    z-index:0;
 }
 
-.string-lights span{
-    font-size:18px;
-    animation: glow 2s infinite ease-in-out;
-    filter: drop-shadow(0 0 6px rgba(255,255,200,0.6));
+.fairy-wire::before{
+    content:"";
+    position:absolute;
+
+    top:180px;
+    left:5%;
+    width:90%;
+    height:700px;
+
+    background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='700'%3E%3Cpath d='M20 80 C200 220 300 40 500 180 S850 320 1180 120' stroke='%23654321' stroke-width='4' fill='none'/%3E%3C/svg%3E");
+
+    background-size:100% 100%;
+    background-repeat:no-repeat;
 }
 
-.string-lights span:nth-child(odd){
-    animation-delay:0.5s;
+.fairy-wire::after{
+    content:"";
+
+    position:absolute;
+
+    top:120px;
+    left:0;
+
+    width:100%;
+    height:900px;
+
+    background:
+    radial-gradient(circle,#fff7b2 0 6px,transparent 8px) 8% 8%,
+    radial-gradient(circle,#fff7b2 0 6px,transparent 8px) 28% 18%,
+    radial-gradient(circle,#fff7b2 0 6px,transparent 8px) 48% 10%,
+    radial-gradient(circle,#fff7b2 0 6px,transparent 8px) 68% 22%,
+    radial-gradient(circle,#fff7b2 0 6px,transparent 8px) 88% 12%;
+
+    background-repeat:no-repeat;
+
+    filter:
+        drop-shadow(0 0 8px #fff6a5)
+        drop-shadow(0 0 15px #fff6a5);
+
+    animation: twinkle 2s infinite alternate;
 }
 
-@keyframes glow{
-    0%,100%{opacity:0.5; transform:translateY(0);}
-    50%{opacity:1; transform:translateY(5px);}
+@keyframes twinkle{
+    from{opacity:.6;}
+    to{opacity:1;}
 }
 </style>
 </head>
 
 <body>
-<div class="string-lights">
-  <span>✨</span><span>💡</span><span>✨</span><span>💡</span><span>✨</span><span>💡</span><span>✨</span>
-</div>
+
 <h1>📸 Our Little Memory Wall ❤️</h1>
 
 <div id="wall">
-
+<div class="fairy-wire"></div>
 <div class="polaroid p1" onclick="openMemory(0)"><img src="pic1.jpg"><p>Memory 1</p></div>
 <div class="polaroid p2" onclick="openMemory(1)"><img src="pic2.jpg"><p>Memory 2</p></div>
 <div class="polaroid p3" onclick="openMemory(2)"><img src="pic3.jpg"><p>Memory 3</p></div>
