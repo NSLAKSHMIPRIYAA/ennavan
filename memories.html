@@ -11,32 +11,46 @@ body{
     font-family:Arial;
     overflow-x:hidden;
 
+    /* richer pink vintage base */
     background:
-    repeating-linear-gradient(
-        0deg,
-        #fff8f0,
-        #fff8f0 26px,
-        #f3e6d8 27px
-    ),
-    radial-gradient(circle at top, #ffd6e7, transparent 60%);
+    radial-gradient(circle at top left, #ffb6c1 0%, transparent 55%),
+    radial-gradient(circle at bottom right, #ffd6a5 0%, transparent 60%),
+    linear-gradient(135deg, #f7c6d9, #f3d6b5, #e8a9c1);
 }
 
-/* faint paper texture lines */
+/* vignette + depth overlay */
 body::before{
     content:"";
     position:fixed;
     inset:0;
-
-    background:
-    repeating-linear-gradient(
-        0deg,
-        rgba(0,0,0,0.03),
-        rgba(0,0,0,0.03) 1px,
-        transparent 1px,
-        transparent 28px
-    );
-
     pointer-events:none;
+
+    /* darkened edges so center pops */
+    background:
+    radial-gradient(
+        circle at center,
+        rgba(255,255,255,0) 40%,
+        rgba(0,0,0,0.18) 100%
+    );
+    mix-blend-mode:multiply;
+}
+
+/* subtle grain so it doesn’t look flat */
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+
+    background-image:
+    repeating-radial-gradient(
+        circle,
+        rgba(0,0,0,0.03) 1px,
+        transparent 2px
+    );
+    background-size:3px 3px;
+
+    opacity:0.25;
 }
 
 h1{
