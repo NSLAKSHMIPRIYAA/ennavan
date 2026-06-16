@@ -236,52 +236,7 @@ h1{
     font-size:18px;
     opacity:0.8;
 }
-.fairy-lights{
-    position:absolute;
-    top:40px;
-    left:0;
-    width:100%;
-    height:1800px;
-    pointer-events:none;
-    z-index:2;
-    background:
-linear-gradient(white,white) 15% 85px/20% 2px no-repeat,
-linear-gradient(white,white) 35% 135px/20% 2px no-repeat,
-linear-gradient(white,white) 55% 95px/20% 2px no-repeat,
 
-linear-gradient(white,white) 20% 455px/30% 2px no-repeat,
-linear-gradient(white,white) 50% 525px/30% 2px no-repeat,
-
-linear-gradient(white,white) 15% 855px/25% 2px no-repeat,
-linear-gradient(white,white) 40% 905px/30% 2px no-repeat,
-
-linear-gradient(white,white) 20% 1205px/30% 2px no-repeat,
-linear-gradient(white,white) 50% 1255px/30% 2px no-repeat,
-
-linear-gradient(white,white) 25% 1555px/30% 2px no-repeat;
-    background-repeat:no-repeat;
-}
-
-.light{
-    position:absolute;
-    width:14px;
-    height:14px;
-    border-radius:50%;
-
-    background:#ffd86b;
-
-    box-shadow:
-        0 0 8px #ffd86b,
-        0 0 15px #ffd86b,
-        0 0 25px #ffd86b;
-
-    animation:twinkle 2s infinite alternate;
-}
-
-@keyframes twinkle{
-    from{opacity:.5;}
-    to{opacity:1;}
-}
 
 
 </style>
@@ -292,30 +247,9 @@ linear-gradient(white,white) 25% 1555px/30% 2px no-repeat;
 <h1>📸 Our Little Memory Wall ❤️</h1>
 
 <div id="wall">
-<div class="fairy-lights">
 
-<div class="light" style="top:80px;left:15%;"></div>
-<div class="light" style="top:130px;left:35%;"></div>
-<div class="light" style="top:90px;left:55%;"></div>
-<div class="light" style="top:140px;left:75%;"></div>
 
-<div class="light" style="top:450px;left:20%;"></div>
-<div class="light" style="top:520px;left:50%;"></div>
-<div class="light" style="top:470px;left:80%;"></div>
 
-<div class="light" style="top:850px;left:15%;"></div>
-<div class="light" style="top:900px;left:40%;"></div>
-<div class="light" style="top:850px;left:70%;"></div>
-
-<div class="light" style="top:1200px;left:20%;"></div>
-<div class="light" style="top:1250px;left:50%;"></div>
-<div class="light" style="top:1200px;left:80%;"></div>
-
-<div class="light" style="top:1550px;left:25%;"></div>
-<div class="light" style="top:1600px;left:55%;"></div>
-<div class="light" style="top:1550px;left:80%;"></div>
-
-</div>
 <div class="polaroid p1" onclick="openMemory(0)"><img src="pic1.jpg"><p>Memory 1</p></div>
 <div class="polaroid p2" onclick="openMemory(1)"><img src="pic2.jpg"><p>Memory 2</p></div>
 <div class="polaroid p3" onclick="openMemory(2)"><img src="pic3.jpg"><p>Memory 3</p></div>
