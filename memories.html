@@ -274,7 +274,27 @@ h1{
 
     z-index:3;
 }
+/* ✨ FLOATING SPARKLES */
+.sparkle{
+    position:absolute;
+    color:#fff7c2;
+    font-size:20px;
+    z-index:2;
+    pointer-events:none;
 
+    animation:twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+    from{
+        opacity:.3;
+        transform:scale(.8);
+    }
+    to{
+        opacity:1;
+        transform:scale(1.2);
+    }
+}
 
 </style>
 </head>
@@ -284,6 +304,19 @@ h1{
 <h1>📸 Our Little Memory Wall ❤️</h1>
 
 <div id="wall">
+<!-- ✨ SPARKLES -->
+
+<div class="sparkle" style="top:180px;left:30%;">✦</div>
+<div class="sparkle" style="top:250px;right:18%;">✧</div>
+
+<div class="sparkle" style="top:700px;left:18%;">✦</div>
+<div class="sparkle" style="top:780px;right:30%;">✧</div>
+
+<div class="sparkle" style="top:1150px;left:60%;">✦</div>
+<div class="sparkle" style="top:1250px;right:15%;">✧</div>
+
+<div class="sparkle" style="top:1650px;left:22%;">✦</div>
+<div class="sparkle" style="top:1750px;right:25%;">✧</div>
 <!-- 🌸 STICKERS -->
 
 <div class="sticker" style="top:250px;left:4%;">🌸</div>
