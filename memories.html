@@ -236,61 +236,54 @@ h1{
     font-size:18px;
     opacity:0.8;
 }
-
-.fairy-wire{
+.fairy-lights{
     position:absolute;
-    inset:0;
-    pointer-events:none;
-    z-index:0;
-}
-
-.fairy-wire::before{
-    content:"";
-    position:absolute;
-
-    top:180px;
-    left:5%;
-    width:90%;
-    height:700px;
-
-    background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='700'%3E%3Cpath d='M20 80 C200 220 300 40 500 180 S850 320 1180 120' stroke='%23654321' stroke-width='4' fill='none'/%3E%3C/svg%3E");
-
-    background-size:100% 100%;
-    background-repeat:no-repeat;
-}
-
-.fairy-wire::after{
-    content:"";
-
-    position:absolute;
-
-    top:120px;
+    top:40px;
     left:0;
-
     width:100%;
-    height:900px;
-
+    height:1800px;
+    pointer-events:none;
+    z-index:2;
     background:
-    radial-gradient(circle,#fff7b2 0 6px,transparent 8px) 8% 8%,
-    radial-gradient(circle,#fff7b2 0 6px,transparent 8px) 28% 18%,
-    radial-gradient(circle,#fff7b2 0 6px,transparent 8px) 48% 10%,
-    radial-gradient(circle,#fff7b2 0 6px,transparent 8px) 68% 22%,
-    radial-gradient(circle,#fff7b2 0 6px,transparent 8px) 88% 12%;
+linear-gradient(white,white) 15% 85px/20% 2px no-repeat,
+linear-gradient(white,white) 35% 135px/20% 2px no-repeat,
+linear-gradient(white,white) 55% 95px/20% 2px no-repeat,
 
+linear-gradient(white,white) 20% 455px/30% 2px no-repeat,
+linear-gradient(white,white) 50% 525px/30% 2px no-repeat,
+
+linear-gradient(white,white) 15% 855px/25% 2px no-repeat,
+linear-gradient(white,white) 40% 905px/30% 2px no-repeat,
+
+linear-gradient(white,white) 20% 1205px/30% 2px no-repeat,
+linear-gradient(white,white) 50% 1255px/30% 2px no-repeat,
+
+linear-gradient(white,white) 25% 1555px/30% 2px no-repeat;
     background-repeat:no-repeat;
+}
 
-    filter:
-        drop-shadow(0 0 8px #fff6a5)
-        drop-shadow(0 0 15px #fff6a5);
+.light{
+    position:absolute;
+    width:14px;
+    height:14px;
+    border-radius:50%;
 
-    animation: twinkle 2s infinite alternate;
+    background:#ffd86b;
+
+    box-shadow:
+        0 0 8px #ffd86b,
+        0 0 15px #ffd86b,
+        0 0 25px #ffd86b;
+
+    animation:twinkle 2s infinite alternate;
 }
 
 @keyframes twinkle{
-    from{opacity:.6;}
+    from{opacity:.5;}
     to{opacity:1;}
 }
+
+
 </style>
 </head>
 
@@ -299,7 +292,30 @@ h1{
 <h1>📸 Our Little Memory Wall ❤️</h1>
 
 <div id="wall">
-<div class="fairy-wire"></div>
+<div class="fairy-lights">
+
+<div class="light" style="top:80px;left:15%;"></div>
+<div class="light" style="top:130px;left:35%;"></div>
+<div class="light" style="top:90px;left:55%;"></div>
+<div class="light" style="top:140px;left:75%;"></div>
+
+<div class="light" style="top:450px;left:20%;"></div>
+<div class="light" style="top:520px;left:50%;"></div>
+<div class="light" style="top:470px;left:80%;"></div>
+
+<div class="light" style="top:850px;left:15%;"></div>
+<div class="light" style="top:900px;left:40%;"></div>
+<div class="light" style="top:850px;left:70%;"></div>
+
+<div class="light" style="top:1200px;left:20%;"></div>
+<div class="light" style="top:1250px;left:50%;"></div>
+<div class="light" style="top:1200px;left:80%;"></div>
+
+<div class="light" style="top:1550px;left:25%;"></div>
+<div class="light" style="top:1600px;left:55%;"></div>
+<div class="light" style="top:1550px;left:80%;"></div>
+
+</div>
 <div class="polaroid p1" onclick="openMemory(0)"><img src="pic1.jpg"><p>Memory 1</p></div>
 <div class="polaroid p2" onclick="openMemory(1)"><img src="pic2.jpg"><p>Memory 2</p></div>
 <div class="polaroid p3" onclick="openMemory(2)"><img src="pic3.jpg"><p>Memory 3</p></div>
