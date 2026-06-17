@@ -372,16 +372,16 @@ h1{
 <div class="polaroid p4" onclick="openMemory(3)"><img src="pic4.jpg"><p>Memory 4</p></div>
 <div class="polaroid p5" onclick="openMemory(4)"><img src="pic5.jpg"><p>Memory 5</p></div>
 
-<div class="polaroid p6" onclick="openMemory(5)"><img src="pic1.jpg"><p>Memory 6</p></div>
-<div class="polaroid p7" onclick="openMemory(6)"><img src="pic1.jpg"><p>Memory 7</p></div>
-<div class="polaroid p8" onclick="openMemory(7)"><img src="pic1.jpg"><p>Memory 8</p></div>
-<div class="polaroid p9" onclick="openMemory(8)"><img src="pic1.jpg"><p>Memory 9</p></div>
-<div class="polaroid p10" onclick="openMemory(9)"><img src="pic1.jpg"><p>Memory 10</p></div>
-<div class="polaroid p11" onclick="openMemory(10)"><img src="pic1.jpg"><p>Memory 11</p></div>
-<div class="polaroid p12" onclick="openMemory(11)"><img src="pic1.jpg"><p>Memory 12</p></div>
-<div class="polaroid p13" onclick="openMemory(12)"><img src="pic1.jpg"><p>Memory 13</p></div>
-<div class="polaroid p14" onclick="openMemory(13)"><img src="pic1.jpg"><p>Memory 14</p></div>
-<div class="polaroid p15" onclick="openMemory(14)"><img src="pic1.jpg"><p>More ❤️</p></div>
+<div class="polaroid p6" onclick="openMemory(5)"><img src="pic6.jpg"><p>Memory 6</p></div>
+<div class="polaroid p7" onclick="openMemory(6)"><img src="pic7.jpg"><p>Memory 7</p></div>
+<div class="polaroid p8" onclick="openMemory(7)"><img src="pic8.jpg"><p>Memory 8</p></div>
+<div class="polaroid p9" onclick="openMemory(8)"><img src="pic9.jpg"><p>Memory 9</p></div>
+<div class="polaroid p10" onclick="openMemory(9)"><img src="pic10.jpg"><p>Memory 10</p></div>
+<div class="polaroid p11" onclick="openMemory(10)"><img src="pic11.jpg"><p>Memory 11</p></div>
+<div class="polaroid p12" onclick="openMemory(11)"><img src="pic12.jpg"><p>Memory 12</p></div>
+<div class="polaroid p13" onclick="openMemory(12)"><img src="pic13.jpg"><p>Memory 13</p></div>
+<div class="polaroid p14" onclick="openMemory(13)"><img src="pic14.jpg"><p>Memory 14</p></div>
+<div class="polaroid p15" onclick="openMemory(14)"><img src="pic15.jpg"><p>More ❤️</p></div>
 
 </div>
 
@@ -408,7 +408,7 @@ h1{
 
 /* 15 memories now supported */
 const memories = Array.from({length:15}, (_,i)=>({
-    photo:`pic${(i%5)+1}.jpg`,
+    photo:`pic${i+1}.jpg`,
     title:`Memory ${i+1} ❤️`,
     caption:`A beautiful little moment we shared ✨`
 }));
