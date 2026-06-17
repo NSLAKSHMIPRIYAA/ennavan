@@ -1,1 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
 
+<title>Our Story ❤️</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Georgia',serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+
+background:
+linear-gradient(
+135deg,
+#f8d7ff,
+#ffe8d6,
+#fff3b0
+);
+
+overflow:hidden;
+}
+
+/* BOOK */
+
+.book{
+width:900px;
+height:600px;
+position:relative;
+perspective:2000px;
+}
+
+/* COVER */
+
+.cover{
+position:absolute;
+width:100%;
+height:100%;
+
+background:
+linear-gradient(
+135deg,
+#ffb6c1,
+#ffc0cb,
+#ffd6e8
+);
+
+border-radius:15px;
+
+box-shadow:
+0 20px 40px rgba(0,0,0,.25);
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+
+color:white;
+
+z-index:20;
+}
+
+.cover h1{
+font-size:48px;
+margin-bottom:15px;
+}
+
+.cover h2{
+font-size:24px;
+font-weight:normal;
+}
+
+.badge{
+margin-top:25px;
+
+padding:10px 20px;
+
+background:gold;
+color:#7a0018;
+
+border-radius:30px;
+
+font-weight:bold;
+}
+
+/* PAGES */
+
+.page{
+position:absolute;
+
+width:100%;
+height:100%;
+
+background:white;
+
+border-radius:10px;
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.15);
+
+transform-origin:left;
+
+transition:transform 1s;
+
+display:none;
+
+padding:25px;
+}
+
+.page.active{
+display:block;
+}
+
+.content{
+height:100%;
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+.content img{
+width:70%;
+max-height:350px;
+
+object-fit:cover;
+
+border-radius:12px;
+
+box-shadow:
+0 8px 20px rgba(0,0,0,.2);
+}
+
+.caption{
+margin-top:25px;
+
+font-size:20px;
+
+color:#555;
+
+text-align:center;
+
+line-height:1.6;
+
+max-width:80%;
+}
+
+/* BUTTONS */
+
+.controls{
+position:fixed;
+bottom:50px;
+
+display:flex;
+gap:20px;
+}
+
+.btn{
+padding:15px 30px;
+
+border:none;
+
+border-radius:30px;
+
+background:white;
+
+font-size:18px;
+
+cursor:pointer;
+
+box-shadow:
+0 5px 15px rgba(0,0,0,.2);
+
+transition:.3s;
+}
+
+.btn:hover{
+transform:scale(1.05);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="book">
+
+<!-- COVER -->
+
+<div class="cover" id="cover">
+
+<h1>📖 Our Story</h1>
+
+<h2>Priyaa & Akash ❤️</h2>
+
+<div class="badge">
+⭐ No.1 Bestselling Love Story ⭐
+</div>
+
+</div>
+
+<!-- PAGE 1 -->
+
+<div class="page" id="page1">
+
+<div class="content">
+
+<img src="story1.jpg">
+
+<div class="caption">
+This was the beginning of everything ❤️
+</div>
+
+</div>
+
+</div>
+
+<!-- PAGE 2 -->
+
+<div class="page" id="page2">
+
+<div class="content">
+
+<img src="story2.jpg">
+
+<div class="caption">
+One of the happiest memories we made together ✨
+</div>
+
+</div>
+
+</div>
+
+<!-- PAGE 3 -->
+
+<div class="page" id="page3">
+
+<div class="content">
+
+<img src="story3.jpg">
+
+<div class="caption">
+A moment I never want to forget 💕
+</div>
+
+</div>
+
+</div>
+
+<!-- PAGE 4 -->
+
+<div class="page" id="page4">
+
+<div class="content">
+
+<img src="story4.jpg">
+
+<div class="caption">
+More adventures waiting for us 🌸
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="controls">
+
+<button class="btn" onclick="prevPage()">
+⬅ Previous
+</button>
+
+<button class="btn" onclick="nextPage()">
+Next ➡
+</button>
+
+</div>
+
+<script>
+
+let current=0;
+
+const pages=[
+document.getElementById("cover"),
+document.getElementById("page1"),
+document.getElementById("page2"),
+document.getElementById("page3"),
+document.getElementById("page4")
+];
+
+function showPage(index){
+
+pages.forEach((p,i)=>{
+
+if(i===index){
+
+if(i===0){
+p.style.display="flex";
+}
+else{
+p.style.display="block";
+}
+
+}
+else{
+p.style.display="none";
+}
+
+});
+
+}
+
+showPage(current);
+
+function nextPage(){
+
+if(current<pages.length-1){
+
+current++;
+
+showPage(current);
+
+}
+
+}
+
+function prevPage(){
+
+if(current>0){
+
+current--;
+
+showPage(current);
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
