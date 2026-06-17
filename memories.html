@@ -342,13 +342,50 @@ h1{
         transform:scale(1.2);
     }
 }
+#musicBtn{
+    position:fixed;
+    top:20px;
+    right:20px;
 
+    z-index:1000;
+
+    background:#fff8dc;
+    color:#7a0018;
+
+    border:none;
+    padding:12px 20px;
+    border-radius:30px;
+
+    font-size:16px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    box-shadow:0 4px 10px rgba(0,0,0,.25);
+
+    transition:.3s;
+}
+#musicBtn:hover{
+    transform:scale(1.05);
+}
 </style>
 </head>
 
 <body>
 
 <h1>📸 The Moments We Made ❤️</h1>
+
+
+
+<button id="musicBtn" onclick="toggleMusic()">
+🎵 Play Our Song
+</button>
+
+<audio id="bgMusic" loop>
+    <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+
 
 <div id="wall">
 <!-- ✨ SPARKLES -->
@@ -521,7 +558,21 @@ function closeMemory(){
 document.getElementById("scrapbook").style.display="none";
 document.getElementById("wall").style.display="block";
 }
+function toggleMusic(){
 
+const music = document.getElementById("bgMusic");
+const btn = document.getElementById("musicBtn");
+
+if(music.paused){
+    music.play();
+    btn.innerText = "⏸ Pause Music";
+}
+else{
+    music.pause();
+    btn.innerText = "🎵 Play Our Song";
+}
+
+}
 </script>
 
 </body>
