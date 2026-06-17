@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <title>Our Story ❤️</title>
 
 <style>
@@ -10,7 +9,7 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:'Georgia',serif;
+font-family:Georgia, serif;
 }
 
 body{
@@ -22,9 +21,9 @@ align-items:center;
 background:
 linear-gradient(
 135deg,
-#f8d7ff,
-#ffe8d6,
-#fff3b0
+#ffd6e8,
+#fff0d6,
+#e8d6ff
 );
 
 overflow:hidden;
@@ -33,10 +32,10 @@ overflow:hidden;
 /* BOOK */
 
 .book{
+position:relative;
 width:900px;
 height:600px;
-position:relative;
-perspective:2000px;
+perspective:2500px;
 }
 
 /* COVER */
@@ -49,15 +48,11 @@ height:100%;
 background:
 linear-gradient(
 135deg,
-#ffb6c1,
-#ffc0cb,
-#ffd6e8
+#ff8db2,
+#ffb7cf
 );
 
-border-radius:15px;
-
-box-shadow:
-0 20px 40px rgba(0,0,0,.25);
+border-radius:12px;
 
 display:flex;
 flex-direction:column;
@@ -66,33 +61,35 @@ align-items:center;
 
 color:white;
 
-z-index:20;
+box-shadow:
+0 20px 40px rgba(0,0,0,.3);
+
+z-index:100;
 }
 
 .cover h1{
-font-size:48px;
-margin-bottom:15px;
+font-size:50px;
 }
 
-.cover h2{
-font-size:24px;
-font-weight:normal;
+.cover p{
+margin-top:20px;
+font-size:22px;
 }
 
 .badge{
-margin-top:25px;
-
-padding:10px 20px;
+margin-top:30px;
 
 background:gold;
 color:#7a0018;
+
+padding:12px 25px;
 
 border-radius:30px;
 
 font-weight:bold;
 }
 
-/* PAGES */
+/* PAGE */
 
 .page{
 position:absolute;
@@ -100,72 +97,113 @@ position:absolute;
 width:100%;
 height:100%;
 
-background:white;
+transform-style:preserve-3d;
+transform-origin:left center;
+
+transition:transform 1.2s ease;
+
+cursor:pointer;
+}
+
+.page.flipped{
+transform:rotateY(-180deg);
+}
+
+.front,
+.back{
+
+position:absolute;
+
+width:100%;
+height:100%;
+
+backface-visibility:hidden;
+
+background:#fffdf7;
 
 border-radius:10px;
+
+overflow:hidden;
 
 box-shadow:
 0 10px 25px rgba(0,0,0,.15);
 
-transform-origin:left;
-
-transition:transform 1s;
-
-display:none;
-
-padding:25px;
-}
-
-.page.active{
-display:block;
-}
-
-.content{
-height:100%;
-
 display:flex;
-flex-direction:column;
 justify-content:center;
 align-items:center;
+flex-direction:column;
 }
 
-.content img{
+.back{
+transform:rotateY(180deg);
+}
+
+/* PAPER TEXTURE */
+
+.front::before,
+.back::before{
+
+content:"";
+
+position:absolute;
+inset:0;
+
+background:
+repeating-linear-gradient(
+0deg,
+transparent,
+transparent 24px,
+rgba(0,0,0,.03) 25px
+);
+
+pointer-events:none;
+}
+
+/* CONTENT */
+
+.page img{
 width:70%;
-max-height:350px;
+max-height:320px;
 
 object-fit:cover;
 
 border-radius:12px;
 
 box-shadow:
-0 8px 20px rgba(0,0,0,.2);
+0 6px 18px rgba(0,0,0,.2);
+
+margin-bottom:20px;
 }
 
 .caption{
-margin-top:25px;
-
-font-size:20px;
-
-color:#555;
+width:80%;
 
 text-align:center;
 
+font-size:20px;
+
 line-height:1.6;
 
-max-width:80%;
+color:#555;
+
+z-index:2;
 }
 
 /* BUTTONS */
 
 .controls{
+
 position:fixed;
-bottom:50px;
+
+bottom:40px;
 
 display:flex;
+
 gap:20px;
 }
 
-.btn{
+button{
+
 padding:15px 30px;
 
 border:none;
@@ -184,12 +222,11 @@ box-shadow:
 transition:.3s;
 }
 
-.btn:hover{
+button:hover{
 transform:scale(1.05);
 }
 
 </style>
-
 </head>
 
 <body>
@@ -202,10 +239,10 @@ transform:scale(1.05);
 
 <h1>📖 Our Story</h1>
 
-<h2>Priyaa & Akash ❤️</h2>
+<p>Priyaa ❤️ Akash</p>
 
 <div class="badge">
-⭐ No.1 Bestselling Love Story ⭐
+⭐ No.1 Bestselling Love Story
 </div>
 
 </div>
@@ -214,12 +251,23 @@ transform:scale(1.05);
 
 <div class="page" id="page1">
 
-<div class="content">
+<div class="front">
 
-<img src="story1.jpg">
+<img src="page1.jpg">
 
 <div class="caption">
-This was the beginning of everything ❤️
+Chapter 1 ❤️<br>
+Where everything began.
+</div>
+
+</div>
+
+<div class="back">
+
+<img src="page2.jpg">
+
+<div class="caption">
+The first pages of our story.
 </div>
 
 </div>
@@ -230,12 +278,22 @@ This was the beginning of everything ❤️
 
 <div class="page" id="page2">
 
-<div class="content">
+<div class="front">
 
-<img src="story2.jpg">
+<img src="page3.jpg">
 
 <div class="caption">
-One of the happiest memories we made together ✨
+A memory I never want to forget.
+</div>
+
+</div>
+
+<div class="back">
+
+<img src="page4.jpg">
+
+<div class="caption">
+One more beautiful chapter.
 </div>
 
 </div>
@@ -246,28 +304,22 @@ One of the happiest memories we made together ✨
 
 <div class="page" id="page3">
 
-<div class="content">
+<div class="front">
 
-<img src="story3.jpg">
-
-<div class="caption">
-A moment I never want to forget 💕
-</div>
-
-</div>
-
-</div>
-
-<!-- PAGE 4 -->
-
-<div class="page" id="page4">
-
-<div class="content">
-
-<img src="story4.jpg">
+<img src="page5.jpg">
 
 <div class="caption">
-More adventures waiting for us 🌸
+The adventures continue...
+</div>
+
+</div>
+
+<div class="back">
+
+<img src="page6.jpg">
+
+<div class="caption">
+To be continued ❤️
 </div>
 
 </div>
@@ -278,11 +330,11 @@ More adventures waiting for us 🌸
 
 <div class="controls">
 
-<button class="btn" onclick="prevPage()">
+<button onclick="prevPage()">
 ⬅ Previous
 </button>
 
-<button class="btn" onclick="nextPage()">
+<button onclick="nextPage()">
 Next ➡
 </button>
 
@@ -292,57 +344,45 @@ Next ➡
 
 let current=0;
 
+const cover=document.getElementById("cover");
+
 const pages=[
-document.getElementById("cover"),
 document.getElementById("page1"),
 document.getElementById("page2"),
-document.getElementById("page3"),
-document.getElementById("page4")
+document.getElementById("page3")
 ];
-
-function showPage(index){
-
-pages.forEach((p,i)=>{
-
-if(i===index){
-
-if(i===0){
-p.style.display="flex";
-}
-else{
-p.style.display="block";
-}
-
-}
-else{
-p.style.display="none";
-}
-
-});
-
-}
-
-showPage(current);
 
 function nextPage(){
 
-if(current<pages.length-1){
+if(current===0){
 
+cover.style.display="none";
 current++;
+return;
+}
 
-showPage(current);
+if(current<=pages.length){
 
+pages[current-1].classList.add("flipped");
+current++;
 }
 
 }
 
 function prevPage(){
 
-if(current>0){
+if(current===1){
+
+cover.style.display="flex";
+current=0;
+return;
+}
+
+if(current>1){
 
 current--;
 
-showPage(current);
+pages[current-1].classList.remove("flipped");
 
 }
 
