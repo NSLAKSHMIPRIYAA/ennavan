@@ -25,7 +25,7 @@ body {
     width: 850px;
     height: 550px;
     position: relative;
-    perspective: 2000px;
+    perspective: 2000px; /* Crucial for 3D page flip depth */
 }
 
 /* COVER */
@@ -42,8 +42,15 @@ body {
     flex-direction: column;
     box-shadow: 0 15px 35px rgba(124, 141, 116, 0.3);
     z-index: 100;
-    transition: transform 1.5s ease-in-out, opacity 1s ease-in-out;
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s;
     transform-origin: left center;
+    backface-visibility: hidden;
+}
+
+.cover.opened {
+    transform: rotateY(-140deg);
+    opacity: 0;
+    pointer-events: none;
 }
 
 .cover h1 {
@@ -90,46 +97,63 @@ body {
     color: #7c8d74;
 }
 
-/* BOOK & PAGES */
+/* BOOK & SHEET SYSTEM */
 .book {
     width: 100%;
     height: 100%;
-    display: none;
     position: relative;
+    transform-style: preserve-3d;
+    display: none;
+}
+
+/* A "sheet" contains a Left page on its back, and a Right page on its front */
+.sheet {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    right: 0; /* All sheets stack neatly on the right side initially */
+    top: 0;
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 5;
 }
 
 /* Base Page Styling */
 .page {
-    width: 50%;
-    height: 100%;
-    background: #fffcf7; /* Premium off-white paper color */
     position: absolute;
+    width: 100%;
+    height: 100%;
     top: 0;
-    padding: 40px;
+    left: 0;
+    background: #fffcf7; /* Premium off-white paper color */
+    padding: 35px;
     box-shadow: inset 0 0 30px rgba(223, 193, 138, 0.15);
-    display: none; /* Hidden by default, controlled via JS */
+    display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     border: 1px solid rgba(0,0,0,0.05);
+    backface-visibility: hidden; /* Crucial so we don't see the mirror image flipped text */
 }
 
-/* Book Spine Shadow */
-.left {
-    left: 0;
-    border-radius: 10px 0 0 10px;
-    box-shadow: inset -15px 0 20px rgba(0, 0, 0, 0.05);
-}
-
-.right {
-    right: 0;
+/* Front of the sheet faces right */
+.page.front {
+    z-index: 2;
     border-radius: 0 10px 10px 0;
-    box-shadow: inset 15px 0 20px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 15px 0 20px rgba(0, 0, 0, 0.02);
 }
 
-/* Show active page pair */
-.page.active {
-    display: flex;
+/* Back of the sheet faces left when flipped */
+.page.back {
+    transform: rotateY(180deg);
+    border-radius: 10px 0 0 10px;
+    box-shadow: inset -15px 0 20px rgba(0, 0, 0, 0.02);
+}
+
+/* The state when a sheet has been turned to the left side */
+.sheet.flipped {
+    transform: rotateY(-180deg);
 }
 
 .page h2 {
@@ -142,7 +166,7 @@ body {
 
 .page img {
     width: 100%;
-    height: 260px;
+    height: 240px;
     object-fit: cover;
     border-radius: 4px;
     border: 6px solid #f2e6d6;
@@ -151,29 +175,29 @@ body {
 
 .caption {
     text-align: center;
-    font-size: 16px;
+    font-size: 15px;
     color: #6b6055;
-    line-height: 1.5;
+    line-height: 1.4;
     font-style: italic;
-    padding: 0 10px;
+    padding: 0 5px;
 }
 
 /* BUTTONS */
 .buttons-container {
     display: flex;
-    gap: 15px;
+    gap: 10px;
     width: 100%;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 .voice, .nav-btn {
-    padding: 10px 20px;
+    padding: 8px 16px;
     border: none;
     border-radius: 20px;
     cursor: pointer;
     font-family: "Georgia", serif;
-    font-size: 14px;
+    font-size: 13px;
     transition: 0.3s;
 }
 
@@ -196,22 +220,31 @@ body {
     background: #61705a;
 }
 
-/* END PAGE */
-.end {
-    display: none;
-    text-align: center;
-    color: #61705a;
-    width: 100%;
-    padding-top: 160px;
+/* CENTRAL SPIRAL BINDING */
+.spiral-spine {
+    position: absolute;
+    left: 50%;
+    top: 15px;
+    width: 16px;
+    height: calc(100% - 30px);
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 99; /* Always floats right along the middle axis */
+    pointer-events: none;
 }
 
-.end h1 {
-    font-weight: normal;
-    font-size: 36px;
-    margin-bottom: 10px;
+.spiral-ring {
+    width: 24px;
+    height: 8px;
+    background: linear-gradient(to bottom, #e2cb99, #bca168, #e2cb99); /* Shiny metallic gold finish */
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-/* Background Sparkles */
+/* BACKGROUND SPARKLES */
 .sparkle {
     position: absolute;
     color: #dfc18a;
@@ -231,6 +264,7 @@ body {
 
 <div class="diary">
 
+    <!-- COVER -->
     <div class="cover" id="cover">
         <div class="gold one"></div>
         <div class="gold two"></div>
@@ -241,105 +275,158 @@ body {
         <button class="open" onclick="openDiary()">Open Diary</button>
     </div>
 
+    <!-- BOOK SYSTEM -->
     <div class="book" id="book">
+        
+        <!-- SPIRAL BINDING EFFECT -->
+        <div class="spiral-spine" id="spine">
+            <!-- Rings generated automatically via JS -->
+        </div>
 
-        <div class="page left active" id="p1">
-            <h2>Chapter 1</h2>
-            <img src="image1.jpg" alt="Memory 1">
-            <div class="caption">Your first memory goes here ✨</div>
-            <div class="buttons-container">
-                <button class="voice" onclick="playAudio('audio1.mp3')">🎙️ Voice Note</button>
+        <!-- SHEET 1 (Front: Chapter 1 | Back: Chapter 2) -->
+        <div class="sheet" id="sheet1">
+            <div class="page front">
+                <h2>Chapter 1</h2>
+                <img src="image1.jpg" alt="Memory 1">
+                <div class="caption">Your first memory goes here ✨</div>
+                <div class="buttons-container">
+                    <button class="voice" onclick="playAudio('audio1.mp3')">🎙️ Voice Note</button>
+                    <button class="nav-btn" onclick="turnForward(1)">Next →</button>
+                </div>
+            </div>
+            <div class="page back">
+                <h2>Chapter 2</h2>
+                <img src="image2.jpg" alt="Memory 2">
+                <div class="caption">Write your favourite moment here ❤️</div>
+                <div class="buttons-container">
+                    <button class="nav-btn" onclick="turnBackward(1)">← Back</button>
+                    <button class="voice" onclick="playAudio('audio2.mp3')">🎙️ Voice Note</button>
+                </div>
             </div>
         </div>
 
-        <div class="page right active" id="p2">
-            <h2>Chapter 2</h2>
-            <img src="image2.jpg" alt="Memory 2">
-            <div class="caption">Write your favourite moment here ❤️</div>
-            <div class="buttons-container">
-                <button class="voice" onclick="playAudio('audio2.mp3')">🎙️ Voice Note</button>
-                <button class="nav-btn" onclick="nextSpread(2)">Next →</button>
+        <!-- SHEET 2 (Front: Chapter 3 | Back: Chapter 4) -->
+        <div class="sheet" id="sheet2">
+            <div class="page front">
+                <h2>Chapter 3</h2>
+                <img src="image3.jpg" alt="Memory 3">
+                <div class="caption">A story you never want to forget 💌</div>
+                <div class="buttons-container">
+                    <button class="voice" onclick="playAudio('audio3.mp3')">🎙️ Voice Note</button>
+                    <button class="nav-btn" onclick="turnForward(2)">Next →</button>
+                </div>
+            </div>
+            <div class="page back">
+                <h2>Chapter 4</h2>
+                <img src="image4.jpg" alt="Memory 4">
+                <div class="caption">Another beautiful memory 🌙</div>
+                <div class="buttons-container">
+                    <button class="nav-btn" onclick="turnBackward(2)">← Back</button>
+                    <button class="voice" onclick="playAudio('audio4.mp3')">🎙️ Voice Note</button>
+                </div>
             </div>
         </div>
 
-        <div class="page left" id="p3">
-            <h2>Chapter 3</h2>
-            <img src="image3.jpg" alt="Memory 3">
-            <div class="caption">A story you never want to forget 💌</div>
-            <div class="buttons-container">
-                <button class="voice" onclick="playAudio('audio3.mp3')">🎙️ Voice Note</button>
+        <!-- SHEET 3 (Front: Chapter 5 | Back: Chapter 6) -->
+        <div class="sheet" id="sheet3">
+            <div class="page front">
+                <h2>Chapter 5</h2>
+                <img src="image5.jpg" alt="Memory 5">
+                <div class="caption">Forever favourite moment ❤️</div>
+                <div class="buttons-container">
+                    <button class="voice" onclick="playAudio('audio5.mp3')">🎙️ Voice Note</button>
+                    <button class="nav-btn" onclick="turnForward(3)">Next →</button>
+                </div>
+            </div>
+            <div class="page back">
+                <h2>Chapter 6</h2>
+                <img src="image6.jpg" alt="Memory 6">
+                <div class="caption">And the story continues...</div>
+                <div class="buttons-container">
+                    <button class="nav-btn" onclick="turnBackward(3)">← Back</button>
+                    <button class="voice" onclick="playAudio('audio6.mp3')">🎙️ Voice Note</button>
+                    <button class="nav-btn" onclick="turnForward(4)">Finish ❤️</button>
+                </div>
             </div>
         </div>
 
-        <div class="page right" id="p4">
-            <h2>Chapter 4</h2>
-            <img src="image4.jpg" alt="Memory 4">
-            <div class="caption">Another beautiful memory 🌙</div>
-            <div class="buttons-container">
-                <button class="voice" onclick="playAudio('audio4.mp3')">🎙️ Voice Note</button>
-                <button class="nav-btn" onclick="nextSpread(4)">Next →</button>
+        <!-- SHEET 4 (Front: End Screen | Back: Empty) -->
+        <div class="sheet" id="sheet4">
+            <div class="page front" style="justify-content: center; padding-top: 0;">
+                <h1 style="color: #61705a; font-weight: normal; font-size: 36px; margin-bottom: 10px;">❤️ The End ❤️</h1>
+                <p style="color: #6b6055; font-style: italic; margin-bottom: 30px;">Some memories deserve their own diary.</p>
+                <div class="buttons-container">
+                    <button class="nav-btn" onclick="turnBackward(4)">← Back</button>
+                    <button class="voice" style="background: #7c8d74; color: white;" onclick="restartDiary()">🔄 Restart Diary</button>
+                </div>
             </div>
-        </div>
-
-        <div class="page left" id="p5">
-            <h2>Chapter 5</h2>
-            <img src="image5.jpg" alt="Memory 5">
-            <div class="caption">Forever favourite moment ❤️</div>
-            <div class="buttons-container">
-                <button class="voice" onclick="playAudio('audio5.mp3')">🎙️ Voice Note</button>
-            </div>
-        </div>
-
-        <div class="page right" id="p6">
-            <h2>Chapter 6</h2>
-            <img src="image6.jpg" alt="Memory 6">
-            <div class="caption">And the story continues...</div>
-            <div class="buttons-container">
-                <button class="voice" onclick="playAudio('audio6.mp3')">🎙️ Voice Note</button>
-                <button class="nav-btn" onclick="ending()">Finish ❤️</button>
-            </div>
-        </div>
-
-        <div class="end" id="end">
-            <h1>❤️ The End ❤️</h1>
-            <p>Some memories deserve their own diary.</p>
+            <div class="page back"></div>
         </div>
 
     </div>
 </div>
 
 <script>
+// Track layered stacking orders during dynamic flips
+let totalSheets = 4;
+
 function openDiary() {
-    // Elegant slide & fade out for cover
-    document.getElementById("cover").style.transform = "rotateY(-90deg)";
-    document.getElementById("cover").style.opacity = "0";
+    document.getElementById("cover").classList.add("opened");
+    
+    // Build out spine loops
+    const spine = document.getElementById("spine");
+    if(spine.children.length === 0) {
+        for(let r=0; r<18; r++) {
+            let ring = document.createElement("div");
+            ring.className = "spiral-ring";
+            spine.appendChild(ring);
+        }
+    }
 
     setTimeout(() => {
         document.getElementById("cover").style.display = "none";
         document.getElementById("book").style.display = "block";
-    }, 1000);
+        resetZIndex();
+    }, 600);
 }
 
-function nextSpread(currentRightPageNum) {
-    // Hide current pair
-    document.getElementById("p" + (currentRightPageNum - 1)).classList.remove("active");
-    document.getElementById("p" + currentRightPageNum).classList.remove("active");
+function resetZIndex() {
+    // Left-to-right base stacking layer calculation
+    for (let i = 1; i <= totalSheets; i++) {
+        let sheet = document.getElementById("sheet" + i);
+        if (sheet.classList.contains("flipped")) {
+            sheet.style.zIndex = i;
+        } else {
+            sheet.style.zIndex = (totalSheets - i + 1);
+        }
+    }
+}
 
-    // Show next pair
-    document.getElementById("p" + (currentRightPageNum + 1)).classList.add("active");
-    document.getElementById("p" + (currentRightPageNum + 2)).classList.add("active");
+function turnForward(sheetNum) {
+    let sheet = document.getElementById("sheet" + sheetNum);
+    sheet.classList.add("flipped");
+    resetZIndex();
+}
+
+function turnBackward(sheetNum) {
+    let sheet = document.getElementById("sheet" + sheetNum);
+    sheet.classList.remove("flipped");
+    resetZIndex();
+}
+
+function restartDiary() {
+    // Unflip sheets backwards with a cascading wave timing element
+    for (let i = totalSheets; i >= 1; i--) {
+        setTimeout(() => {
+            document.getElementById("sheet" + i).classList.remove("flipped");
+            resetZIndex();
+        }, (totalSheets - i) * 200);
+    }
 }
 
 function playAudio(file) {
     let audio = new Audio(file);
     audio.play();
-}
-
-function ending() {
-    // Hide last set of pages
-    document.getElementById("p5").classList.remove("active");
-    document.getElementById("p6").classList.remove("active");
-    document.getElementById("end").style.display = "block";
 }
 
 // Sparkle generation
