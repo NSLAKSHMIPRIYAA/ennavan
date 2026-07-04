@@ -196,9 +196,7 @@ gap:10px;
 width:100%;
 
 }
-.nav-btn{
-    margin-top: auto;
-}
+
 
 .voice, .nav-btn {
     padding: 8px 16px;
@@ -393,269 +391,184 @@ width:100%;
 
     <!-- BOOK SYSTEM -->
     <div class="book" id="book">
-        
-        <!-- SPIRAL BINDING EFFECT -->
-        <div class="spiral-spine" id="spine">
-            <!-- Rings generated automatically via JS -->
-        </div>
 
-        <!-- SHEET 1 (Front: Chapter 1 | Back: Chapter 2) -->
+        <div class="spiral-spine" id="spine"></div>
+
+        <!-- ================= SHEET 1 ================= -->
         <div class="sheet" id="sheet1">
+
+            <!-- FRONT -->
             <div class="page front">
                 <h2>Chapter 1</h2>
-                <img src="image1.jpg" alt="Memory 1">
+                <img src="image1.jpg">
                 <div class="caption">Your first memory goes here ✨</div>
+
                 <div class="buttons-container">
+
                     <div class="cassette-player">
+                        <div class="cassette-title">🎙️ Lakshmi's Voice</div>
 
-    <div class="cassette-title">
-        🎙️ Lakshmi's Voice
-    </div>
+                        <div class="player-controls">
+                            <button class="play-btn" onclick="toggleAudio('audio1.mp3', this)">▶️</button>
+                            <input type="range" class="progress" value="0" min="0" max="100">
+                            <span class="timer">0:00 / 0:00</span>
+                        </div>
 
-    <div class="player-controls">
+                        <div class="recorded">Recorded specially for you ❤️</div>
+                    </div>
 
-        <button class="play-btn"
-                onclick="toggleAudio('audio1.mp3', this)">
-            ▶️
-        </button>
-
-        <input
-            type="range"
-            class="progress"
-            value="0"
-            min="0"
-            max="100">
-
-        <span class="timer">
-            0:00 / 0:00
-        </span>
-
-    </div>
-
-    <div class="recorded">
-        Recorded specially for you ❤️
-    </div>
-
-</div>
                     <button class="nav-btn" onclick="turnForward(1)">Next →</button>
+
                 </div>
             </div>
+
+            <!-- BACK -->
             <div class="page back">
                 <h2>Chapter 2</h2>
-                <img src="image2.jpg" alt="Memory 2">
+                <img src="image2.jpg">
                 <div class="caption">Write your favourite moment here ❤️</div>
+
                 <div class="buttons-container">
-                    <button class="nav-btn" onclick="turnBackward(1)">← Back</button>
+
                     <div class="cassette-player">
+                        <div class="cassette-title">🎙️ Lakshmi's Voice</div>
 
-    <div class="cassette-title">
-        🎙️ Lakshmi's Voice
-    </div>
+                        <div class="player-controls">
+                            <button class="play-btn" onclick="toggleAudio('audio2.mp3', this)">▶️</button>
+                            <input type="range" class="progress" value="0" min="0" max="100">
+                            <span class="timer">0:00 / 0:00</span>
+                        </div>
 
-    <div class="player-controls">
+                        <div class="recorded">Recorded specially for you ❤️</div>
+                    </div>
 
-        <button class="play-btn"
-                onclick="toggleAudio('audio2.mp3', this)">
-            ▶️
-        </button>
+                    <button class="nav-btn" onclick="turnBackward(1)">← Back</button>
 
-        <input
-            type="range"
-            class="progress"
-            value="0"
-            min="0"
-            max="100">
-
-        <span class="timer">
-            0:00 / 0:00
-        </span>
-
-    </div>
-
-    <div class="recorded">
-        Recorded specially for you ❤️
-    </div>
-
-</div>
                 </div>
             </div>
         </div>
 
-        <!-- SHEET 2 (Front: Chapter 3 | Back: Chapter 4) -->
+        <!-- ================= SHEET 2 ================= -->
         <div class="sheet" id="sheet2">
+
             <div class="page front">
                 <h2>Chapter 3</h2>
-                <img src="image3.jpg" alt="Memory 3">
+                <img src="image3.jpg">
                 <div class="caption">A story you never want to forget 💌</div>
+
                 <div class="buttons-container">
+
                     <div class="cassette-player">
+                        <div class="cassette-title">🎙️ Lakshmi's Voice</div>
 
-    <div class="cassette-title">
-        🎙️ Lakshmi's Voice
-    </div>
+                        <div class="player-controls">
+                            <button class="play-btn" onclick="toggleAudio('audio3.mp3', this)">▶️</button>
+                            <input type="range" class="progress" value="0" min="0" max="100">
+                            <span class="timer">0:00 / 0:00</span>
+                        </div>
 
-    <div class="player-controls">
+                        <div class="recorded">Recorded specially for you ❤️</div>
+                    </div>
 
-        <button class="play-btn"
-                onclick="toggleAudio('audio3.mp3', this)">
-            ▶️
-        </button>
-
-        <input
-            type="range"
-            class="progress"
-            value="0"
-            min="0"
-            max="100">
-
-        <span class="timer">
-            0:00 / 0:00
-        </span>
-
-    </div>
-
-    <div class="recorded">
-        Recorded specially for you ❤️
-    </div>
-
-</div>
                     <button class="nav-btn" onclick="turnForward(2)">Next →</button>
+
                 </div>
             </div>
+
             <div class="page back">
                 <h2>Chapter 4</h2>
-                <img src="image4.jpg" alt="Memory 4">
+                <img src="image4.jpg">
                 <div class="caption">Another beautiful memory 🌙</div>
+
                 <div class="buttons-container">
-                    <button class="nav-btn" onclick="turnBackward(2)">← Back</button>
+
                     <div class="cassette-player">
+                        <div class="cassette-title">🎙️ Lakshmi's Voice</div>
 
-    <div class="cassette-title">
-        🎙️ Lakshmi's Voice
-    </div>
+                        <div class="player-controls">
+                            <button class="play-btn" onclick="toggleAudio('audio4.mp3', this)">▶️</button>
+                            <input type="range" class="progress" value="0" min="0" max="100">
+                            <span class="timer">0:00 / 0:00</span>
+                        </div>
 
-    <div class="player-controls">
+                        <div class="recorded">Recorded specially for you ❤️</div>
+                    </div>
 
-        <button class="play-btn"
-                onclick="toggleAudio('audio4.mp3', this)">
-            ▶️
-        </button>
+                    <button class="nav-btn" onclick="turnBackward(2)">← Back</button>
 
-        <input
-            type="range"
-            class="progress"
-            value="0"
-            min="0"
-            max="100">
-
-        <span class="timer">
-            0:00 / 0:00
-        </span>
-
-    </div>
-
-    <div class="recorded">
-        Recorded specially for you ❤️
-    </div>
-
-</div>
                 </div>
             </div>
         </div>
 
-        <!-- SHEET 3 (Front: Chapter 5 | Back: Chapter 6) -->
+        <!-- ================= SHEET 3 ================= -->
         <div class="sheet" id="sheet3">
+
             <div class="page front">
                 <h2>Chapter 5</h2>
-                <img src="image5.jpg" alt="Memory 5">
+                <img src="image5.jpg">
                 <div class="caption">Forever favourite moment ❤️</div>
+
                 <div class="buttons-container">
+
                     <div class="cassette-player">
+                        <div class="cassette-title">🎙️ Lakshmi's Voice</div>
 
-    <div class="cassette-title">
-        🎙️ Lakshmi's Voice
-    </div>
+                        <div class="player-controls">
+                            <button class="play-btn" onclick="toggleAudio('audio5.mp3', this)">▶️</button>
+                            <input type="range" class="progress" value="0" min="0" max="100">
+                            <span class="timer">0:00 / 0:00</span>
+                        </div>
 
-    <div class="player-controls">
+                        <div class="recorded">Recorded specially for you ❤️</div>
+                    </div>
 
-        <button class="play-btn"
-                onclick="toggleAudio('audio5.mp3', this)">
-            ▶️
-        </button>
-
-        <input
-            type="range"
-            class="progress"
-            value="0"
-            min="0"
-            max="100">
-
-        <span class="timer">
-            0:00 / 0:00
-        </span>
-
-    </div>
-
-    <div class="recorded">
-        Recorded specially for you ❤️
-    </div>
-
-</div>
                     <button class="nav-btn" onclick="turnForward(3)">Next →</button>
+
                 </div>
             </div>
+
             <div class="page back">
                 <h2>Chapter 6</h2>
-                <img src="image6.jpg" alt="Memory 6">
+                <img src="image6.jpg">
                 <div class="caption">And the story continues...</div>
+
                 <div class="buttons-container">
-                    <button class="nav-btn" onclick="turnBackward(3)">← Back</button>
+
                     <div class="cassette-player">
+                        <div class="cassette-title">🎙️ Lakshmi's Voice</div>
 
-    <div class="cassette-title">
-        🎙️ Lakshmi's Voice
-    </div>
+                        <div class="player-controls">
+                            <button class="play-btn" onclick="toggleAudio('audio6.mp3', this)">▶️</button>
+                            <input type="range" class="progress" value="0" min="0" max="100">
+                            <span class="timer">0:00 / 0:00</span>
+                        </div>
 
-    <div class="player-controls">
+                        <div class="recorded">Recorded specially for you ❤️</div>
+                    </div>
 
-        <button class="play-btn"
-                onclick="toggleAudio('audio6.mp3', this)">
-            ▶️
-        </button>
+                    <button class="nav-btn" onclick="turnBackward(3)">← Back</button>
 
-        <input
-            type="range"
-            class="progress"
-            value="0"
-            min="0"
-            max="100">
-
-        <span class="timer">
-            0:00 / 0:00
-        </span>
-
-    </div>
-
-    <div class="recorded">
-        Recorded specially for you ❤️
-    </div>
-
-</div>
-                    <button class="nav-btn" onclick="turnForward(4)">Finish ❤️</button>
                 </div>
             </div>
         </div>
 
-        <!-- SHEET 4 (Front: End Screen | Back: Empty) -->
+        <!-- ================= SHEET 4 ================= -->
         <div class="sheet" id="sheet4">
-            <div class="page front" style="justify-content: center; padding-top: 0;">
-                <h1 style="color: #61705a; font-weight: normal; font-size: 36px; margin-bottom: 10px;">❤️ The End ❤️</h1>
-                <p style="color: #6b6055; font-style: italic; margin-bottom: 30px;">Some memories deserve their own diary.</p>
+
+            <div class="page front" style="justify-content:center;">
+                <h1 style="color:#61705a;">❤️ The End ❤️</h1>
+                <p style="color:#6b6055;">Some memories deserve their own diary.</p>
+
                 <div class="buttons-container">
+
                     <button class="nav-btn" onclick="turnBackward(4)">← Back</button>
-                    <button class="voice" style="background: #7c8d74; color: white;" onclick="restartDiary()"> Restart Diary</button>
+                    <button class="voice" style="background:#7c8d74;color:white;" onclick="restartDiary()">
+                        Restart Diary
+                    </button>
+
                 </div>
             </div>
+
             <div class="page back"></div>
         </div>
 
