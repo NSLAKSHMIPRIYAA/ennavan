@@ -166,7 +166,7 @@ body {
 
 .page img {
     width: 100%;
-    height: 240px;
+    height: 220px;
     object-fit: cover;
     border-radius: 4px;
     border: 6px solid #f2e6d6;
@@ -183,12 +183,18 @@ body {
 }
 
 /* BUTTONS */
-.buttons-container {
-    display: flex;
-    gap: 10px;
-    width: 100%;
-    justify-content: center;
-    margin-top: 5px;
+.buttons-container{
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+gap:12px;
+
+width:100%;
+
 }
 
 .voice, .nav-btn {
@@ -257,6 +263,113 @@ body {
     0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
     50% { transform: translateY(-20px) rotate(15deg); opacity: 0.8; }
 }
+/* ---------------- CASSETTE PLAYER ---------------- */
+
+.cassette-player{
+
+    width:95%;
+
+    background:#f6f0e7;
+
+    border:3px solid #d8c4a2;
+
+    border-radius:15px;
+
+    padding:8px 12px;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.15);
+
+}
+
+.cassette-title{
+
+    text-align:center;
+
+    font-weight:bold;
+
+    color:#6a5847;
+
+    margin-bottom:8px;
+
+    font-size:15px;
+
+    letter-spacing:0.5px;
+
+}
+
+.player-controls{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.play-btn{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#7c8d74;
+
+    color:white;
+
+    font-size:18px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+}
+
+.play-btn:hover{
+
+    background:#61705a;
+
+    transform:scale(1.08);
+
+}
+
+.progress{
+    flex:1;
+    cursor:pointer;
+    accent-color:#7c8d74;
+}
+
+.timer{
+
+    width:78px;
+
+    font-size:12px;
+
+    color:#666;
+
+    text-align:right;
+
+    font-family:Arial, sans-serif;
+
+}
+
+.recorded{
+
+    margin-top:8px;
+
+    text-align:center;
+
+    font-size:12px;
+
+    color:#8a7665;
+
+    font-style:italic;
+
+}
 </style>
 </head>
 
@@ -290,7 +403,37 @@ body {
                 <img src="image1.jpg" alt="Memory 1">
                 <div class="caption">Your first memory goes here ✨</div>
                 <div class="buttons-container">
-                    <button class="voice" onclick="playAudio('audio1.mp3')">🎙️ Voice Note</button>
+                    <div class="cassette-player">
+
+    <div class="cassette-title">
+        🎙️ Lakshmi's Voice
+    </div>
+
+    <div class="player-controls">
+
+        <button class="play-btn"
+                onclick="toggleAudio('audio1.mp3', this)">
+            ▶️
+        </button>
+
+        <input
+            type="range"
+            class="progress"
+            value="0"
+            min="0"
+            max="100">
+
+        <span class="timer">
+            0:00 / 0:00
+        </span>
+
+    </div>
+
+    <div class="recorded">
+        Recorded specially for you ❤️
+    </div>
+
+</div>
                     <button class="nav-btn" onclick="turnForward(1)">Next →</button>
                 </div>
             </div>
@@ -300,7 +443,37 @@ body {
                 <div class="caption">Write your favourite moment here ❤️</div>
                 <div class="buttons-container">
                     <button class="nav-btn" onclick="turnBackward(1)">← Back</button>
-                    <button class="voice" onclick="playAudio('audio2.mp3')">🎙️ Voice Note</button>
+                    <div class="cassette-player">
+
+    <div class="cassette-title">
+        🎙️ Lakshmi's Voice
+    </div>
+
+    <div class="player-controls">
+
+        <button class="play-btn"
+                onclick="toggleAudio('audio2.mp3', this)">
+            ▶️
+        </button>
+
+        <input
+            type="range"
+            class="progress"
+            value="0"
+            min="0"
+            max="100">
+
+        <span class="timer">
+            0:00 / 0:00
+        </span>
+
+    </div>
+
+    <div class="recorded">
+        Recorded specially for you ❤️
+    </div>
+
+</div>
                 </div>
             </div>
         </div>
@@ -312,7 +485,37 @@ body {
                 <img src="image3.jpg" alt="Memory 3">
                 <div class="caption">A story you never want to forget 💌</div>
                 <div class="buttons-container">
-                    <button class="voice" onclick="playAudio('audio3.mp3')">🎙️ Voice Note</button>
+                    <div class="cassette-player">
+
+    <div class="cassette-title">
+        🎙️ Lakshmi's Voice
+    </div>
+
+    <div class="player-controls">
+
+        <button class="play-btn"
+                onclick="toggleAudio('audio3.mp3', this)">
+            ▶️
+        </button>
+
+        <input
+            type="range"
+            class="progress"
+            value="0"
+            min="0"
+            max="100">
+
+        <span class="timer">
+            0:00 / 0:00
+        </span>
+
+    </div>
+
+    <div class="recorded">
+        Recorded specially for you ❤️
+    </div>
+
+</div>
                     <button class="nav-btn" onclick="turnForward(2)">Next →</button>
                 </div>
             </div>
@@ -322,7 +525,37 @@ body {
                 <div class="caption">Another beautiful memory 🌙</div>
                 <div class="buttons-container">
                     <button class="nav-btn" onclick="turnBackward(2)">← Back</button>
-                    <button class="voice" onclick="playAudio('audio4.mp3')">🎙️ Voice Note</button>
+                    <div class="cassette-player">
+
+    <div class="cassette-title">
+        🎙️ Lakshmi's Voice
+    </div>
+
+    <div class="player-controls">
+
+        <button class="play-btn"
+                onclick="toggleAudio('audio4.mp3', this)">
+            ▶️
+        </button>
+
+        <input
+            type="range"
+            class="progress"
+            value="0"
+            min="0"
+            max="100">
+
+        <span class="timer">
+            0:00 / 0:00
+        </span>
+
+    </div>
+
+    <div class="recorded">
+        Recorded specially for you ❤️
+    </div>
+
+</div>
                 </div>
             </div>
         </div>
@@ -334,7 +567,37 @@ body {
                 <img src="image5.jpg" alt="Memory 5">
                 <div class="caption">Forever favourite moment ❤️</div>
                 <div class="buttons-container">
-                    <button class="voice" onclick="playAudio('audio5.mp3')">🎙️ Voice Note</button>
+                    <div class="cassette-player">
+
+    <div class="cassette-title">
+        🎙️ Lakshmi's Voice
+    </div>
+
+    <div class="player-controls">
+
+        <button class="play-btn"
+                onclick="toggleAudio('audio5.mp3', this)">
+            ▶️
+        </button>
+
+        <input
+            type="range"
+            class="progress"
+            value="0"
+            min="0"
+            max="100">
+
+        <span class="timer">
+            0:00 / 0:00
+        </span>
+
+    </div>
+
+    <div class="recorded">
+        Recorded specially for you ❤️
+    </div>
+
+</div>
                     <button class="nav-btn" onclick="turnForward(3)">Next →</button>
                 </div>
             </div>
@@ -344,7 +607,37 @@ body {
                 <div class="caption">And the story continues...</div>
                 <div class="buttons-container">
                     <button class="nav-btn" onclick="turnBackward(3)">← Back</button>
-                    <button class="voice" onclick="playAudio('audio6.mp3')">🎙️ Voice Note</button>
+                    <div class="cassette-player">
+
+    <div class="cassette-title">
+        🎙️ Lakshmi's Voice
+    </div>
+
+    <div class="player-controls">
+
+        <button class="play-btn"
+                onclick="toggleAudio('audio6.mp3', this)">
+            ▶️
+        </button>
+
+        <input
+            type="range"
+            class="progress"
+            value="0"
+            min="0"
+            max="100">
+
+        <span class="timer">
+            0:00 / 0:00
+        </span>
+
+    </div>
+
+    <div class="recorded">
+        Recorded specially for you ❤️
+    </div>
+
+</div>
                     <button class="nav-btn" onclick="turnForward(4)">Finish ❤️</button>
                 </div>
             </div>
@@ -402,19 +695,60 @@ function resetZIndex() {
     }
 }
 
-function turnForward(sheetNum) {
+ function turnForward(sheetNum) {
+
+    if(currentAudio){
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+
+        if(currentPlayer){
+    currentPlayer.querySelector(".play-btn").innerHTML = "▶";
+    currentPlayer.querySelector(".progress").value = 0;
+    currentPlayer.querySelector(".timer").innerHTML =
+        "0:00 / " + formatTime(currentAudio.duration);
+}
+        currentAudio = null;
+        currentPlayer = null;
+    }
+
     let sheet = document.getElementById("sheet" + sheetNum);
     sheet.classList.add("flipped");
     resetZIndex();
 }
 
 function turnBackward(sheetNum) {
+    if(currentAudio){
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+
+    if(currentPlayer){
+    currentPlayer.querySelector(".play-btn").innerHTML = "▶";
+    currentPlayer.querySelector(".progress").value = 0;
+    currentPlayer.querySelector(".timer").innerHTML =
+        "0:00 / " + formatTime(currentAudio.duration);
+}
+        currentAudio = null;
+        currentPlayer = null;
+}
     let sheet = document.getElementById("sheet" + sheetNum);
     sheet.classList.remove("flipped");
     resetZIndex();
 }
 
 function restartDiary() {
+    if(currentAudio){
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+
+    if(currentPlayer){
+    currentPlayer.querySelector(".play-btn").innerHTML = "▶";
+    currentPlayer.querySelector(".progress").value = 0;
+    currentPlayer.querySelector(".timer").innerHTML =
+        "0:00 / " + formatTime(currentAudio.duration);
+}
+        currentAudio = null;
+        currentPlayer = null;
+}
     // Unflip sheets backwards with a cascading wave timing element
     for (let i = totalSheets; i >= 1; i--) {
         setTimeout(() => {
@@ -424,11 +758,147 @@ function restartDiary() {
     }
 }
 
-function playAudio(file) {
-    let audio = new Audio(file);
-    audio.play();
+let currentAudio = null;
+
+let currentPlayer = null;
+
+
+
+function formatTime(seconds){
+
+    if(isNaN(seconds))
+        return "0:00";
+
+    let mins=Math.floor(seconds/60);
+
+    let secs=Math.floor(seconds%60);
+
+    if(secs<10)
+        secs="0"+secs;
+
+    return mins+":"+secs;
+
 }
 
+
+
+function toggleAudio(file,button){
+
+    let player=button.closest(".cassette-player");
+
+    let slider=player.querySelector(".progress");
+
+    let timer=player.querySelector(".timer");
+
+
+
+    // Resume same audio
+
+    if(currentAudio &&
+       currentAudio.src.includes(file)){
+
+        if(currentAudio.paused){
+
+            currentAudio.play();
+
+            button.innerHTML="⏸";
+
+        }
+
+        else{
+
+            currentAudio.pause();
+
+            button.innerHTML="▶";
+
+        }
+
+        return;
+
+    }
+
+
+
+    // Stop previous
+
+    // Stop previous
+
+if(currentAudio){
+
+    currentAudio.pause();
+
+    currentAudio.currentTime = 0;
+
+    currentPlayer.querySelector(".play-btn").innerHTML = "▶";
+
+    currentPlayer.querySelector(".progress").value = 0;
+
+    currentPlayer.querySelector(".timer").innerHTML =
+        "0:00 / " + formatTime(currentAudio.duration);
+    currentAudio = null;
+    currentPlayer = null;
+
+}
+
+
+
+    currentAudio=new Audio(file);
+
+    currentPlayer=player;
+
+
+
+    button.innerHTML="⏸";
+
+
+
+    currentAudio.onloadedmetadata=function(){
+
+        slider.max=currentAudio.duration;
+
+        timer.innerHTML=
+
+        "0:00 / "+formatTime(currentAudio.duration);
+
+    }
+
+
+
+    currentAudio.ontimeupdate=function(){
+
+        slider.value=currentAudio.currentTime;
+
+        timer.innerHTML=
+
+        formatTime(currentAudio.currentTime)
+
+        +" / "+
+
+        formatTime(currentAudio.duration);
+
+    }
+
+
+
+    slider.oninput=function(){
+
+        currentAudio.currentTime=this.value;
+
+    }
+
+
+
+    currentAudio.onended = function(){
+
+    button.innerHTML = "▶";
+    slider.value = 0;
+    timer.innerHTML = "0:00 / " + formatTime(slider.max);
+    currentAudio = null;
+    currentPlayer = null;
+}
+currentAudio.play();
+
+}
 // Sparkle generation
 for(let i = 0; i < 25; i++) {
     let s = document.createElement("div");
@@ -439,6 +909,9 @@ for(let i = 0; i < 25; i++) {
     s.style.animationDelay = (Math.random() * 3) + "s";
     document.body.appendChild(s);
 }
+
+
+
 </script>
 
 </body>
