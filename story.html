@@ -127,7 +127,7 @@ body {
     top: 0;
     left: 0;
     background: #fffcf7; /* Premium off-white paper color */
-    padding: 30px 35px 20px 35px;
+    padding: 35px;
     box-shadow: inset 0 0 30px rgba(223, 193, 138, 0.15);
     display: flex;
     flex-direction: column;
@@ -160,14 +160,13 @@ body {
     text-align: center;
     color: #61705a;
     margin-top: 0;
-    margin-bottom: 5px;
     font-weight: normal;
     letter-spacing: 1px;
 }
 
 .page img {
     width: 100%;
-    height: 200px;
+    height: 220px;
     object-fit: cover;
     border-radius: 4px;
     border: 6px solid #f2e6d6;
@@ -176,24 +175,30 @@ body {
 
 .caption {
     text-align: center;
-    font-size: 14px;
+    font-size: 15px;
     color: #6b6055;
     line-height: 1.4;
     font-style: italic;
-    padding: 5px 5px;
+    padding: 0 5px;
 }
 
-/* UNIFORM HORIZONTAL NAVIGATION ROW */
-.nav-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-top: 5px;
+/* BUTTONS */
+.buttons-container{
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+gap:12px;
+
+width:100%;
+
 }
 
 .voice, .nav-btn {
-    padding: 8px 18px;
+    padding: 8px 16px;
     border: none;
     border-radius: 20px;
     cursor: pointer;
@@ -219,11 +224,6 @@ body {
 
 .nav-btn:hover {
     background: #61705a;
-}
-
-/* Utility layout classes to position buttons perfectly when alone */
-.pull-right {
-    margin-left: auto;
 }
 
 /* CENTRAL SPIRAL BINDING */
@@ -263,73 +263,112 @@ body {
     0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
     50% { transform: translateY(-20px) rotate(15deg); opacity: 0.8; }
 }
-
 /* ---------------- CASSETTE PLAYER ---------------- */
-.cassette-player {
-    width: 100%;
-    background: #f6f0e7;
-    border: 3px solid #d8c4a2;
-    border-radius: 15px;
-    padding: 8px 12px;
-    box-shadow: 0 3px 10px rgba(0,0,0,.15);
-    margin-bottom: 5px;
+
+.cassette-player{
+
+    width:95%;
+
+    background:#f6f0e7;
+
+    border:3px solid #d8c4a2;
+
+    border-radius:15px;
+
+    padding:8px 12px;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.15);
+
 }
 
-.cassette-title {
-    text-align: center;
-    font-weight: bold;
-    color: #6a5847;
-    margin-bottom: 8px;
-    font-size: 14px;
-    letter-spacing: 0.5px;
+.cassette-title{
+
+    text-align:center;
+
+    font-weight:bold;
+
+    color:#6a5847;
+
+    margin-bottom:8px;
+
+    font-size:15px;
+
+    letter-spacing:0.5px;
+
 }
 
-.player-controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.player-controls{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
 }
 
-.play-btn {
-    width: 38px;
-    height: 38px;
-    border: none;
-    border-radius: 50%;
-    background: #7c8d74;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.play-btn{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#7c8d74;
+
+    color:white;
+
+    font-size:18px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
 }
 
-.play-btn:hover {
-    background: #61705a;
-    transform: scale(1.08);
+.play-btn:hover{
+
+    background:#61705a;
+
+    transform:scale(1.08);
+
 }
 
-.progress {
-    flex: 1;
-    cursor: pointer;
-    accent-color: #7c8d74;
+.progress{
+    flex:1;
+    cursor:pointer;
+    accent-color:#7c8d74;
 }
 
-.timer {
-    width: 75px;
-    font-size: 11px;
-    color: #666;
-    text-align: right;
-    font-family: Arial, sans-serif;
+.timer{
+
+    width:78px;
+
+    font-size:12px;
+
+    color:#666;
+
+    text-align:right;
+
+    font-family:Arial, sans-serif;
+
 }
 
-.recorded {
-    margin-top: 6px;
-    text-align: center;
-    font-size: 11px;
-    color: #8a7665;
-    font-style: italic;
+.recorded{
+
+    margin-top:8px;
+
+    text-align:center;
+
+    font-size:12px;
+
+    color:#8a7665;
+
+    font-style:italic;
+
 }
 </style>
 </head>
@@ -338,6 +377,7 @@ body {
 
 <div class="diary">
 
+    <!-- COVER -->
     <div class="cover" id="cover">
         <div class="gold one"></div>
         <div class="gold two"></div>
@@ -348,143 +388,267 @@ body {
         <button class="open" onclick="openDiary()">Open Diary</button>
     </div>
 
+    <!-- BOOK SYSTEM -->
     <div class="book" id="book">
         
+        <!-- SPIRAL BINDING EFFECT -->
         <div class="spiral-spine" id="spine">
-            </div>
+            <!-- Rings generated automatically via JS -->
+        </div>
 
+        <!-- SHEET 1 (Front: Chapter 1 | Back: Chapter 2) -->
         <div class="sheet" id="sheet1">
             <div class="page front">
                 <h2>Chapter 1</h2>
                 <img src="image1.jpg" alt="Memory 1">
                 <div class="caption">Your first memory goes here ✨</div>
-                
-                <div class="cassette-player">
-                    <div class="cassette-title">🎙️ Lakshmi's Voice</div>
-                    <div class="player-controls">
-                        <button class="play-btn" onclick="toggleAudio('audio1.mp3', this)">▶️</button>
-                        <input type="range" class="progress" value="0" min="0" max="100">
-                        <span class="timer">0:00 / 0:00</span>
-                    </div>
-                    <div class="recorded">Recorded specially for you ❤️</div>
-                </div>
+                <div class="buttons-container">
+                    <div class="cassette-player">
 
-                <div class="nav-row">
-                    <button class="nav-btn pull-right" onclick="turnForward(1)">Next →</button>
+    <div class="cassette-title">
+        🎙️ Lakshmi's Voice
+    </div>
+
+    <div class="player-controls">
+
+        <button class="play-btn"
+                onclick="toggleAudio('audio1.mp3', this)">
+            ▶️
+        </button>
+
+        <input
+            type="range"
+            class="progress"
+            value="0"
+            min="0"
+            max="100">
+
+        <span class="timer">
+            0:00 / 0:00
+        </span>
+
+    </div>
+
+    <div class="recorded">
+        Recorded specially for you ❤️
+    </div>
+
+</div>
+                    <button class="nav-btn" onclick="turnForward(1)">Next →</button>
                 </div>
             </div>
-            
             <div class="page back">
                 <h2>Chapter 2</h2>
                 <img src="image2.jpg" alt="Memory 2">
                 <div class="caption">Write your favourite moment here ❤️</div>
-                
-                <div class="cassette-player">
-                    <div class="cassette-title">🎙️ Lakshmi's Voice</div>
-                    <div class="player-controls">
-                        <button class="play-btn" onclick="toggleAudio('audio2.mp3', this)">▶️</button>
-                        <input type="range" class="progress" value="0" min="0" max="100">
-                        <span class="timer">0:00 / 0:00</span>
-                    </div>
-                    <div class="recorded">Recorded specially for you ❤️</div>
-                </div>
-
-                <div class="nav-row">
+                <div class="buttons-container">
                     <button class="nav-btn" onclick="turnBackward(1)">← Back</button>
+                    <div class="cassette-player">
+
+    <div class="cassette-title">
+        🎙️ Lakshmi's Voice
+    </div>
+
+    <div class="player-controls">
+
+        <button class="play-btn"
+                onclick="toggleAudio('audio2.mp3', this)">
+            ▶️
+        </button>
+
+        <input
+            type="range"
+            class="progress"
+            value="0"
+            min="0"
+            max="100">
+
+        <span class="timer">
+            0:00 / 0:00
+        </span>
+
+    </div>
+
+    <div class="recorded">
+        Recorded specially for you ❤️
+    </div>
+
+</div>
                 </div>
             </div>
         </div>
 
+        <!-- SHEET 2 (Front: Chapter 3 | Back: Chapter 4) -->
         <div class="sheet" id="sheet2">
             <div class="page front">
                 <h2>Chapter 3</h2>
                 <img src="image3.jpg" alt="Memory 3">
                 <div class="caption">A story you never want to forget 💌</div>
-                
-                <div class="cassette-player">
-                    <div class="cassette-title">🎙️ Lakshmi's Voice</div>
-                    <div class="player-controls">
-                        <button class="play-btn" onclick="toggleAudio('audio3.mp3', this)">▶️</button>
-                        <input type="range" class="progress" value="0" min="0" max="100">
-                        <span class="timer">0:00 / 0:00</span>
-                    </div>
-                    <div class="recorded">Recorded specially for you ❤️</div>
-                </div>
+                <div class="buttons-container">
+                    <div class="cassette-player">
 
-                <div class="nav-row">
-                    <button class="nav-btn pull-right" onclick="turnForward(2)">Next →</button>
+    <div class="cassette-title">
+        🎙️ Lakshmi's Voice
+    </div>
+
+    <div class="player-controls">
+
+        <button class="play-btn"
+                onclick="toggleAudio('audio3.mp3', this)">
+            ▶️
+        </button>
+
+        <input
+            type="range"
+            class="progress"
+            value="0"
+            min="0"
+            max="100">
+
+        <span class="timer">
+            0:00 / 0:00
+        </span>
+
+    </div>
+
+    <div class="recorded">
+        Recorded specially for you ❤️
+    </div>
+
+</div>
+                    <button class="nav-btn" onclick="turnForward(2)">Next →</button>
                 </div>
             </div>
-            
             <div class="page back">
                 <h2>Chapter 4</h2>
                 <img src="image4.jpg" alt="Memory 4">
                 <div class="caption">Another beautiful memory 🌙</div>
-                
-                <div class="cassette-player">
-                    <div class="cassette-title">🎙️ Lakshmi's Voice</div>
-                    <div class="player-controls">
-                        <button class="play-btn" onclick="toggleAudio('audio4.mp3', this)">▶️</button>
-                        <input type="range" class="progress" value="0" min="0" max="100">
-                        <span class="timer">0:00 / 0:00</span>
-                    </div>
-                    <div class="recorded">Recorded specially for you ❤️</div>
-                </div>
-
-                <div class="nav-row">
+                <div class="buttons-container">
                     <button class="nav-btn" onclick="turnBackward(2)">← Back</button>
+                    <div class="cassette-player">
+
+    <div class="cassette-title">
+        🎙️ Lakshmi's Voice
+    </div>
+
+    <div class="player-controls">
+
+        <button class="play-btn"
+                onclick="toggleAudio('audio4.mp3', this)">
+            ▶️
+        </button>
+
+        <input
+            type="range"
+            class="progress"
+            value="0"
+            min="0"
+            max="100">
+
+        <span class="timer">
+            0:00 / 0:00
+        </span>
+
+    </div>
+
+    <div class="recorded">
+        Recorded specially for you ❤️
+    </div>
+
+</div>
                 </div>
             </div>
         </div>
 
+        <!-- SHEET 3 (Front: Chapter 5 | Back: Chapter 6) -->
         <div class="sheet" id="sheet3">
             <div class="page front">
                 <h2>Chapter 5</h2>
                 <img src="image5.jpg" alt="Memory 5">
                 <div class="caption">Forever favourite moment ❤️</div>
-                
-                <div class="cassette-player">
-                    <div class="cassette-title">🎙️ Lakshmi's Voice</div>
-                    <div class="player-controls">
-                        <button class="play-btn" onclick="toggleAudio('audio5.mp3', this)">▶️</button>
-                        <input type="range" class="progress" value="0" min="0" max="100">
-                        <span class="timer">0:00 / 0:00</span>
-                    </div>
-                    <div class="recorded">Recorded specially for you ❤️</div>
-                </div>
+                <div class="buttons-container">
+                    <div class="cassette-player">
 
-                <div class="nav-row">
-                    <button class="nav-btn pull-right" onclick="turnForward(3)">Next →</button>
+    <div class="cassette-title">
+        🎙️ Lakshmi's Voice
+    </div>
+
+    <div class="player-controls">
+
+        <button class="play-btn"
+                onclick="toggleAudio('audio5.mp3', this)">
+            ▶️
+        </button>
+
+        <input
+            type="range"
+            class="progress"
+            value="0"
+            min="0"
+            max="100">
+
+        <span class="timer">
+            0:00 / 0:00
+        </span>
+
+    </div>
+
+    <div class="recorded">
+        Recorded specially for you ❤️
+    </div>
+
+</div>
+                    <button class="nav-btn" onclick="turnForward(3)">Next →</button>
                 </div>
             </div>
-            
             <div class="page back">
                 <h2>Chapter 6</h2>
                 <img src="image6.jpg" alt="Memory 6">
                 <div class="caption">And the story continues...</div>
-                
-                <div class="cassette-player">
-                    <div class="cassette-title">🎙️ Lakshmi's Voice</div>
-                    <div class="player-controls">
-                        <button class="play-btn" onclick="toggleAudio('audio6.mp3', this)">▶️</button>
-                        <input type="range" class="progress" value="0" min="0" max="100">
-                        <span class="timer">0:00 / 0:00</span>
-                    </div>
-                    <div class="recorded">Recorded specially for you ❤️</div>
-                </div>
-
-                <div class="nav-row">
+                <div class="buttons-container">
                     <button class="nav-btn" onclick="turnBackward(3)">← Back</button>
+                    <div class="cassette-player">
+
+    <div class="cassette-title">
+        🎙️ Lakshmi's Voice
+    </div>
+
+    <div class="player-controls">
+
+        <button class="play-btn"
+                onclick="toggleAudio('audio6.mp3', this)">
+            ▶️
+        </button>
+
+        <input
+            type="range"
+            class="progress"
+            value="0"
+            min="0"
+            max="100">
+
+        <span class="timer">
+            0:00 / 0:00
+        </span>
+
+    </div>
+
+    <div class="recorded">
+        Recorded specially for you ❤️
+    </div>
+
+</div>
                     <button class="nav-btn" onclick="turnForward(4)">Finish ❤️</button>
                 </div>
             </div>
         </div>
 
+        <!-- SHEET 4 (Front: End Screen | Back: Empty) -->
         <div class="sheet" id="sheet4">
             <div class="page front" style="justify-content: center; padding-top: 0;">
                 <h1 style="color: #61705a; font-weight: normal; font-size: 36px; margin-bottom: 10px;">❤️ The End ❤️</h1>
                 <p style="color: #6b6055; font-style: italic; margin-bottom: 30px;">Some memories deserve their own diary.</p>
-                <div class="nav-row" style="justify-content: center; gap: 15px;">
+                <div class="buttons-container">
                     <button class="nav-btn" onclick="turnBackward(4)">← Back</button>
                     <button class="voice" style="background: #7c8d74; color: white;" onclick="restartDiary()"> Restart Diary</button>
                 </div>
@@ -496,15 +660,16 @@ body {
 </div>
 
 <script>
+// Track layered stacking orders during dynamic flips
 let totalSheets = 4;
 
 function openDiary() {
     document.getElementById("cover").classList.add("opened");
     
+    // Build out spine loops
     const spine = document.getElementById("spine");
     if(spine.children.length === 0) {
         for(let r=0; r<18; r++) {
-            let ring = document.createElement("div");
             let ring = document.createElement("div");
             ring.className = "spiral-ring";
             spine.appendChild(ring);
@@ -519,6 +684,7 @@ function openDiary() {
 }
 
 function resetZIndex() {
+    // Left-to-right base stacking layer calculation
     for (let i = 1; i <= totalSheets; i++) {
         let sheet = document.getElementById("sheet" + i);
         if (sheet.classList.contains("flipped")) {
@@ -529,18 +695,22 @@ function resetZIndex() {
     }
 }
 
-function turnForward(sheetNum) {
+ function turnForward(sheetNum) {
+
     if(currentAudio){
         currentAudio.pause();
         currentAudio.currentTime = 0;
+
         if(currentPlayer){
-            currentPlayer.querySelector(".play-btn").innerHTML = "▶";
-            currentPlayer.querySelector(".progress").value = 0;
-            currentPlayer.querySelector(".timer").innerHTML = "0:00 / " + formatTime(currentAudio.duration);
-        }
+    currentPlayer.querySelector(".play-btn").innerHTML = "▶";
+    currentPlayer.querySelector(".progress").value = 0;
+    currentPlayer.querySelector(".timer").innerHTML =
+        "0:00 / " + formatTime(currentAudio.duration);
+}
         currentAudio = null;
         currentPlayer = null;
     }
+
     let sheet = document.getElementById("sheet" + sheetNum);
     sheet.classList.add("flipped");
     resetZIndex();
@@ -548,16 +718,18 @@ function turnForward(sheetNum) {
 
 function turnBackward(sheetNum) {
     if(currentAudio){
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
-        if(currentPlayer){
-            currentPlayer.querySelector(".play-btn").innerHTML = "▶";
-            currentPlayer.querySelector(".progress").value = 0;
-            currentPlayer.querySelector(".timer").innerHTML = "0:00 / " + formatTime(currentAudio.duration);
-        }
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+
+    if(currentPlayer){
+    currentPlayer.querySelector(".play-btn").innerHTML = "▶";
+    currentPlayer.querySelector(".progress").value = 0;
+    currentPlayer.querySelector(".timer").innerHTML =
+        "0:00 / " + formatTime(currentAudio.duration);
+}
         currentAudio = null;
         currentPlayer = null;
-    }
+}
     let sheet = document.getElementById("sheet" + sheetNum);
     sheet.classList.remove("flipped");
     resetZIndex();
@@ -565,16 +737,19 @@ function turnBackward(sheetNum) {
 
 function restartDiary() {
     if(currentAudio){
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
-        if(currentPlayer){
-            currentPlayer.querySelector(".play-btn").innerHTML = "▶";
-            currentPlayer.querySelector(".progress").value = 0;
-            currentPlayer.querySelector(".timer").innerHTML = "0:00 / " + formatTime(currentAudio.duration);
-        }
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+
+    if(currentPlayer){
+    currentPlayer.querySelector(".play-btn").innerHTML = "▶";
+    currentPlayer.querySelector(".progress").value = 0;
+    currentPlayer.querySelector(".timer").innerHTML =
+        "0:00 / " + formatTime(currentAudio.duration);
+}
         currentAudio = null;
         currentPlayer = null;
-    }
+}
+    // Unflip sheets backwards with a cascading wave timing element
     for (let i = totalSheets; i >= 1; i--) {
         setTimeout(() => {
             document.getElementById("sheet" + i).classList.remove("flipped");
@@ -584,70 +759,146 @@ function restartDiary() {
 }
 
 let currentAudio = null;
+
 let currentPlayer = null;
 
+
+
 function formatTime(seconds){
-    if(isNaN(seconds)) return "0:00";
+
+    if(isNaN(seconds))
+        return "0:00";
+
     let mins=Math.floor(seconds/60);
+
     let secs=Math.floor(seconds%60);
-    if(secs<10) secs="0"+secs;
+
+    if(secs<10)
+        secs="0"+secs;
+
     return mins+":"+secs;
+
 }
+
+
 
 function toggleAudio(file,button){
+
     let player=button.closest(".cassette-player");
+
     let slider=player.querySelector(".progress");
+
     let timer=player.querySelector(".timer");
 
-    if(currentAudio && currentAudio.src.includes(file)){
+
+
+    // Resume same audio
+
+    if(currentAudio &&
+       currentAudio.src.includes(file)){
+
         if(currentAudio.paused){
+
             currentAudio.play();
+
             button.innerHTML="⏸";
-        } else {
-            currentAudio.pause();
-            button.innerHTML="▶";
+
         }
+
+        else{
+
+            currentAudio.pause();
+
+            button.innerHTML="▶";
+
+        }
+
         return;
+
     }
 
-    if(currentAudio){
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
-        currentPlayer.querySelector(".play-btn").innerHTML = "▶";
-        currentPlayer.querySelector(".progress").value = 0;
-        currentPlayer.querySelector(".timer").innerHTML = "0:00 / " + formatTime(currentAudio.duration);
-        currentAudio = null;
-        currentPlayer = null;
-    }
 
-    currentAudio=new Audio(file);
-    currentPlayer=player;
-    button.innerHTML="⏸";
 
-    currentAudio.onloadedmetadata=function(){
-        slider.max=currentAudio.duration;
-        timer.innerHTML="0:00 / "+formatTime(currentAudio.duration);
-    }
+    // Stop previous
 
-    currentAudio.ontimeupdate=function(){
-        slider.value=currentAudio.currentTime;
-        timer.innerHTML=formatTime(currentAudio.currentTime)+" / "+formatTime(currentAudio.duration);
-    }
+    // Stop previous
 
-    slider.oninput=function(){
-        currentAudio.currentTime=this.value;
-    }
+if(currentAudio){
 
-    currentAudio.onended = function(){
-        button.innerHTML = "▶";
-        slider.value = 0;
-        timer.innerHTML = "0:00 / " + formatTime(slider.max);
-        currentAudio = null;
-        currentPlayer = null;
-    }
-    currentAudio.play();
+    currentAudio.pause();
+
+    currentAudio.currentTime = 0;
+
+    currentPlayer.querySelector(".play-btn").innerHTML = "▶";
+
+    currentPlayer.querySelector(".progress").value = 0;
+
+    currentPlayer.querySelector(".timer").innerHTML =
+        "0:00 / " + formatTime(currentAudio.duration);
+    currentAudio = null;
+    currentPlayer = null;
+
 }
 
+
+
+    currentAudio=new Audio(file);
+
+    currentPlayer=player;
+
+
+
+    button.innerHTML="⏸";
+
+
+
+    currentAudio.onloadedmetadata=function(){
+
+        slider.max=currentAudio.duration;
+
+        timer.innerHTML=
+
+        "0:00 / "+formatTime(currentAudio.duration);
+
+    }
+
+
+
+    currentAudio.ontimeupdate=function(){
+
+        slider.value=currentAudio.currentTime;
+
+        timer.innerHTML=
+
+        formatTime(currentAudio.currentTime)
+
+        +" / "+
+
+        formatTime(currentAudio.duration);
+
+    }
+
+
+
+    slider.oninput=function(){
+
+        currentAudio.currentTime=this.value;
+
+    }
+
+
+
+    currentAudio.onended = function(){
+
+    button.innerHTML = "▶";
+    slider.value = 0;
+    timer.innerHTML = "0:00 / " + formatTime(slider.max);
+    currentAudio = null;
+    currentPlayer = null;
+}
+currentAudio.play();
+
+}
 // Sparkle generation
 for(let i = 0; i < 25; i++) {
     let s = document.createElement("div");
@@ -658,6 +909,9 @@ for(let i = 0; i < 25; i++) {
     s.style.animationDelay = (Math.random() * 3) + "s";
     document.body.appendChild(s);
 }
+
+
+
 </script>
 
 </body>
