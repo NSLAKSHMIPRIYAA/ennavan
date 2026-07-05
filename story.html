@@ -550,26 +550,100 @@ body {
         </div>
 
         <!-- ================= SHEET 4 ================= -->
-        <div class="sheet" id="sheet4">
+<div class="sheet" id="sheet4">
 
-            <div class="page front" style="justify-content:center;">
-                <h1 style="color:#61705a;">❤️ The End ❤️</h1>
-                <p style="color:#6b6055;">Some memories deserve their own diary.</p>
+    <!-- FRONT -->
+    <div class="page front">
+        <h2>One Last Page...</h2>
 
-                <div class="buttons-container">
+        <img src="image7.jpg">
 
-                    <button class="nav-btn" onclick="turnBackward(4)">← Back</button>
-                    <button class="voice" style="background:#7c8d74;color:white;" onclick="restartDiary()">
-                        Restart Diary
+        <div class="caption">
+            This one hasn't happened yet...
+        </div>
+
+        <div class="buttons-container">
+
+            <div class="cassette-player">
+
+                <div class="cassette-title">
+                    💖 Before You Turn The Page...
+                </div>
+
+                <div class="player-controls">
+
+                    <button class="play-btn"
+                        onclick="toggleAudio('audio7.mp3', this)">
+                        ▶️
                     </button>
 
+                    <input
+                        type="range"
+                        class="progress"
+                        value="0"
+                        min="0"
+                        max="100">
+
+                    <span class="timer">
+                        0:00 / 0:00
+                    </span>
+
                 </div>
+
+                <div class="recorded">
+                    This moment is about to become a memory ❤️
+                </div>
+
             </div>
 
-            <div class="page back"></div>
+            <button class="nav-btn"
+                onclick="turnForward(4)">
+                Turn The Last Page →
+            </button>
+
         </div>
 
     </div>
+
+    <!-- BACK -->
+    <div class="page back" style="justify-content:center;">
+
+        <h1 style="color:#61705a;">
+            ❤️ The End ❤️
+        </h1>
+
+        <p style="color:#6b6055;text-align:center;line-height:1.6;">
+            Every page before this<br>
+            was one of our memories.
+            <br><br>
+            But this last page became one
+            the moment you smiled.
+            <br><br>
+            Thank you for filling my diary
+            with the happiest chapters of my life.
+            ❤️
+        </p>
+
+        <div class="buttons-container">
+
+            <button class="nav-btn"
+                onclick="turnBackward(4)">
+                ← Back
+            </button>
+
+            <button
+                class="voice"
+                style="background:#7c8d74;color:white;"
+                onclick="restartDiary()">
+
+                One More Time?  ❤️
+
+            </button>
+
+        </div>
+
+    </div>
+
 </div>
 
 <script>
