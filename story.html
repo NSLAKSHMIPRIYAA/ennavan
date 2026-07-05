@@ -368,6 +368,126 @@ body {
     font-style:italic;
 
 }
+#proposalBox{
+
+position:fixed;
+
+left:0;
+top:0;
+
+width:100%;
+height:100%;
+
+background:rgba(0,0,0,.45);
+
+display:none;
+
+justify-content:center;
+align-items:center;
+
+z-index:9999;
+
+}
+
+.proposal-content{
+
+background:#fffaf5;
+
+padding:35px;
+
+border-radius:20px;
+
+width:420px;
+
+text-align:center;
+
+box-shadow:0 15px 40px rgba(0,0,0,.25);
+
+position:relative;
+
+}
+
+.proposal-content h2{
+
+color:#61705a;
+
+margin-top:0;
+
+}
+
+.proposal-buttons{
+
+margin-top:30px;
+
+position:relative;
+
+height:150px;
+
+}
+
+#yesBtn{
+
+padding:12px 28px;
+
+background:#7c8d74;
+
+color:white;
+
+border:none;
+
+border-radius:30px;
+
+font-size:18px;
+
+cursor:pointer;
+
+position:absolute;
+
+left:70px;
+
+top:50px;
+
+}
+
+#noBtn{
+
+padding:12px 28px;
+
+background:#d77b7b;
+
+color:white;
+
+border:none;
+
+border-radius:30px;
+
+font-size:18px;
+
+cursor:pointer;
+
+position:absolute;
+
+right:70px;
+
+top:50px;
+
+transition:.25s;
+
+}
+
+#teaseMessage{
+
+margin-top:20px;
+
+font-style:italic;
+
+color:#7c8d74;
+
+font-size:17px;
+
+height:25px;
+
+}
 </style>
 </head>
 
@@ -646,12 +766,17 @@ margin-bottom:25px;">
 The best gift I could ever ask for is making a thousand more memories with you.
 </p>
 
-<p style="
+<p id="chapter8Btn"
+style="
 font-size:24px;
 color:#61705a;
 font-weight:bold;
-margin-bottom:0;">
+cursor:pointer;
+margin-bottom:0;"
+onclick="showProposal()">
+
 Shall we start Chapter 8? ❤️
+
 </p>
 
 </div>
@@ -785,8 +910,84 @@ function restartDiary() {
 let currentAudio = null;
 
 let currentPlayer = null;
+const teasingMessages = [
+
+"Nice try 😂",
+
+"No isn't an option 😌",
+
+"Just click YES ❤️",
+
+"You really thought I'd let you? 😏",
+
+"You're too cute 😂",
+
+"I'll keep moving 😝",
+
+"Mission failed 😎"
+
+];
+
+let teaseIndex = 0;
+let noBtn;
+let tease;
+let listenerAdded = false;
+
+function showProposal(){
+
+    document.getElementById("proposalBox").style.display = "flex";
+
+    noBtn = document.getElementById("noBtn");
+    tease = document.getElementById("teaseMessage");
+
+    if(!listenerAdded){
+        noBtn.addEventListener("mouseenter", moveNoButton);
+        listenerAdded = true;
+    }
+
+}
 
 
+function moveNoButton(){
+
+const parent=noBtn.parentElement;
+
+const maxX=parent.clientWidth-110;
+
+const maxY=parent.clientHeight-60;
+
+const x=Math.random()*maxX;
+
+const y=Math.random()*maxY;
+
+noBtn.style.left=x+"px";
+
+noBtn.style.top=y+"px";
+
+noBtn.style.right="auto";
+
+tease.innerHTML=teasingMessages[teaseIndex];
+
+teaseIndex++;
+
+if(teaseIndex>=teasingMessages.length)
+teaseIndex=0;
+
+}
+setInterval(function(){
+
+if(document.getElementById("proposalBox").style.display=="flex"){
+
+tease.innerHTML=teasingMessages[teaseIndex];
+
+teaseIndex++;
+
+if(teaseIndex>=teasingMessages.length)
+teaseIndex=0;
+
+}
+
+},5000);
 
 function formatTime(seconds){
 
@@ -937,6 +1138,36 @@ for(let i = 0; i < 25; i++) {
 
 
 </script>
+<div id="proposalBox">
 
+    <div class="proposal-content">
+
+        <h2>❤️ Chapter 8 ❤️</h2>
+
+        <p>
+            So...
+            <br><br>
+            Will you start the next chapter with me?
+        </p>
+
+        <div class="proposal-buttons">
+
+            <button id="yesBtn">
+                YES ❤️
+            </button>
+
+            <button id="noBtn">
+                NO
+            </button>
+
+        </div>
+
+        <div id="teaseMessage">
+            😏
+        </div>
+
+    </div>
+
+</div>
 </body>
 </html>
