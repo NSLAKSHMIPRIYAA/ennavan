@@ -606,54 +606,73 @@ body {
     </div>
 
     <!-- BACK -->
-    <div class="page back" style="justify-content:center;">
+<div class="page back"
+     style="display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            text-align:center;
+            padding:45px;">
 
-        <h1 style="color:#61705a;">
-            ❤️ Until the Next Chapter ❤️
-        </h1>
+    <h1 style="
+        color:#61705a;
+        font-size:46px;
+        line-height:1.25;
+        margin-bottom:45px;
+        font-weight:normal;">
+        ❤️ Until the Next Chapter ❤️
+    </h1>
 
-        <p style="color:#6b6055;text-align:center;line-height:1.6;">
-            This diary may have reached
+    <div style="
+        max-width:420px;
+        color:#6b6055;
+        font-size:22px;
+        line-height:1.8;">
+
+        <p style="margin:0 0 22px;">
+            This diary may have reached<br>
             its last page...
-
-            but I hope
-
-            our story never does.
-
-
-
-
-            P.S.
-
-            The best gift I could ever ask for is making a thousand more memories with you.
-
-            Shall we start Chapter 8? ❤️
-
-            
         </p>
 
-        <div class="buttons-container">
+        <p style="margin:0 0 30px;">
+            But I hope<br>
+            our story never does.
+        </p>
 
-            <button class="nav-btn"
-                onclick="turnBackward(4)">
-                ← Back
-            </button>
+        <p style="
+            margin:0 0 30px;
+            font-size:19px;
+            color:#7b6c61;
+            line-height:1.7;">
+            <strong>P.S.</strong><br>
+            The best gift I could ever ask for is
+            making a thousand more memories with you.
+        </p>
 
-            <button
-                class="voice"
+        <p style="
+            margin:0;
+            font-size:28px;
+            color:#61705a;
+            font-weight:bold;">
+            Shall we start<br>
+            Chapter 8? ❤️
+        </p>
+
+    </div>
+
+    <div class="buttons-container" style="margin-top:50px;">
+
+        <button class="nav-btn" onclick="turnBackward(4)">← Back</button>
+
+        <button class="voice"
                 style="background:#7c8d74;color:white;"
                 onclick="restartDiary()">
-
-                One More Time?  ❤️
-
-            </button>
-
-        </div>
+            One More Time? ❤️
+        </button>
 
     </div>
 
 </div>
-
 <script>
 // Track layered stacking orders during dynamic flips
 let totalSheets = 4;
