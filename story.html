@@ -234,7 +234,6 @@ body {
     gap: 30px; /* Aligns them nicely side-by-side initially */
 }
 
-/* Modified to ensure both buttons are precisely the same size and have lower z-index than Yes */
 #yesBtn {
     background: #7c8d74;
     color: white;
@@ -242,7 +241,7 @@ body {
     height: 54px;          /* Match button sizes precisely */
     border-radius: 30px;
     font-size: 20px;
-    z-index: 10;           /* High z-index ensures Yes is ALWAYS on top of the escaping No */
+    z-index: 10;           /* High z-index keeps Yes button layered correctly */
     border: none;
     cursor: pointer;
     display: flex;
@@ -258,7 +257,7 @@ body {
     border-radius: 30px;
     font-size: 20px;       /* Matched to Yes button font-size */
     transition: left 0.15s ease, top 0.15s ease;
-    z-index: 1;            /* Stays below Yes button layer if they cross */
+    z-index: 12;           /* Increased to 12 to make sure it always renders on top of the Yes button when crossing paths */
     border: none;
     cursor: pointer;
     white-space: nowrap;   /* Prevents text from breaking onto new lines as width changes */
