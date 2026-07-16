@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -59,6 +59,11 @@ font-weight:bold;
 
 <body>
 
+<!-- Hidden Audio Player for Siren -->
+<audio id="sirenAudio" autoplay>
+    <source src="police.mp3" type="audio/mpeg">
+</audio>
+
 <div class="container">
 
 <h1>🚨 EMERGENCY ALERT 🚨</h1>
@@ -87,12 +92,27 @@ Lifetime imprisonment in Priyaa's heart.
 </div>
 
 <script>
+// Automatically play the siren on load and stop it after 7 seconds
+window.addEventListener('DOMContentLoaded', () => {
+    const siren = document.getElementById("sirenAudio");
+    
+    // Attempt autoplay (browsers sometimes block audio until a click, 
+    // but since they just clicked the pink pin to get here, it should trigger smoothly!)
+    siren.play().catch(error => {
+        console.log("Autoplay prevented by browser settings, will play on next interaction.");
+    });
+
+    // Stop the siren completely after 7000 milliseconds (7 seconds)
+    setTimeout(() => {
+        siren.pause();
+        siren.currentTime = 0; // Reset track to beginning
+    }, 7000);
+});
 
 function acceptCharges(){
 document.querySelector("button").style.display="none";
 document.getElementById("verdict").style.display="block";
 }
-
 </script>
 
 </body>
