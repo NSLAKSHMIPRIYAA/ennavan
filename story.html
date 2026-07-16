@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -224,43 +223,38 @@ body {
 }
 
 /* Interactive Choices Layout */
-.choice-container{
-    position:relative;
-    width:100%;
-    height:120px;
-    margin-top:20px;
+.choice-container {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px; /* Aligns them nicely side-by-side initially */
 }
 
-#yesBtn{
-    position:absolute;
-
-    left:50%;
-    top:50%;
-
-    transform:translate(-50%,-50%);
-
-    background:#7c8d74;
-    color:white;
-    padding:14px 38px;
-    border-radius:30px;
-    font-size:20px;
-    z-index:1;
+#yesBtn {
+    background: #7c8d74;
+    color: white;
+    padding: 14px 38px;
+    border-radius: 30px;
+    font-size: 20px;
+    z-index: 1;
+    border: none;
+    cursor: pointer;
 }
 
-#noBtn{
-    position:absolute;
-    left:65%;
-    top:50%;
-
-    /* Remove this */
-    /* transform:translate(-50%,-50%); */
-
-    background:#d98880;
-    color:white;
-    padding:14px 28px;
-    border-radius:30px;
-    transition:left .18s, top .18s;
-    z-index:2;
+#noBtn {
+    background: #d98880;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 30px;
+    transition: left 0.15s ease, top 0.15s ease;
+    z-index: 2;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap; /* Prevents text from breaking onto new lines as width changes */
 }
 
 /* CENTRAL SPIRAL BINDING */
@@ -556,18 +550,14 @@ overflow:hidden;
                     
                     <!-- YES / NO INTERACTIVE BUTTON CONTAINER -->
                     <div class="choice-container" id="choiceContainer">
-    <button class="choice-btn" id="yesBtn"
-        onclick="handleYesClick()">
-        Yes ❤️
-    </button>
+                        <button class="choice-btn" id="yesBtn" onclick="handleYesClick()">
+                            Yes ❤️
+                        </button>
 
-    <button class="choice-btn" id="noBtn"
-        onmouseover="evadeNoButton()"
-        onclick="evadeNoButton()">
-        No
-    </button>
-
-</div>
+                        <button class="choice-btn" id="noBtn" onmouseover="evadeNoButton()" onclick="evadeNoButton()">
+                            No
+                        </button>
+                    </div>
                 </div>
 
                 <div class="buttons-container"
@@ -662,8 +652,9 @@ function restartDiary() {
         currentPlayer = null;
     }
 
-    // Reset the No button back to its initial design positioning
+    // Reset the No button back to its initial inline styling layout
     const noBtn = document.getElementById("noBtn");
+    noBtn.style.position = "";
     noBtn.style.left = "";
     noBtn.style.top = "";
     noBtn.innerHTML = "No";
@@ -773,40 +764,65 @@ let noMessageIndex = 0;
 let lastTextChangeTime = 0;
 
 function evadeNoButton() {
-
     const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
     const container = document.getElementById("choiceContainer");
 
-    const btnWidth = noBtn.offsetWidth;
-    const btnHeight = noBtn.offsetHeight;
-
-    const padding = 10;
-
-const maxX = container.clientWidth - btnWidth - (padding * 2);
-const maxY = container.clientHeight - btnHeight - (padding * 2);
-
-let x, y;
-
-do {
-    x = padding + Math.random() * maxX;
-    y = padding + Math.random() * maxY;
-} while (
-    x > container.clientWidth * 0.35 &&
-    x < container.clientWidth * 0.65 &&
-    y > container.clientHeight * 0.25 &&
-    y < container.clientHeight * 0.75
-);
-
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
+    // Force button to absolute position upon interactive hover
+    if (noBtn.style.position !== "absolute") {
+        noBtn.style.position = "absolute";
+    }
 
     const currentTime = Date.now();
-
-    if (currentTime - lastTextChangeTime > 5000) {
+    if (currentTime - lastTextChangeTime > 3000) {
         noBtn.innerHTML = noMessages[noMessageIndex];
         noMessageIndex = (noMessageIndex + 1) % noMessages.length;
         lastTextChangeTime = currentTime;
     }
+
+    const containerRect = container.getBoundingClientRect();
+    const yesRect = yesBtn.getBoundingClientRect();
+    
+    // Relative coordinates of Yes button inside its container
+    const yesLeft = yesRect.left - containerRect.left;
+    const yesRight = yesRect.right - containerRect.left;
+    const yesTop = yesRect.top - containerRect.top;
+    const yesBottom = yesRect.bottom - containerRect.top;
+
+    const btnWidth = noBtn.offsetWidth;
+    const btnHeight = noBtn.offsetHeight;
+    const padding = 10;
+
+    const maxX = container.clientWidth - btnWidth - padding;
+    const maxY = container.clientHeight - btnHeight - padding;
+
+    let x = 0;
+    let y = 0;
+    let attempts = 0;
+    let overlaps = true;
+
+    // Cycle random coordinate combinations until no collision is detected with YES button bounds
+    while (overlaps && attempts < 100) {
+        x = padding + Math.random() * (maxX - padding);
+        y = padding + Math.random() * (maxY - padding);
+
+        const noLeft = x;
+        const noRight = x + btnWidth;
+        const noTop = y;
+        const noBottom = y + btnHeight;
+
+        // Pad intersection area slightly to prevent near-clipping
+        const horizontalOverlap = noRight > (yesLeft - 15) && noLeft < (yesRight + 15);
+        const verticalOverlap = noBottom > (yesTop - 15) && noTop < (yesBottom + 15);
+
+        if (!(horizontalOverlap && verticalOverlap)) {
+            overlaps = false;
+        }
+        attempts++;
+    }
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
 }
 
 function handleYesClick() {
@@ -817,5 +833,3 @@ function handleYesClick() {
 
 </body>
 </html>
-
-```
