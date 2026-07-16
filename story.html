@@ -224,14 +224,13 @@ body {
 }
 
 /* Interactive Choices Layout */
-.choice-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 15px;
-    width: 100%;
-    height: 50px;
-    position: relative;
+.choice-container{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    margin-top:12px;
+    width:100%;
+    height:40px;
 }
 
 .choice-btn {
@@ -522,12 +521,22 @@ body {
             </div>
 
             <!-- BACK -->
-            <div class="page back" id="finalPage" style="display:flex; flex-direction:column; align-items:center; justify-content:flex-start; text-align:center; padding:35px;">
-                <h1 style="color:#61705a; font-size:36px; line-height:1.2; margin:0 0 25px 0; font-weight:normal;">
+            <div class="page back" id="finalPage"
+style="
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+align-items:center;
+text-align:center;
+padding:25px;
+overflow:hidden;
+">
+       
+                <h1 style="color:#61705a; font-size:28px; line-height:1.2; margin:0 0 15px 0; font-weight:normal;">
                     ❤️ Until the Next Chapter ❤️
                 </h1>
 
-                <div style="max-width:390px; font-size:19px; line-height:1.7; color:#6b6055;">
+                <div style="max-width:390px; font-size:16px; line-height:1.5; color:#6b6055;">
                     <p style="margin-bottom:20px;">This diary may have reached its last page...</p>
                     <p style="margin-bottom:25px;">But I hope our story never does.</p>
                     <p style="font-size:17px; margin-bottom:25px;">
@@ -545,7 +554,11 @@ body {
                     </div>
                 </div>
 
-                <div class="buttons-container" style="margin-top:auto;">
+                <div class="buttons-container"
+style="
+margin-top:15px;
+flex-shrink:0;
+">
                     <button class="nav-btn" onclick="turnBackward(4)">← Back</button>
                     <button class="voice" style="background:#7c8d74;color:white;" onclick="restartDiary()">One More Time? ❤️</button>
                 </div>
