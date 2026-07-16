@@ -225,12 +225,13 @@ body {
 
 /* Interactive Choices Layout */
 .choice-container{
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    margin-top:12px;
-    width:100%;
-    height:40px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    width: 100%;
+    height: 140px;
 }
 
 .choice-btn {
@@ -759,22 +760,19 @@ let lastTextChangeTime = 0;
 function evadeNoButton() {
     const noBtn = document.getElementById("noBtn");
     const container = document.getElementById("choiceContainer");
-    
-    // Bounds restricted strictly inside the flex area of the text container
-    const padding = 10;
-    const maxX = container.clientWidth - noBtn.clientWidth - padding;
-    const maxY = 120; // Allows it to hop above/below slightly within the page margin
-    const minY = -80; 
 
-    // Generate random layout coordinate jumps
-    const randomX = Math.floor(Math.random() * (maxX + 1));
-    const randomY = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+    // Available movement area
+    const maxX = container.clientWidth - noBtn.offsetWidth;
+    const maxY = container.clientHeight - noBtn.offsetHeight;
 
-    noBtn.style.left = randomX + "px";
-    noBtn.style.top = randomY + "px";
+    // Random position INSIDE the container
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
 
-    // Dynamic text cycle constraint system: maximum once per 5 seconds 
-    const currentTime = new Date().getTime();
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+
+    const currentTime = Date.now();
     if (currentTime - lastTextChangeTime >= 5000) {
         noBtn.innerHTML = noMessages[noMessageIndex];
         noMessageIndex = (noMessageIndex + 1) % noMessages.length;
