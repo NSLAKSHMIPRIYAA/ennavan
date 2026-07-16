@@ -234,27 +234,37 @@ body {
     gap: 30px; /* Aligns them nicely side-by-side initially */
 }
 
+/* Modified to ensure both buttons are precisely the same size and have lower z-index than Yes */
 #yesBtn {
     background: #7c8d74;
     color: white;
-    padding: 14px 38px;
+    width: 140px;          /* Match button sizes precisely */
+    height: 54px;          /* Match button sizes precisely */
     border-radius: 30px;
     font-size: 20px;
-    z-index: 1;
+    z-index: 10;           /* High z-index ensures Yes is ALWAYS on top of the escaping No */
     border: none;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #noBtn {
     background: #d98880;
     color: white;
-    padding: 14px 28px;
+    width: 140px;          /* Match button sizes precisely */
+    height: 54px;          /* Match button sizes precisely */
     border-radius: 30px;
+    font-size: 20px;       /* Matched to Yes button font-size */
     transition: left 0.15s ease, top 0.15s ease;
-    z-index: 2;
+    z-index: 1;            /* Stays below Yes button layer if they cross */
     border: none;
     cursor: pointer;
-    white-space: nowrap; /* Prevents text from breaking onto new lines as width changes */
+    white-space: nowrap;   /* Prevents text from breaking onto new lines as width changes */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* CENTRAL SPIRAL BINDING */
@@ -657,6 +667,8 @@ function restartDiary() {
     noBtn.style.position = "";
     noBtn.style.left = "";
     noBtn.style.top = "";
+    noBtn.style.width = "140px"; // Ensure width resets to matches Yes
+    noBtn.style.height = "54px"; // Ensure height resets to matches Yes
     noBtn.innerHTML = "No";
     noMessageIndex = 0;
 
@@ -778,6 +790,11 @@ function evadeNoButton() {
         noBtn.innerHTML = noMessages[noMessageIndex];
         noMessageIndex = (noMessageIndex + 1) % noMessages.length;
         lastTextChangeTime = currentTime;
+        
+        // Dynamically recalculate sizing to keep width/height equal to Yes even with long texts
+        noBtn.style.width = "auto";
+        noBtn.style.padding = "14px 28px";
+        noBtn.style.height = "54px";
     }
 
     const containerRect = container.getBoundingClientRect();
@@ -802,7 +819,7 @@ function evadeNoButton() {
     let overlaps = true;
 
     // Cycle random coordinate combinations until no collision is detected with YES button bounds
-    while (overlaps && attempts < 100) {
+    while (overlaps && attempts < 150) {
         x = padding + Math.random() * (maxX - padding);
         y = padding + Math.random() * (maxY - padding);
 
@@ -811,9 +828,9 @@ function evadeNoButton() {
         const noTop = y;
         const noBottom = y + btnHeight;
 
-        // Pad intersection area slightly to prevent near-clipping
-        const horizontalOverlap = noRight > (yesLeft - 15) && noLeft < (yesRight + 15);
-        const verticalOverlap = noBottom > (yesTop - 15) && noTop < (yesBottom + 15);
+        // Pad separation margin (40px) to prevent No from ever overlapping the Yes area
+        const horizontalOverlap = noRight > (yesLeft - 40) && noLeft < (yesRight + 40);
+        const verticalOverlap = noBottom > (yesTop - 40) && noTop < (yesBottom + 40);
 
         if (!(horizontalOverlap && verticalOverlap)) {
             overlaps = false;
