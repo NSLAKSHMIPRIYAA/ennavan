@@ -257,7 +257,7 @@ body {
     border-radius: 30px;
     font-size: 20px;       /* Matched to Yes button font-size */
     transition: left 0.15s ease, top 0.15s ease;
-    z-index: 12;           /* Increased to 12 to make sure it always renders on top of the Yes button when crossing paths */
+    z-index: 12;           /* Kept at 12 as a backup, but math below prevents overlapping entirely */
     border: none;
     cursor: pointer;
     white-space: nowrap;   /* Prevents text from breaking onto new lines as width changes */
@@ -540,6 +540,7 @@ align-items:center;
 text-align:center;
 padding:25px;
 overflow:hidden;
+position:relative;
 ">
        
                 <h1 style="color:#61705a; font-size:28px; line-height:1.2; margin:0 0 15px 0; font-weight:normal;">
@@ -671,6 +672,9 @@ function restartDiary() {
     noBtn.innerHTML = "No";
     noMessageIndex = 0;
 
+    // Reset layout hierarchy
+    document.getElementById("choiceContainer").style.position = "relative";
+
     for (let i = totalSheets; i >= 1; i--) {
         setTimeout(() => {
             document.getElementById("sheet" + i).classList.remove("flipped");
@@ -777,7 +781,11 @@ let lastTextChangeTime = 0;
 function evadeNoButton() {
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
+    const finalPage = document.getElementById("finalPage");
     const container = document.getElementById("choiceContainer");
+
+    // Let the No button fly around the ENTIRE final page instead of just the tiny container
+    container.style.position = "static";
 
     // Force button to absolute position upon interactive hover
     if (noBtn.style.position !== "absolute") {
@@ -796,21 +804,22 @@ function evadeNoButton() {
         noBtn.style.height = "54px";
     }
 
-    const containerRect = container.getBoundingClientRect();
+    const pageRect = finalPage.getBoundingClientRect();
     const yesRect = yesBtn.getBoundingClientRect();
     
-    // Relative coordinates of Yes button inside its container
-    const yesLeft = yesRect.left - containerRect.left;
-    const yesRight = yesRect.right - containerRect.left;
-    const yesTop = yesRect.top - containerRect.top;
-    const yesBottom = yesRect.bottom - containerRect.top;
+    // Relative coordinates of Yes button inside finalPage
+    const yesLeft = yesRect.left - pageRect.left;
+    const yesRight = yesRect.right - pageRect.left;
+    const yesTop = yesRect.top - pageRect.top;
+    const yesBottom = yesRect.bottom - pageRect.top;
 
     const btnWidth = noBtn.offsetWidth;
     const btnHeight = noBtn.offsetHeight;
-    const padding = 10;
+    const padding = 15;
 
-    const maxX = container.clientWidth - btnWidth - padding;
-    const maxY = container.clientHeight - btnHeight - padding;
+    // Bounds of the entire 550px page
+    const maxX = pageRect.width - btnWidth - padding;
+    const maxY = pageRect.height - btnHeight - padding;
 
     let x = 0;
     let y = 0;
@@ -818,7 +827,7 @@ function evadeNoButton() {
     let overlaps = true;
 
     // Cycle random coordinate combinations until no collision is detected with YES button bounds
-    while (overlaps && attempts < 150) {
+    while (overlaps && attempts < 200) {
         x = padding + Math.random() * (maxX - padding);
         y = padding + Math.random() * (maxY - padding);
 
@@ -827,9 +836,9 @@ function evadeNoButton() {
         const noTop = y;
         const noBottom = y + btnHeight;
 
-        // Pad separation margin (40px) to prevent No from ever overlapping the Yes area
-        const horizontalOverlap = noRight > (yesLeft - 40) && noLeft < (yesRight + 40);
-        const verticalOverlap = noBottom > (yesTop - 40) && noTop < (yesBottom + 40);
+        // Pad separation margin (25px) to strictly prevent No from ever overlapping the Yes area
+        const horizontalOverlap = noRight > (yesLeft - 25) && noLeft < (yesRight + 25);
+        const verticalOverlap = noBottom > (yesTop - 25) && noTop < (yesBottom + 25);
 
         if (!(horizontalOverlap && verticalOverlap)) {
             overlaps = false;
