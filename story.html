@@ -793,7 +793,7 @@ function evadeNoButton() {
     }
 
     const currentTime = Date.now();
-    if (currentTime - lastTextChangeTime > 3000) {
+    if (currentTime - lastTextChangeTime > 2000) {
         noBtn.innerHTML = noMessages[noMessageIndex];
         noMessageIndex = (noMessageIndex + 1) % noMessages.length;
         lastTextChangeTime = currentTime;
