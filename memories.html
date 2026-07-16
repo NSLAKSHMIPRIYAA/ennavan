@@ -100,7 +100,7 @@ h1{
     transform-origin: top center;
 }
 
-/* 📌 PIN (new top center dot) */
+/* 📌 PIN (Default Red dot for all polaroids) */
 .polaroid::before{
     content:"";
     position:absolute;
@@ -117,7 +117,14 @@ h1{
     box-shadow:
     0 3px 6px rgba(0,0,0,0.5),
     inset -2px -2px 3px rgba(0,0,0,0.25);
+    z-index:10;
 }
+
+/* 💗 SPECIAL PINK PIN FOR THE 8TH POLAROID */
+.p8::before {
+    background: radial-gradient(circle at 30% 30%, #ff85a2, #c93b5f);
+}
+
 .polaroid:hover{
     transform:scale(1.06) rotate(0deg);
     z-index:100;
@@ -375,8 +382,6 @@ h1{
 
 <h1>📸 The Moments We Made ❤️</h1>
 
-
-
 <button id="musicBtn" onclick="toggleMusic()">
 🎵 Play Our Song
 </button>
@@ -384,8 +389,6 @@ h1{
 <audio id="bgMusic" loop>
     <source src="song.mp3" type="audio/mpeg">
 </audio>
-
-
 
 <div id="wall">
 <!-- ✨ SPARKLES -->
@@ -413,7 +416,6 @@ h1{
 
 <div class="sticker" style="top:1700px;left:12%;">💖</div>
 
-
 <!-- ✨ DOODLES -->
 
 <div class="doodle-wall"
@@ -430,7 +432,6 @@ h1{
      style="top:1705px;right:4%;">
      You & Me 🌷
 </div>
-
 
 <!-- 📝 STICKY NOTES -->
 
@@ -449,36 +450,36 @@ h1{
      One of my favorite gifs of yours
 </div>
 
+<div class="polaroid p1" onclick="openMemory(0)"><img src="pic1.jpg"><p>Everything was good apart from the movie lol</p></div>
 
-<div class="polaroid p1"><img src="pic1.jpg"><p>Everything was good apart from the movie lol</p></div>
+<div class="polaroid p2" onclick="openMemory(1)"><img src="pic2.jpg"><p>Dakshin Chitra for the win</p></div>
 
-<div class="polaroid p2"><img src="pic2.jpg"><p>Dakshin Chitra for the win</p></div>
+<div class="polaroid p3" onclick="openMemory(2)"><img src="pic3.jpg"><p>Our reaction after taking the first bite of chocolate mousse</p></div>
 
-<div class="polaroid p3"><img src="pic3.jpg"><p>Our reaction after taking the first bite of chocolate mousse</p></div>
+<div class="polaroid p4" onclick="openMemory(3)"><img src="pic4.jpg"><p>That mandatory snap filter</p></div>
 
-<div class="polaroid p4"><img src="pic4.jpg"><p>That mandatory snap filter</p></div>
+<div class="polaroid p5" onclick="openMemory(4)"><img src="pic5.jpg"><p>Low quality pics cannot be skipped</p></div>
 
-<div class="polaroid p5"><img src="pic5.jpg"><p>Low quality pics cannot be skipped</p></div>
+<div class="polaroid p6" onclick="openMemory(5)"><img src="pic6.jpg"><p>Your first cafe experience</p></div>
 
-<div class="polaroid p6"><img src="pic6.jpg"><p>Your first cafe experience</p></div>
+<div class="polaroid p7" onclick="openMemory(6)"><img src="pic7.jpg"><p>Our Family</p></div>
 
-<div class="polaroid p7"><img src="pic7.jpg"><p>Our Family</p></div>
+<!-- 🚨 8TH POLAROID: Triggers emergency.html when clicked -->
+<div class="polaroid p8" onclick="window.open('emergency.html', '_blank')"><img src="pic8.jpg"><p>Our 1st Anniversary present</p></div>
 
-<div class="polaroid p8"><img src="pic8.jpg"><p>Our 1st Anniversary present</p></div>
+<div class="polaroid p9" onclick="openMemory(8)"><img src="pic9.jpg"><p>Tommy Da</p></div>
 
-<div class="polaroid p9"><img src="pic9.jpg"><p>Tommy Da</p></div>
+<div class="polaroid p10" onclick="openMemory(9)"><img src="pic10.jpg"><p>Heiduuu</p></div>
 
-<div class="polaroid p10"><img src="pic10.jpg"><p>Heiduuu</p></div>
+<div class="polaroid p11" onclick="openMemory(10)"><img src="pic11.jpg"><p>Cringe us during MTC rides</p></div>
 
-<div class="polaroid p11"><img src="pic11.jpg"><p>Cringe us during MTC rides</p></div>
+<div class="polaroid p12" onclick="openMemory(11)"><img src="pic12.jpg"><p>The park where we first kissed</p></div>
 
-<div class="polaroid p12"><img src="pic12.jpg"><p>The park where we first kissed</p></div>
+<div class="polaroid p13" onclick="openMemory(12)"><img src="pic13.jpg"><p>Boggo da</p></div>
 
-<div class="polaroid p13"><img src="pic13.jpg"><p>Boggo da</p></div>
+<div class="polaroid p14" onclick="openMemory(13)"><img src="pic14.jpg"><p>Hehe this one is to make u chuckle</p></div>
 
-<div class="polaroid p14"><img src="pic14.jpg"><p>Hehe this one is to make u chuckle</p></div>
-
-<div class="polaroid p15"><img src="pic15.jpg"><p>Kutty paapa namma</p></div>
+<div class="polaroid p15" onclick="openMemory(14)"><img src="pic15.jpg"><p>Kutty paapa namma</p></div>
 </div>
 
 <div id="scrapbook">
