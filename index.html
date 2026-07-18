@@ -25,19 +25,19 @@ background:linear-gradient(
 #e8d6ff
 );
 overflow-x:hidden;
-overflow-y:auto; /* 🎯 FIX: Restores vertical scrolling so 4th button is accessible */
+overflow-y:auto; 
 display:flex;
 justify-content:center;
 align-items:center;
 text-align:center;
-padding:40px 0; /* Gives some breathing space when scrolling */
+padding:40px 0; 
 }
 
 .container{
 max-width:800px;
 padding:30px;
 z-index:2;
-display: none; /* Hidden until "Shall we start" is clicked */
+display: none; 
 opacity:0;
 transition:opacity 2s ease;
 }
@@ -78,7 +78,7 @@ button:hover{
 transform:scale(1.05);
 }
 
-/* MENU (smooth reveal) */
+/* MENU */
 #menu{
 margin-top:40px;
 opacity:0;
@@ -116,7 +116,7 @@ bottom:-30px;
 font-size:20px;
 animation:floatUp 8s linear infinite;
 opacity:0.7;
-display: none; /* Initially hidden */
+display: none; 
 z-index: 1;
 }
 
@@ -133,7 +133,7 @@ transform:translateY(0);
 }
 
 #footer{
-position:static; /* Changed to static so it stays naturally beneath elements when scrolling */
+position:static; 
 margin-top: 40px;
 font-size:0.9rem;
 color:#7a5878;
@@ -338,7 +338,7 @@ animation:twinkle linear infinite;
     <source src="song.mp3" type="audio/mpeg">
 </audio>
 
-<!-- 🎵 NEW: Intro transition scene audio track -->
+<!-- Intro transition scene audio track -->
 <audio id="introMusic" loop>
     <source src="song1.mp3" type="audio/mpeg">
 </audio>
@@ -382,7 +382,6 @@ animation:twinkle linear infinite;
         <a class="card" href="story.html">📖 Our Story</a>
     </div>
     
-    <!-- Relocated footer inside container context so layout wraps perfectly -->
     <div id="footer">Made with ❤️ by Priyaa</div>
 </div>
 
@@ -443,11 +442,7 @@ const displayTime = 3200;
 
 function runCinematicIntro(index) {
     if (index >= storyLines.length) {
-        // 🎯 STOP INTRO MUSIC here when the button appears
-        const introMusic = document.getElementById("introMusic");
-        introMusic.pause();
-        introMusic.currentTime = 0;
-
+        // Just make the button appear; song1.mp3 keeps looping beautifully!
         document.getElementById("startBtn").classList.add("show");
         return;
     }
@@ -467,6 +462,11 @@ function runCinematicIntro(index) {
 }
 
 function beginJourney() {
+    // 🎯 FIX: song1.mp3 now halts strictly on clicking this button
+    const introMusic = document.getElementById("introMusic");
+    introMusic.pause();
+    introMusic.currentTime = 0;
+
     document.getElementById("introOverlay").classList.add("hide");
     
     document.querySelector(".container").classList.add("show");
@@ -474,9 +474,8 @@ function beginJourney() {
     document.getElementById("secret").classList.add("show");
     document.getElementById("menu").classList.add("show");
 
-    // Play the main birthday song loop
     const mainMusic = document.getElementById("bgMusic");
-    mainMusic.play().catch(e => console.log("Main music play interactive requirement catch."));
+    mainMusic.play().catch(e => console.log("Playback interaction error logged."));
 
     setInterval(createHeart, 700);
     setInterval(createSparkle, 120);
@@ -489,7 +488,6 @@ window.onload=()=>{
     const mainMusic = document.getElementById("bgMusic");
     mainMusic.volume = 0.45;
     
-    // Automatically attempt playing intro audio sequence tracking clicks cleanly
     introMusic.play().catch(()=>{
         document.body.addEventListener("click",()=>{
             introMusic.play();
