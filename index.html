@@ -333,11 +333,6 @@ animation:twinkle linear infinite;
 
 <body>
 
-<!-- Main background music system loop -->
-<audio id="bgMusic" loop>
-    <source src="song.mp3" type="audio/mpeg">
-</audio>
-
 <!-- Intro transition scene audio track -->
 <audio id="introMusic" loop>
     <source src="song1.mp3" type="audio/mpeg">
@@ -442,7 +437,7 @@ const displayTime = 3200;
 
 function runCinematicIntro(index) {
     if (index >= storyLines.length) {
-        // Just make the button appear; song1.mp3 keeps looping beautifully!
+        // Just show the button; song1.mp3 keeps running smoothly!
         document.getElementById("startBtn").classList.add("show");
         return;
     }
@@ -462,7 +457,7 @@ function runCinematicIntro(index) {
 }
 
 function beginJourney() {
-    // 🎯 FIX: song1.mp3 now halts strictly on clicking this button
+    // 🎯 song1.mp3 stops ONLY when clicking the "Shall we start?" button
     const introMusic = document.getElementById("introMusic");
     introMusic.pause();
     introMusic.currentTime = 0;
@@ -474,9 +469,6 @@ function beginJourney() {
     document.getElementById("secret").classList.add("show");
     document.getElementById("menu").classList.add("show");
 
-    const mainMusic = document.getElementById("bgMusic");
-    mainMusic.play().catch(e => console.log("Playback interaction error logged."));
-
     setInterval(createHeart, 700);
     setInterval(createSparkle, 120);
 }
@@ -484,9 +476,6 @@ function beginJourney() {
 window.onload=()=>{
     const introMusic = document.getElementById("introMusic");
     introMusic.volume = 0.6;
-    
-    const mainMusic = document.getElementById("bgMusic");
-    mainMusic.volume = 0.45;
     
     introMusic.play().catch(()=>{
         document.body.addEventListener("click",()=>{
