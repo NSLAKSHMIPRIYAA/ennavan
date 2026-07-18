@@ -1,873 +1,1023 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Digital Memory Book</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        /* ================= GLOBAL STYLES ================= */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            background: radial-gradient(circle at center, #2c1654, #0f051d);
-            font-family: 'Poppins', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            perspective: 2000px;
-        }
+<title>Our Diary ❤️</title>
 
-        /* Ambient Sparkles */
-        .sparkle {
-            position: absolute;
-            color: rgba(255, 215, 0, 0.6);
-            font-size: 14px;
-            pointer-events: none;
-            animation: twinkle 4s infinite linear;
-        }
-        @keyframes twinkle {
-            0%, 100% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-        /* ================= DIARY STRUCTURE ================= */
-        #bookContainer {
-            position: relative;
-            width: 900px;
-            height: 600px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+body {
+    margin: 0;
+    height: 100vh;
+    background: #f4eae1; /* Warm, soft cream background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Georgia", serif;
+    overflow: hidden;
+    position: relative;
+}
 
-        /* --- BOOK COVER --- */
-        #cover {
-            width: 450px;
-            height: 600px;
-            background: linear-gradient(135deg, #4a154b, #2c0830);
-            border-radius: 0 20px 20px 0;
-            box-shadow: 10px 10px 30px rgba(0,0,0,0.7), inset -5px 0 15px rgba(255,255,255,0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-origin: left center;
-            z-index: 50;
-            position: absolute;
-            right: 50%;
-            transform: translateX(50%);
-            border: 4px solid #ffd700;
-        }
-        #cover.opened {
-            transform: translateX(50%) rotateY(-180deg);
-        }
-        #cover h1 {
-            font-family: 'Dancing Script', cursive;
-            color: #ffd700;
-            font-size: 3.5rem;
-            text-align: center;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
-            margin-bottom: 15px;
-        }
-        #cover p {
-            color: #fff;
-            opacity: 0.8;
-            font-size: 1.1rem;
-            letter-spacing: 2px;
-        }
+/* DIARY CONTAINER */
+.diary {
+    width: 850px;
+    height: 550px;
+    position: relative;
+    perspective: 2000px; /* Crucial for 3D page flip depth */
+}
 
-        /* --- THE RING BOUND ALBUM --- */
-        #book {
-            width: 900px;
-            height: 600px;
-            position: relative;
-            display: none;
-            background: rgba(0,0,0,0.2);
-            border-radius: 20px;
-        }
+/* COVER */
+.cover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #a3b19b, #7c8d74); /* Elegant Soft Sage Green */
+    border-radius: 15px;
+    color: #fffdec;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 15px 35px rgba(124, 141, 116, 0.3);
+    z-index: 100;
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s;
+    transform-origin: left center;
+    backface-visibility: hidden;
+}
 
-        /* Center Spiral Spine */
-        #spine {
-            position: absolute;
-            left: 50%;
-            top: 5%;
-            width: 30px;
-            height: 90%;
-            transform: translateX(-50%);
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            align-items: center;
-            pointer-events: none;
-        }
-        .spiral-ring {
-            width: 45px;
-            height: 12px;
-            background: linear-gradient(to bottom, #e0e0e0, #999, #fff, #777);
-            border-radius: 6px;
-            box-shadow: 2px 4px 5px rgba(0,0,0,0.4);
-            transform: rotate(-5deg);
-        }
+.cover.opened {
+    transform: rotateY(-140deg);
+    opacity: 0;
+    pointer-events: none;
+}
 
-        /* --- SHEETS & LEAVES --- */
-        .sheet {
-            position: absolute;
-            width: 450px;
-            height: 600px;
-            top: 0;
-            transform-style: preserve-3d;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-origin: left center;
-        }
-        /* Layout sheets to sit on the right side initially */
-        #sheet1 { right: 0; z-index: 4; }
-        #sheet2 { right: 0; z-index: 3; }
-        #sheet3 { right: 0; z-index: 2; }
-        #sheet4 { right: 0; z-index: 1; }
+.cover h1 {
+    font-size: 45px;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+    font-weight: normal;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
 
-        .sheet.flipped {
-            transform: rotateY(-180deg);
-        }
+.cover p {
+    font-size: 18px;
+    font-style: italic;
+    opacity: 0.9;
+}
 
-        /* Page Sides */
-        .page {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: #fffdf6;
-            backface-visibility: hidden;
-            padding: 40px;
-            overflow: hidden;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.05);
-        }
-        .front {
-            border-radius: 0 20px 20px 0;
-            border-right: 2px solid #eae5d8;
-        }
-        .back {
-            transform: rotateY(180deg);
-            border-radius: 20px 0 0 20px;
-            border-left: 2px solid #eae5d8;
-        }
+/* Decorative Gold Corners */
+.gold {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #dfc18a; /* Champagne Gold */
+}
+.one { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+.two { top: 20px; right: 20px; border-left: none; border-bottom: none; }
+.three { bottom: 20px; left: 20px; border-right: none; border-top: none; }
+.four { bottom: 20px; right: 20px; border-left: none; border-top: none; }
 
-        /* Page Flip Helpers */
-        .btn-next, .btn-prev {
-            position: absolute;
-            bottom: 25px;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: #8a6d3b;
-            cursor: pointer;
-            transition: transform 0.2s;
-            font-family: 'Dancing Script', cursive;
-            font-weight: bold;
-            z-index: 10;
-        }
-        .btn-next:hover { transform: translateX(5px) scale(1.1); }
-        .btn-prev:hover { transform: translateX(-5px) scale(1.1); }
-        .btn-next { right: 30px; }
-        .btn-prev { left: 30px; }
+.open {
+    margin-top: 35px;
+    padding: 12px 35px;
+    border: 1px solid #dfc18a;
+    background: transparent;
+    color: #fffdec;
+    font-size: 16px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: 0.3s;
+}
 
-        /* ================= CONTENT STYLES ================= */
-        .page-content {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            justify-content: space-between;
-        }
-        .text-section h2 {
-            font-family: 'Dancing Script', cursive;
-            color: #4a154b;
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            border-bottom: 2px dashed #e8dcc4;
-            padding-bottom: 5px;
-        }
-        .text-section p {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #443e34;
-            margin-bottom: 15px;
-        }
-        .media-container {
-            width: 100%;
-            height: 220px;
-            background: #f3efe0;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: inline 0 4px 10px rgba(0,0,0,0.05);
-            border: 6px solid #fff;
-            outline: 1px solid #dcd4b8;
-        }
-        .media-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+.open:hover {
+    background: #fffdec;
+    color: #7c8d74;
+}
 
-        /* Cassette Audio Players */
-        .cassette-player {
-            background: #222;
-            border-radius: 10px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            border: 3px solid #444;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-        .cassette-top {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .play-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: #ffd700;
-            border: none;
-            font-size: 1rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #222;
-            transition: transform 0.2s;
-        }
-        .play-btn:hover { transform: scale(1.1); }
-        .cassette-label {
-            color: #fff;
-            font-size: 0.8rem;
-            font-family: monospace;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            flex-grow: 1;
-            background: #333;
-            padding: 4px 8px;
-            border-radius: 4px;
-            border-left: 4px solid #ffd700;
-        }
-        .cassette-bottom {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-        }
-        .progress {
-            flex-grow: 1;
-            accent-color: #ffd700;
-            cursor: pointer;
-            height: 4px;
-        }
-        .timer {
-            color: #aaa;
-            font-size: 0.75rem;
-            font-family: monospace;
-            min-width: 75px;
-            text-align: right;
-        }
+/* BOOK & SHEET SYSTEM */
+.book {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    display: none;
+}
 
-        /* --- FINAL ROMANTIC INTERACTION PAGE --- */
-        #finalPage {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            text-align: center;
-            position: relative;
-        }
-        #finalPage h2 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.8rem;
-            color: #4a154b;
-            margin-bottom: 25px;
-        }
-        #choiceContainer {
-            display: flex;
-            gap: 25px;
-            margin-top: 15px;
-            width: 100%;
-            justify-content: center;
-            align-items: center;
-            min-height: 80px;
-        }
-        .interactive-btn {
-            width: 140px;
-            height: 54px;
-            border-radius: 27px;
-            border: none;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        #yesBtn {
-            background: linear-gradient(135deg, #ff4b72, #ff758c);
-            color: white;
-            z-index: 10;
-        }
-        #yesBtn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(255, 75, 114, 0.4);
-        }
-        #noBtn {
-            background: #e0e0e0;
-            color: #555;
-            transition: all 0.15s ease-out;
-        }
+/* A "sheet" contains a Left page on its back, and a Right page on its front */
+.sheet {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    right: 0; /* All sheets stack neatly on the right side initially */
+    top: 0;
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 5;
+}
 
-        /* ================= CINEMATIC EXIT OVERLAY ================= */
-        #exitOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #000000;
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 1.5s ease;
-        }
-        #exitOverlay.show {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        #exitStars {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-        .exitStar {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: pulseStar infinite ease-in-out;
-        }
-        @keyframes pulseStar {
-            0%, 100% { opacity: 0.2; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.5); }
-        }
-        #exitStoryContainer {
-            width: 80%;
-            max-width: 700px;
-            text-align: center;
-            position: relative;
-        }
-        .exitStoryLine {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.8rem;
-            color: #ffffff;
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1.2s ease, transform 1.2s ease, filter 1.2s ease;
-            filter: blur(10px);
-            text-shadow: 0 0 15px rgba(255,255,255,0.4);
-        }
-        .exitStoryLine.enter {
-            visibility: visible;
-            opacity: 1;
-            transform: translateY(-50%) scale(1);
-            filter: blur(0px);
-        }
-        .exitStoryLine.exit {
-            visibility: visible;
-            opacity: 0;
-            transform: translateY(-70%) scale(0.95);
-            filter: blur(10px);
-        }
-    </style>
+/* Base Page Styling */
+.page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #fffcf7; /* Premium off-white paper color */
+    padding: 35px;
+    box-shadow: inset 0 0 30px rgba(223, 193, 138, 0.15);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    border: 1px solid rgba(0,0,0,0.05);
+    backface-visibility: hidden;
+}
+/* Front of the sheet faces right */
+.page.front {
+    z-index: 2;
+    border-radius: 0 10px 10px 0;
+    box-shadow: inset 15px 0 20px rgba(0, 0, 0, 0.02);
+}
+
+/* Back of the sheet faces left when flipped */
+.page.back {
+    transform: rotateY(180deg);
+    border-radius: 10px 0 0 10px;
+    box-shadow: inset -15px 0 20px rgba(0, 0, 0, 0.02);
+}
+
+/* The state when a sheet has been turned to the left side */
+.sheet.flipped {
+    transform: rotateY(-180deg);
+}
+
+.page h2 {
+    text-align: center;
+    color: #61705a;
+    margin-top: 0;
+    font-weight: normal;
+    letter-spacing: 1px;
+}
+
+.page img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 6px solid #f2e6d6;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.caption {
+    text-align: center;
+    font-size: 15px;
+    color: #6b6055;
+    line-height: 1.4;
+    font-style: italic;
+    padding: 0 5px;
+}
+
+/* BUTTONS */
+.buttons-container{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    width:100%;
+    margin-top:auto;
+}
+
+.voice, .nav-btn, .choice-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: "Georgia", serif;
+    font-size: 13px;
+    transition: 0.3s;
+}
+
+.voice {
+    background: #e6ded4;
+    color: #554d45;
+}
+
+.voice:hover {
+    background: #dfc18a;
+    color: white;
+}
+
+.nav-btn {
+    background: #7c8d74;
+    color: white;
+}
+
+.nav-btn:hover {
+    background: #61705a;
+}
+
+/* Interactive Choices Layout */
+.choice-container {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px; /* Aligns them nicely side-by-side initially */
+}
+
+#yesBtn {
+    background: #7c8d74;
+    color: white;
+    width: 140px;          /* Match button sizes precisely */
+    height: 54px;          /* Match button sizes precisely */
+    border-radius: 30px;
+    font-size: 20px;
+    z-index: 10;           /* High z-index keeps Yes button layered correctly */
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#yesBtn:hover {
+    background: #61705a;
+}
+
+#noBtn {
+    background: #d98880;
+    color: white;
+    width: 140px;          /* Match button sizes precisely */
+    height: 54px;          /* Match button sizes precisely */
+    border-radius: 30px;
+    font-size: 20px;       /* Matched to Yes button font-size */
+    transition: left 0.15s ease, top 0.15s ease;
+    z-index: 12;           /* Kept at 12 as a backup, but math below prevents overlapping entirely */
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;   /* Prevents text from breaking onto new lines as width changes */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CENTRAL SPIRAL BINDING */
+.spiral-spine {
+    position: absolute;
+    left: 50%;
+    top: 15px;
+    width: 16px;
+    height: calc(100% - 30px);
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 99;
+    pointer-events: none;
+}
+
+.spiral-ring {
+    width: 24px;
+    height: 8px;
+    background: linear-gradient(to bottom, #e2cb99, #bca168, #e2cb99);
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* BACKGROUND SPARKLES */
+.sparkle {
+    position: absolute;
+    color: #dfc18a;
+    font-size: 12px;
+    pointer-events: none;
+    animation: float 4s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+    50% { transform: translateY(-20px) rotate(15deg); opacity: 0.8; }
+}
+
+/* ---------------- CASSETTE PLAYER ---------------- */
+.cassette-player{
+    width:95%;
+    background:#f6f0e7;
+    border:3px solid #d8c4a2;
+    border-radius:15px;
+    padding:8px 12px;
+    box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+
+.cassette-title{
+    text-align:center;
+    font-weight:bold;
+    color:#6a5847;
+    margin-bottom:8px;
+    font-size:15px;
+    letter-spacing:0.5px;
+}
+
+.player-controls{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.play-btn{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:50%;
+    background:#7c8d74;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.play-btn:hover{
+    background:#61705a;
+    transform:scale(1.08);
+}
+
+.progress{
+    flex:1;
+    cursor:pointer;
+    accent-color:#7c8d74;
+}
+
+.timer{
+    width:78px;
+    font-size:12px;
+    color:#666;
+    text-align:right;
+    font-family:Arial, sans-serif;
+}
+
+.recorded{
+    margin-top:8px;
+    text-align:center;
+    font-size:12px;
+    color:#8a7665;
+    font-style:italic;
+}
+
+/* ================= GRAND CINEMATIC EXIT OVERLAY ================= */
+#exitOverlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    z-index: 99999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 2s ease;
+}
+
+#exitOverlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#exitStoryContainer {
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    height: 350px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.exitStoryLine {
+    position: absolute;
+    opacity: 0;
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 300;
+    line-height: 1.8;
+    width: 100%;
+    transform: translateY(25px);
+    transition: opacity 1.5s ease, transform 1.5s ease;
+    text-shadow: 0 0 15px rgba(255,255,255,.35);
+    pointer-events: none;
+}
+
+.exitStoryLine.enter {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.exitStoryLine.exit {
+    opacity: 0;
+    transform: translateY(-25px);
+}
+
+/* Return to Hub Button Styling */
+#exitHubBtn {
+    position: absolute;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.5s ease, transform 1.5s ease;
+    pointer-events: none;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.4);
+    color: white;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    border-radius: 40px;
+    text-decoration: none;
+    box-shadow: 0 0 15px rgba(255,255,255,0.1);
+}
+
+#exitHubBtn.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#exitHubBtn:hover {
+    background: white;
+    color: black;
+    box-shadow: 0 0 25px rgba(255,255,255,0.4);
+}
+
+.exitStar {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    opacity: .15;
+    animation: exitTwinkle linear infinite;
+}
+
+@keyframes exitTwinkle {
+    0% { opacity: .1; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.8); }
+    100% { opacity: .1; transform: scale(1); }
+}
+</style>
 </head>
+
 <body>
 
-    <div id="bookContainer">
-        <!-- 1. ALBUM COVER -->
-        <div id="cover" onclick="openDiary()">
-            <h1>Our Story</h1>
-            <p>TAP TO OPEN</p>
-        </div>
+<div class="diary">
 
-        <!-- 2. PAGES DECK -->
-        <div id="book">
-            <div id="spine"></div>
-
-            <!-- SHEET 1 -->
-            <div class="sheet" id="sheet1">
-                <div class="page front">
-                    <div class="page-content">
-                        <div class="text-section">
-                            <h2>The First Chapter</h2>
-                            <p>It feels like it was just yesterday when our paths first crossed. Looking back, it's amazing how a completely random day turned into the benchmark milestone of my life.</p>
-                            <p>Every single conversation we shared from that moment on started changing my world, one beautiful laugh at a time.</p>
-                        </div>
-                        <div class="media-container">
-                            <!-- Change placeholder to your image path -->
-                            <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=600" alt="First Memory Image">
-                        </div>
-                        <button class="btn-next" onclick="turnForward(1)">Next Page ➔</button>
-                    </div>
-                </div>
-                <div class="page back">
-                    <div class="page-content">
-                        <div class="text-section">
-                            <h2>The Soundtrack of Us</h2>
-                            <p>Do you remember this voice note or the song that played on repeat during that unforgettable night? Music always has this incredible superpower of holding onto snapshots of our timeline.</p>
-                        </div>
-                        <div class="cassette-player">
-                            <div class="cassette-top">
-                                <button class="play-btn" onclick="toggleAudio('audio/voice1.mp3', this)">▶</button>
-                                <div class="cassette-label">Voice Note From That Night.mp3</div>
-                            </div>
-                            <div class="cassette-bottom">
-                                <input type="range" class="progress" value="0" min="0">
-                                <div class="timer">0:00 / 0:00</div>
-                            </div>
-                        </div>
-                        <button class="btn-prev" onclick="turnBackward(1)">➔ Go Back</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SHEET 2 -->
-            <div class="sheet" id="sheet2">
-                <div class="page front">
-                    <div class="page-content">
-                        <div class="text-section">
-                            <h2>Milestones & Adventures</h2>
-                            <p>From the completely spontaneous late-night long drives to the simple, lazy Sunday afternoons spent doing absolutely nothing, every trip felt complete just because you were there.</p>
-                            <p>This is my absolute favorite picture of you. It completely captures the magic you bring into my world every single day.</p>
-                        </div>
-                        <div class="media-container">
-                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=600" alt="Adventure Memory">
-                        </div>
-                        <button class="btn-next" onclick="turnForward(2)">Next Page ➔</button>
-                    </div>
-                </div>
-                <div class="page back">
-                    <div class="page-content">
-                        <div class="text-section">
-                            <h2>Late Night Safe Haven</h2>
-                            <p>Listen closely to this one. It’s a gentle reminder of the moments we spent talking about everything and nothing until the sun peeked through the blinds.</p>
-                        </div>
-                        <div class="cassette-player">
-                            <div class="cassette-top">
-                                <button class="play-btn" onclick="toggleAudio('audio/voice2.mp3', this)">▶</button>
-                                <div class="cassette-label">Midnight Comfort Wholesome.mp3</div>
-                            </div>
-                            <div class="cassette-bottom">
-                                <input type="range" class="progress" value="0" min="0">
-                                <div class="timer">0:00 / 0:00</div>
-                            </div>
-                        </div>
-                        <button class="btn-prev" onclick="turnBackward(2)">➔ Go Back</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SHEET 3 -->
-            <div class="sheet" id="sheet3">
-                <div class="page front">
-                    <div class="page-content">
-                        <div class="text-section">
-                            <h2>Through Everything, Hand in Hand</h2>
-                            <p>It hasn't just been about the perfect, sunny days. It’s about how safe and anchored I feel knowing I have you right beside me through the messy storms, too.</p>
-                            <p>Thank you for your infinite patience, your unmatched kindness, and for being my ultimate safe haven.</p>
-                        </div>
-                        <div class="media-container">
-                            <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=600" alt="Storm Safety Memory">
-                        </div>
-                        <button class="btn-next" onclick="turnForward(3)">Next Page ➔</button>
-                    </div>
-                </div>
-                <div class="page back">
-                    <div class="page-content">
-                        <div class="text-section">
-                            <h2>A Message For Always</h2>
-                            <p>Whenever you are having a tough, heavy day or doubt how incredibly amazing you are, just press play on this tape and listen to my voice.</p>
-                        </div>
-                        <div class="cassette-player">
-                            <div class="cassette-top">
-                                <button class="play-btn" onclick="toggleAudio('audio/voice3.mp3', this)">▶</button>
-                                <div class="cassette-label">Read This When You Miss Me.mp3</div>
-                            </div>
-                            <div class="cassette-bottom">
-                                <input type="range" class="progress" value="0" min="0">
-                                <div class="timer">0:00 / 0:00</div>
-                            </div>
-                        </div>
-                        <button class="btn-prev" onclick="turnBackward(3)">➔ Go Back</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SHEET 4 (FINAL PAGE) -->
-            <div class="sheet" id="sheet4">
-                <div class="page front">
-                    <div class="page-content">
-                        <div id="finalPage">
-                            <h2>Will you continue writing this beautiful story with me forever?</h2>
-                            <div id="choiceContainer">
-                                <button id="yesBtn" class="interactive-btn" onclick="handleYesClick()">Yes! 💖</button>
-                                <button id="noBtn" class="interactive-btn" onmouseover="evadeNoButton()" onclick="evadeNoButton()">No</button>
-                            </div>
-                        </div>
-                        <button class="btn-prev" onclick="turnBackward(4)">➔ Go Back</button>
-                    </div>
-                </div>
-                <!-- Empty padding page since book stays flat layout -->
-                <div class="page back">
-                    <div class="page-content">
-                        <button class="btn-prev" onclick="restartDiary()">➔ Close Album Cover</button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+    <!-- COVER -->
+    <div class="cover" id="cover">
+        <div class="gold one"></div>
+        <div class="gold two"></div>
+        <div class="gold three"></div>
+        <div class="gold four"></div>
+        <h1>Our Diary</h1>
+        <p>A little book of memories ❤️</p>
+        <button class="open" onclick="openDiary()">Open Diary</button>
     </div>
 
-    <!-- 3. THE UPDATED CINEMATIC EXIT BLANKET OVERLAY -->
-    <div id="exitOverlay">
-        <div id="exitStars"></div>
-        <div id="exitStoryContainer">
-            <div class="exitStoryLine">I knew you'd say yes... 😉</div>
-            <div class="exitStoryLine">Thank you for making my world so incredibly beautiful.</div>
-            <div class="exitStoryLine">Every moment with you is my absolute favorite.</div>
-            <div class="exitStoryLine">Forever sounds absolutely perfect with you. ❤️</div>
+    <!-- BOOK SYSTEM -->
+    <div class="book" id="book">
+
+        <div class="spiral-spine" id="spine"></div>
+
+        <!-- ================= SHEET 1 ================= -->
+        <div class="sheet" id="sheet1">
+            <!-- FRONT -->
+            <div class="page front">
+                <h2>Chapter 1</h2>
+                <img src="image1.jpg">
+                <div class="caption">The Night Before Diwali ✨</div>
+                <div class="buttons-container">
+                    <div class="cassette-player">
+                        <div class="cassette-title"> For Your Ears Only 💖</div>
+                        <div class="player-controls">
+                            <button class="play-btn" onclick="toggleAudio('audio1.mp3', this)">▶️</button>
+                            <input type="range" class="progress" value="0" min="0" max="100">
+                            <span class="timer">0:00 / 0:00</span>
+                        </div>
+                        <div class="recorded">My heart sounds like this ❤️</div>
+                    </div>
+                    <button class="nav-btn" onclick="turnForward(1)">Next →</button>
+                </div>
+            </div>
+
+            <!-- BACK -->
+            <div class="page back">
+                <h2>Chapter 2</h2>
+                <img src="image2.jpg">
+                <div class="caption">Our Bus Travel</div>
+                <div class="buttons-container">
+                    <div class="cassette-player">
+                        <div class="cassette-title">🍓 Guess Who?</div>
+                        <div class="player-controls">
+                            <button class="play-btn" onclick="toggleAudio('audio2.mp3', this)">▶️</button>
+                            <input type="range" class="progress" value="0" min="0" max="100">
+                            <span class="timer">0:00 / 0:00</span>
+                        </div>
+                        <div class="recorded">💕 From my heart to yours.</div>
+                    </div>
+                    <button class="nav-btn" onclick="turnBackward(1)">← Back</button>
+                </div>
+            </div>
         </div>
+
+        <!-- ================= SHEET 2 ================= -->
+        <div class="sheet" id="sheet2">
+            <div class="page front">
+                <h2>Chapter 3</h2>
+                <img src="image3.jpg">
+                <div class="caption">An Adventurous visit to the Park</div>
+                <div class="buttons-container">
+                    <div class="cassette-player">
+                        <div class="cassette-title">A Hug in Audio Form</div>
+                        <div class="player-controls">
+                            <button class="play-btn" onclick="toggleAudio('audio3.mp3', this)">▶️</button>
+                            <input type="range" class="progress" value="0" min="0" max="100">
+                            <span class="timer">0:00 / 0:00</span>
+                        </div>
+                        <div class="recorded">💖 Open Your Ears, Dummy 😤❤️</div>
+                    </div>
+                    <button class="nav-btn" onclick="turnForward(2)">Next →</button>
+                </div>
+            </div>
+
+            <div class="page back">
+                <h2>Chapter 4</h2>
+                <img src="image4.jpg">
+                <div class="caption">Our Favourite Movie and Album</div>
+                <div class="buttons-container">
+                    <div class="cassette-player">
+                        <div class="cassette-title">📼 A Recorded Memory</div>
+                        <div class="player-controls">
+                            <button class="play-btn" onclick="toggleAudio('audio4.mp3', this)">▶️</button>
+                            <input type="range" class="progress" value="0" min="0" max="100">
+                            <span class="timer">0:00 / 0:00</span>
+                        </div>
+                        <div class="recorded">Recorded specially for you ❤️</div>
+                    </div>
+                    <button class="nav-btn" onclick="turnBackward(2)">← Back</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= SHEET 3 ================= -->
+        <div class="sheet" id="sheet3">
+            <div class="page front">
+                <h2>Chapter 5</h2>
+                <img src="image5.jpg">
+                <div class="caption">Our Train Travels</div>
+                <div class="buttons-container">
+                    <div class="cassette-player">
+                        <div class="cassette-title">🎙️ Priyaa's Voice</div>
+                        <div class="player-controls">
+                            <button class="play-btn" onclick="toggleAudio('audio5.mp3', this)">▶️</button>
+                            <input type="range" class="progress" value="0" min="0" max="100">
+                            <span class="timer">0:00 / 0:00</span>
+                        </div>
+                        <div class="recorded">💌 A Letter You Can Hear</div>
+                    </div>
+                    <button class="nav-btn" onclick="turnForward(3)">Next →</button>
+                </div>
+            </div>
+
+            <div class="page back">
+                <h2>Chapter 6</h2>
+                <img src="image6.jpg">
+                <div class="caption">Tales after You got your License</div>
+                <div class="buttons-container">
+                    <div class="cassette-player">
+                        <div class="cassette-title">📼 Love Tape</div>
+                        <div class="player-controls">
+                            <button class="play-btn" onclick="toggleAudio('audio6.mp3', this)">▶️</button>
+                            <input type="range" class="progress" value="0" min="0" max="100">
+                            <span class="timer">0:00 / 0:00</span>
+                        </div>
+                        <div class="recorded">❤️ Made with all my love</div>
+                    </div>
+                    <button class="nav-btn" onclick="turnBackward(3)">← Back</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= SHEET 4 ================= -->
+        <div class="sheet" id="sheet4">
+            <!-- FRONT -->
+            <div class="page front">
+                <h2>One More Memory...</h2>
+                <img src="image7.jpg">
+                <div class="caption">This page was waiting for today</div>
+                <div class="buttons-container">
+                    <div class="cassette-player">
+                        <div class="cassette-title">💖 Before You Turn The Page...</div>
+                        <div class="player-controls">
+                            <button class="play-btn" onclick="toggleAudio('audio7.mp3', this)">▶️</button>
+                            <input type="range" class="progress" value="0" min="0" max="100">
+                            <span class="timer">0:00 / 0:00</span>
+                        </div>
+                        <div class="recorded">This moment is about to become a memory ❤️</div>
+                    </div>
+                    <button class="nav-btn" onclick="turnForward(4)">Next →</button>
+                </div>
+            </div>
+
+            <!-- BACK -->
+            <div class="page back" id="finalPage"
+style="
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+align-items:center;
+text-align:center;
+padding:25px;
+overflow:hidden;
+position:relative;
+">
+       
+                <h1 style="color:#61705a; font-size:28px; line-height:1.2; margin:0 0 15px 0; font-weight:normal;">
+                    ❤️ Until the Next Chapter ❤️
+                </h1>
+
+                <div style="max-width:390px; font-size:16px; line-height:1.5; color:#6b6055;">
+                    <p style="margin-bottom:20px;">This diary may have reached its last page...</p>
+                    <p style="margin-bottom:25px;">But I hope our story never does.</p>
+                    <p style="font-size:17px; margin-bottom:25px;">
+                        <strong>P.S.</strong><br>
+                        The best gift I could ever ask for is making a thousand more memories with you.
+                    </p>
+                    <p style="font-size:24px; color:#61705a; font-weight:bold; margin-bottom:0;">
+                        Shall we start Chapter 8? ❤️
+                    </p>
+                    
+                    <!-- YES / NO INTERACTIVE BUTTON CONTAINER -->
+                    <div class="choice-container" id="choiceContainer">
+                        <button class="choice-btn" id="yesBtn" onclick="handleYesClick()">
+                            Yes ❤️
+                        </button>
+
+                        <button class="choice-btn" id="noBtn" onmouseover="evadeNoButton()" onclick="evadeNoButton()">
+                            No
+                        </button>
+                    </div>
+                </div>
+
+                <div class="buttons-container"
+style="
+margin-top:15px;
+flex-shrink:0;
+">
+                    <button class="nav-btn" onclick="turnBackward(4)">← Back</button>
+                    <button class="voice" style="background:#7c8d74;color:white;" onclick="restartDiary()">One More Time? ❤️</button>
+                </div>
+            </div>
+        </div>
+
     </div>
+</div>
 
-    <script>
-    let totalSheets = 4;
+<!-- ================= GRAND CINEMATIC EXIT OVERLAY ================= -->
+<div id="exitOverlay">
+    <div id="exitStars"></div>
+    <div id="exitStoryContainer">
+        <div class="exitStoryLine">And the best part about our story...</div>
+        <div class="exitStoryLine">...is that we're still writing it.</div>
+        <div class="exitStoryLine" style="color: #ffd6e8; font-weight: 600;">To be continued... ❤️</div>
+        
+        <a id="exitHubBtn" href="index.html">Return to Hub</a>
+    </div>
+</div>
 
-    function openDiary() {
-        document.getElementById("cover").classList.add("opened");
-        const spine = document.getElementById("spine");
-        if(spine.children.length === 0) {
-            for(let r=0; r<18; r++) {
-                let ring = document.createElement("div");
-                ring.className = "spiral-ring";
-                spine.appendChild(ring);
-            }
-        }
-        setTimeout(() => {
-            document.getElementById("cover").style.display = "none";
-            document.getElementById("book").style.display = "block";
-            resetZIndex();
-        }, 600);
-    }
+<script>
+let totalSheets = 4;
 
-    function resetZIndex() {
-        for (let i = 1; i <= totalSheets; i++) {
-            let sheet = document.getElementById("sheet" + i);
-            if (sheet.classList.contains("flipped")) {
-                sheet.style.zIndex = i;
-            } else {
-                sheet.style.zIndex = (totalSheets - i + 1);
-            }
+function openDiary() {
+    document.getElementById("cover").classList.add("opened");
+    const spine = document.getElementById("spine");
+    if(spine.children.length === 0) {
+        for(let r=0; r<18; r++) {
+            let ring = document.createElement("div");
+            ring.className = "spiral-ring";
+            spine.appendChild(ring);
         }
     }
-
-    function turnForward(sheetNum) {
-        if(currentAudio){
-            currentAudio.pause();
-            currentAudio.currentTime = 0;
-            if(currentPlayer){
-                currentPlayer.querySelector(".play-btn").innerHTML = "▶";
-                currentPlayer.querySelector(".progress").value = 0;
-                currentPlayer.querySelector(".timer").innerHTML = "0:00 / " + formatTime(currentAudio.duration);
-            }
-            currentAudio = null;
-            currentPlayer = null;
-        }
-        let sheet = document.getElementById("sheet" + sheetNum);
-        sheet.classList.add("flipped");
+    setTimeout(() => {
+        document.getElementById("cover").style.display = "none";
+        document.getElementById("book").style.display = "block";
         resetZIndex();
-    }
+    }, 600);
+}
 
-    function turnBackward(sheetNum) {
-        if(currentAudio){
-            currentAudio.pause();
-            currentAudio.currentTime = 0;
-            if(currentPlayer){
-                currentPlayer.querySelector(".play-btn").innerHTML = "▶";
-                currentPlayer.querySelector(".progress").value = 0;
-                currentPlayer.querySelector(".timer").innerHTML = "0:00 / " + formatTime(currentAudio.duration);
-            }
-            currentAudio = null;
-            currentPlayer = null;
+function resetZIndex() {
+    for (let i = 1; i <= totalSheets; i++) {
+        let sheet = document.getElementById("sheet" + i);
+        if (sheet.classList.contains("flipped")) {
+            sheet.style.zIndex = i;
+        } else {
+            sheet.style.zIndex = (totalSheets - i + 1);
         }
-        let sheet = document.getElementById("sheet" + sheetNum);
-        sheet.classList.remove("flipped");
-        resetZIndex();
     }
+}
 
-    function restartDiary() {
-        if(currentAudio){
-            currentAudio.pause();
-            currentAudio.currentTime = 0;
-            if(currentPlayer){
-                currentPlayer.querySelector(".play-btn").innerHTML = "▶";
-                currentPlayer.querySelector(".progress").value = 0;
-                currentPlayer.querySelector(".timer").innerHTML = "0:00 / " + formatTime(currentAudio.duration);
-            }
-            currentAudio = null;
-            currentPlayer = null;
-        }
-
-        const noBtn = document.getElementById("noBtn");
-        noBtn.style.position = "";
-        noBtn.style.left = "";
-        noBtn.style.top = "";
-        noBtn.style.width = "140px"; 
-        noBtn.style.height = "54px"; 
-        noBtn.innerHTML = "No";
-        noMessageIndex = 0;
-
-        document.getElementById("choiceContainer").style.position = "relative";
-
-        for (let i = totalSheets; i >= 1; i--) {
-            setTimeout(() => {
-                document.getElementById("sheet" + i).classList.remove("flipped");
-                resetZIndex();
-            }, (totalSheets - i) * 200);
-        }
-
-        setTimeout(() => {
-            document.getElementById("book").style.display = "none";
-            const cover = document.getElementById("cover");
-            cover.style.display = "flex";
-            cover.classList.remove("opened");
-        }, totalSheets * 200 + 300);
-    }
-
-    let currentAudio = null;
-    let currentPlayer = null;
-
-    function formatTime(seconds){
-        if(isNaN(seconds)) return "0:00";
-        let mins=Math.floor(seconds/60);
-        let secs=Math.floor(seconds%60);
-        if(secs<10) secs="0"+secs;
-        return mins+":"+secs;
-    }
-
-    function toggleAudio(file,button){
-        let player=button.closest(".cassette-player");
-        let slider=player.querySelector(".progress");
-        let timer=player.querySelector(".timer");
-
-        if(currentAudio && currentAudio.src.includes(file)){
-            if(currentAudio.paused){
-                currentAudio.play();
-                button.innerHTML="⏸";
-            } else {
-                currentAudio.pause();
-                button.innerHTML="▶";
-            }
-            return;
-        }
-
-        if(currentAudio){
-            currentAudio.pause();
-            currentAudio.currentTime = 0;
+function turnForward(sheetNum) {
+    if(currentAudio){
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        if(currentPlayer){
             currentPlayer.querySelector(".play-btn").innerHTML = "▶";
             currentPlayer.querySelector(".progress").value = 0;
             currentPlayer.querySelector(".timer").innerHTML = "0:00 / " + formatTime(currentAudio.duration);
-            currentAudio = null;
-            currentPlayer = null;
         }
+        currentAudio = null;
+        currentPlayer = null;
+    }
+    let sheet = document.getElementById("sheet" + sheetNum);
+    sheet.classList.add("flipped");
+    resetZIndex();
+}
 
-        currentAudio=new Audio(file);
-        currentPlayer=player;
-        button.innerHTML="⏸";
-
-        currentAudio.onloadedmetadata=function(){
-            slider.max=currentAudio.duration;
-            timer.innerHTML="0:00 / "+formatTime(currentAudio.duration);
+function turnBackward(sheetNum) {
+    if(currentAudio){
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        if(currentPlayer){
+            currentPlayer.querySelector(".play-btn").innerHTML = "▶";
+            currentPlayer.querySelector(".progress").value = 0;
+            currentPlayer.querySelector(".timer").innerHTML = "0:00 / " + formatTime(currentAudio.duration);
         }
+        currentAudio = null;
+        currentPlayer = null;
+    }
+    let sheet = document.getElementById("sheet" + sheetNum);
+    sheet.classList.remove("flipped");
+    resetZIndex();
+}
 
-        currentAudio.ontimeupdate=function(){
-            slider.value=currentAudio.currentTime;
-            timer.innerHTML=formatTime(currentAudio.currentTime)+" / "+formatTime(currentAudio.duration);
+function restartDiary() {
+    if(currentAudio){
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        if(currentPlayer){
+            currentPlayer.querySelector(".play-btn").innerHTML = "▶";
+            currentPlayer.querySelector(".progress").value = 0;
+            currentPlayer.querySelector(".timer").innerHTML = "0:00 / " + formatTime(currentAudio.duration);
         }
-
-        slider.oninput=function(){
-            currentAudio.currentTime=this.value;
-        }
-
-        currentAudio.onended = function(){
-            button.innerHTML = "▶";
-            slider.value = 0;
-            timer.innerHTML = "0:00 / " + formatTime(slider.max);
-            currentAudio = null;
-            currentPlayer = null;
-        }
-        currentAudio.play();
+        currentAudio = null;
+        currentPlayer = null;
     }
 
-    // Sparkle generation
-    for(let i = 0; i < 25; i++) {
-        let s = document.createElement("div");
-        s.innerHTML = "✦";
-        s.className = "sparkle";
-        s.style.left = Math.random() * 100 + "%";
-        s.style.top = Math.random() * 100 + "%";
-        s.style.animationDelay = (Math.random() * 3) + "s";
-        document.body.appendChild(s);
+    // Reset the No button back to its initial inline styling layout
+    const noBtn = document.getElementById("noBtn");
+    noBtn.style.position = "";
+    noBtn.style.left = "";
+    noBtn.style.top = "";
+    noBtn.style.width = "140px"; // Ensure width resets to matches Yes
+    noBtn.style.height = "54px"; // Ensure height resets to matches Yes
+    noBtn.innerHTML = "No";
+    noMessageIndex = 0;
+
+    // Reset layout hierarchy
+    document.getElementById("choiceContainer").style.position = "relative";
+
+    for (let i = totalSheets; i >= 1; i--) {
+        setTimeout(() => {
+            document.getElementById("sheet" + i).classList.remove("flipped");
+            resetZIndex();
+        }, (totalSheets - i) * 200);
     }
 
-    // ================= EVADING NO BUTTON LOGIC =================
-    const noMessages = [
-        "That's not an option! 😤",
-        "Try harder! 😜",
-        "Nope, try again! ❤️",
-        "You can't say no to me! 😏",
-        "Error 404: 'No' not found! ❌",
-        "Just click Yes already! 🥺"
-    ];
-    let noMessageIndex = 0;
-    let lastTextChangeTime = 0;
+    setTimeout(() => {
+        document.getElementById("book").style.display = "none";
+        const cover = document.getElementById("cover");
+        cover.style.display = "flex";
+        cover.classList.remove("opened");
+    }, totalSheets * 200 + 300);
+}
 
-    function evadeNoButton() {
-        const noBtn = document.getElementById("noBtn");
-        const yesBtn = document.getElementById("yesBtn");
-        const finalPage = document.getElementById("finalPage");
-        const container = document.getElementById("choiceContainer");
+let currentAudio = null;
+let currentPlayer = null;
 
-        container.style.position = "static";
+function formatTime(seconds){
+    if(isNaN(seconds)) return "0:00";
+    let mins=Math.floor(seconds/60);
+    let secs=Math.floor(seconds%60);
+    if(secs<10) secs="0"+secs;
+    return mins+":"+secs;
+}
 
-        if (noBtn.style.position !== "absolute") {
-            noBtn.style.position = "absolute";
-        }
+function toggleAudio(file,button){
+    let player=button.closest(".cassette-player");
+    let slider=player.querySelector(".progress");
+    let timer=player.querySelector(".timer");
 
-        const currentTime = Date.now();
-        if (currentTime - lastTextChangeTime > 2000) {
-            noBtn.innerHTML = noMessages[noMessageIndex];
-            noMessageIndex = (noMessageIndex + 1) % noMessages.length;
-            lastTextChangeTime = currentTime;
-            
-            noBtn.style.width = "auto";
-            noBtn.style.padding = "14px 28px";
-            noBtn.style.height = "54px";
-        }
-
-        const pageRect = finalPage.getBoundingClientRect();
-        const yesRect = yesBtn.getBoundingClientRect();
-        
-        const yesLeft = yesRect.left - pageRect.left;
-        const yesRight = yesRect.right - pageRect.left;
-        const yesTop = yesRect.top - pageRect.top;
-        const yesBottom = yesRect.bottom - pageRect.top;
-
-        const btnWidth = noBtn.offsetWidth;
-        const btnHeight = noBtn.offsetHeight;
-        const padding = 15;
-
-        const maxX = pageRect.width - btnWidth - padding;
-        const maxY = pageRect.height - btnHeight - padding;
-
-        let x = 0;
-        let y = 0;
-        let attempts = 0;
-        let overlaps = true;
-
-        while (overlaps && attempts < 200) {
-            x = padding + Math.random() * (maxX - padding);
-            y = padding + Math.random() * (maxY - padding);
-
-            const noLeft = x;
-            const noRight = x + btnWidth;
-            const noTop = y;
-            const noBottom = y + btnHeight;
-
-            const horizontalOverlap = noRight > (yesLeft - 25) && noLeft < (yesRight + 25);
-            const verticalOverlap = noBottom > (yesTop - 25) && noTop < (yesBottom + 25);
-
-            if (!(horizontalOverlap && verticalOverlap)) {
-                overlaps = false;
-            }
-            attempts++;
-        }
-
-        noBtn.style.left = x + "px";
-        noBtn.style.top = y + "px";
-    }
-
-    // Generate exit overlay starry background
-    const exitStarsContainer = document.getElementById("exitStars");
-    for(let i = 0; i < 100; i++) {
-        const star = document.createElement("div");
-        star.className = "exitStar";
-        star.style.left = Math.random() * 100 + "%";
-        star.style.top = Math.random() * 100 + "%";
-        star.style.animationDuration = (2 + Math.random() * 5) + "s";
-        star.style.animationDelay = Math.random() * 5 + "s";
-        exitStarsContainer.appendChild(star);
-    }
-
-    // ================= FIXED AUTOMATIC EXIT ROUTING =================
-    function handleYesClick() {
-        if(currentAudio){
+    if(currentAudio && currentAudio.src.includes(file)){
+        if(currentAudio.paused){
+            currentAudio.play();
+            button.innerHTML="⏸";
+        } else {
             currentAudio.pause();
+            button.innerHTML="▶";
         }
+        return;
+    }
 
-        document.getElementById("exitOverlay").classList.add("show");
+    if(currentAudio){
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        currentPlayer.querySelector(".play-btn").innerHTML = "▶";
+        currentPlayer.querySelector(".progress").value = 0;
+        currentPlayer.querySelector(".timer").innerHTML = "0:00 / " + formatTime(currentAudio.duration);
+        currentAudio = null;
+        currentPlayer = null;
+    }
+
+    currentAudio=new Audio(file);
+    currentPlayer=player;
+    button.innerHTML="⏸";
+
+    currentAudio.onloadedmetadata=function(){
+        slider.max=currentAudio.duration;
+        timer.innerHTML="0:00 / "+formatTime(currentAudio.duration);
+    }
+
+    currentAudio.ontimeupdate=function(){
+        slider.value=currentAudio.currentTime;
+        timer.innerHTML=formatTime(currentAudio.currentTime)+" / "+formatTime(currentAudio.duration);
+    }
+
+    slider.oninput=function(){
+        currentAudio.currentTime=this.value;
+    }
+
+    currentAudio.onended = function(){
+        button.innerHTML = "▶";
+        slider.value = 0;
+        timer.innerHTML = "0:00 / " + formatTime(slider.max);
+        currentAudio = null;
+        currentPlayer = null;
+    }
+    currentAudio.play();
+}
+
+// Sparkle generation
+for(let i = 0; i < 25; i++) {
+    let s = document.createElement("div");
+    s.innerHTML = "✦";
+    s.className = "sparkle";
+    s.style.left = Math.random() * 100 + "%";
+    s.style.top = Math.random() * 100 + "%";
+    s.style.animationDelay = (Math.random() * 3) + "s";
+    document.body.appendChild(s);
+}
+
+// ================= EVADING NO BUTTON LOGIC =================
+const noMessages = [
+    "That's not an option! 😤",
+    "Try harder! 😜",
+    "Nope, try again! ❤️",
+    "You can't say no to me! 😏",
+    "Error 404: 'No' not found! ❌",
+    "Just click Yes already! 🥺"
+];
+let noMessageIndex = 0;
+let lastTextChangeTime = 0;
+
+function evadeNoButton() {
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const finalPage = document.getElementById("finalPage");
+    const container = document.getElementById("choiceContainer");
+
+    // Let the No button fly around the ENTIRE final page instead of just the tiny container
+    container.style.position = "static";
+
+    // Force button to absolute position upon interactive hover
+    if (noBtn.style.position !== "absolute") {
+        noBtn.style.position = "absolute";
+    }
+
+    const currentTime = Date.now();
+    if (currentTime - lastTextChangeTime > 2000) {
+        noBtn.innerHTML = noMessages[noMessageIndex];
+        noMessageIndex = (noMessageIndex + 1) % noMessages.length;
+        lastTextChangeTime = currentTime;
+        
+        // Dynamically recalculate sizing to keep width/height equal to Yes even with long texts
+        noBtn.style.width = "auto";
+        noBtn.style.padding = "14px 28px";
+        noBtn.style.height = "54px";
+    }
+
+    const pageRect = finalPage.getBoundingClientRect();
+    const yesRect = yesBtn.getBoundingClientRect();
+    
+    // Relative coordinates of Yes button inside finalPage
+    const yesLeft = yesRect.left - pageRect.left;
+    const yesRight = yesRect.right - pageRect.left;
+    const yesTop = yesRect.top - pageRect.top;
+    const yesBottom = yesRect.bottom - pageRect.top;
+
+    const btnWidth = noBtn.offsetWidth;
+    const btnHeight = noBtn.offsetHeight;
+    const padding = 15;
+
+    // Bounds of the entire 550px page
+    const maxX = pageRect.width - btnWidth - padding;
+    const maxY = pageRect.height - btnHeight - padding;
+
+    let x = 0;
+    let y = 0;
+    let attempts = 0;
+    let overlaps = true;
+
+    // Cycle random coordinate combinations until no collision is detected with YES button bounds
+    while (overlaps && attempts < 200) {
+        x = padding + Math.random() * (maxX - padding);
+        y = padding + Math.random() * (maxY - padding);
+
+        const noLeft = x;
+        const noRight = x + btnWidth;
+        const noTop = y;
+        const noBottom = y + btnHeight;
+
+        // Pad separation margin (25px) to strictly prevent No from ever overlapping the Yes area
+        const horizontalOverlap = noRight > (yesLeft - 25) && noLeft < (yesRight + 25);
+        const verticalOverlap = noBottom > (yesTop - 25) && noTop < (yesBottom + 25);
+
+        if (!(horizontalOverlap && verticalOverlap)) {
+            overlaps = false;
+        }
+        attempts++;
+    }
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+// Generate the starry sky background for the exit overlay
+const exitStarsContainer = document.getElementById("exitStars");
+for(let i = 0; i < 100; i++) {
+    const star = document.createElement("div");
+    star.className = "exitStar";
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 100 + "%";
+    star.style.animationDuration = (2 + Math.random() * 5) + "s";
+    star.style.animationDelay = Math.random() * 5 + "s";
+    exitStarsContainer.appendChild(star);
+}
+
+// ================= UPDATED YES CLICK LOGIC =================
+function handleYesClick() {
+    // Stop any active playing audio track smoothly
+    if(currentAudio){
+        currentAudio.pause();
+    }
+
+    // Bring up the black cinematic overlay screen smoothly
+    document.getElementById("exitOverlay").classList.add("show");
+    
+    // Start running the final text lines after the overlay fade-in finishes
+    setTimeout(() => {
+        runCinematicExit(0);
+    }, 2000);
+}
+
+const exitLines = document.querySelectorAll(".exitStoryLine");
+const exitDisplayTime = 3200; 
+
+function runCinematicExit(index) {
+    if (index >= exitLines.length) {
+        // Bring out the final landing home link button seamlessly
+        document.getElementById("exitHubBtn").classList.add("show");
+        return;
+    }
+
+    const currentLine = exitLines[index];
+    currentLine.classList.add("enter");
+
+    setTimeout(() => {
+        currentLine.classList.remove("enter");
+        currentLine.classList.add("exit");
         
         setTimeout(() => {
-            runCinematicExit(0);
-        }, 2000);
-    }
+            runCinematicExit(index + 1);
+        }, 1500); 
 
-    const exitLines = document.querySelectorAll(".exitStoryLine");
-    const exitDisplayTime = 3200; 
+    }, exitDisplayTime);
+}
+</script>
 
-    function runCinematicExit(index) {
-        // FIXED: The button block is deleted, when text finishes it fires straight home
-        if (index >= exitLines.length) {
-            localStorage.setItem("skipIntroTrailer", "true");
-            window.location.href = "index.html";
-            return;
-        }
-
-        const currentLine = exitLines[index];
-        currentLine.classList.add("enter");
-
-        setTimeout(() => {
-            currentLine.classList.remove("enter");
-            currentLine.classList.add("exit");
-            
-            setTimeout(() => {
-                runCinematicExit(index + 1);
-            }, 1500); 
-
-        }, exitDisplayTime);
-    }
-    </script>
 </body>
 </html>
