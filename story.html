@@ -975,29 +975,40 @@ const exitLines = document.querySelectorAll(".exitStoryLine");
 const exitDisplayTime = 3200; 
 
 function runCinematicExit(index) {
-    if (index >= exitLines.length) {
 
-        // Redirect automatically after the last message
-        setTimeout(() => {
-            window.location.href = "index.html";
-        }, 2000);
+    if(index >= exitLines.length){
+
+        // Let the final message stay for 3 seconds
+        setTimeout(()=>{
+
+            // Fade out the black overlay
+            document.getElementById("exitOverlay").classList.remove("show");
+
+            // Reset all text so it can play again next time
+            exitLines.forEach(line=>{
+                line.classList.remove("enter");
+                line.classList.remove("exit");
+            });
+
+        },3000);
 
         return;
     }
 
-
     const currentLine = exitLines[index];
+
     currentLine.classList.add("enter");
 
-    setTimeout(() => {
+    setTimeout(()=>{
+
         currentLine.classList.remove("enter");
         currentLine.classList.add("exit");
-        
-        setTimeout(() => {
-            runCinematicExit(index + 1);
-        }, 1500); 
 
-    }, exitDisplayTime);
+        setTimeout(()=>{
+            runCinematicExit(index+1);
+        },1500);
+
+    },exitDisplayTime);
 }
 </script>
 
