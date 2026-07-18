@@ -249,6 +249,10 @@ body {
     align-items: center;
 }
 
+#yesBtn:hover {
+    background: #61705a;
+}
+
 #noBtn {
     background: #d98880;
     color: white;
@@ -366,6 +370,106 @@ body {
     font-size:12px;
     color:#8a7665;
     font-style:italic;
+}
+
+/* ================= GRAND CINEMATIC EXIT OVERLAY ================= */
+#exitOverlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    z-index: 99999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 2s ease;
+}
+
+#exitOverlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#exitStoryContainer {
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    height: 350px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.exitStoryLine {
+    position: absolute;
+    opacity: 0;
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 300;
+    line-height: 1.8;
+    width: 100%;
+    transform: translateY(25px);
+    transition: opacity 1.5s ease, transform 1.5s ease;
+    text-shadow: 0 0 15px rgba(255,255,255,.35);
+    pointer-events: none;
+}
+
+.exitStoryLine.enter {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.exitStoryLine.exit {
+    opacity: 0;
+    transform: translateY(-25px);
+}
+
+/* Return to Hub Button Styling */
+#exitHubBtn {
+    position: absolute;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.5s ease, transform 1.5s ease;
+    pointer-events: none;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.4);
+    color: white;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    border-radius: 40px;
+    text-decoration: none;
+    box-shadow: 0 0 15px rgba(255,255,255,0.1);
+}
+
+#exitHubBtn.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#exitHubBtn:hover {
+    background: white;
+    color: black;
+    box-shadow: 0 0 25px rgba(255,255,255,0.4);
+}
+
+.exitStar {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    opacity: .15;
+    animation: exitTwinkle linear infinite;
+}
+
+@keyframes exitTwinkle {
+    0% { opacity: .1; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.8); }
+    100% { opacity: .1; transform: scale(1); }
 }
 </style>
 </head>
@@ -581,6 +685,18 @@ flex-shrink:0;
             </div>
         </div>
 
+    </div>
+</div>
+
+<!-- ================= GRAND CINEMATIC EXIT OVERLAY ================= -->
+<div id="exitOverlay">
+    <div id="exitStars"></div>
+    <div id="exitStoryContainer">
+        <div class="exitStoryLine">And the best part about our story...</div>
+        <div class="exitStoryLine">...is that we're still writing it.</div>
+        <div class="exitStoryLine" style="color: #ffd6e8; font-weight: 600;">To be continued... ❤️</div>
+        
+        <a id="exitHubBtn" href="index.html">Return to Hub</a>
     </div>
 </div>
 
@@ -850,9 +966,56 @@ function evadeNoButton() {
     noBtn.style.top = y + "px";
 }
 
+// Generate the starry sky background for the exit overlay
+const exitStarsContainer = document.getElementById("exitStars");
+for(let i = 0; i < 100; i++) {
+    const star = document.createElement("div");
+    star.className = "exitStar";
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 100 + "%";
+    star.style.animationDuration = (2 + Math.random() * 5) + "s";
+    star.style.animationDelay = Math.random() * 5 + "s";
+    exitStarsContainer.appendChild(star);
+}
+
+// ================= UPDATED YES CLICK LOGIC =================
 function handleYesClick() {
-    alert("Yay! Can't wait for Chapter 8 with you! ❤️");
-    // We will build out the rest of the Yes action flow together later!
+    // Stop any active playing audio track smoothly
+    if(currentAudio){
+        currentAudio.pause();
+    }
+
+    // Bring up the black cinematic overlay screen smoothly
+    document.getElementById("exitOverlay").classList.add("show");
+    
+    // Start running the final text lines after the overlay fade-in finishes
+    setTimeout(() => {
+        runCinematicExit(0);
+    }, 2000);
+}
+
+const exitLines = document.querySelectorAll(".exitStoryLine");
+const exitDisplayTime = 3200; 
+
+function runCinematicExit(index) {
+    if (index >= exitLines.length) {
+        // Bring out the final landing home link button seamlessly
+        document.getElementById("exitHubBtn").classList.add("show");
+        return;
+    }
+
+    const currentLine = exitLines[index];
+    currentLine.classList.add("enter");
+
+    setTimeout(() => {
+        currentLine.classList.remove("enter");
+        currentLine.classList.add("exit");
+        
+        setTimeout(() => {
+            runCinematicExit(index + 1);
+        }, 1500); 
+
+    }, exitDisplayTime);
 }
 </script>
 
