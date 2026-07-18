@@ -44,7 +44,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: opacity 1s ease, transform 1s ease;
         }
 
         /* --- BOOK COVER --- */
@@ -129,6 +128,7 @@
             transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             transform-origin: left center;
         }
+        /* Layout sheets to sit on the right side initially */
         #sheet1 { right: 0; z-index: 4; }
         #sheet2 { right: 0; z-index: 3; }
         #sheet3 { right: 0; z-index: 2; }
@@ -330,61 +330,6 @@
             transition: all 0.15s ease-out;
         }
 
-        /* ================= NEW: HOME SCREEN EMBED LAYOUT ================= */
-        #homeHubScreen {
-            position: absolute;
-            width: 100vw;
-            height: 100vh;
-            display: none; /* Controlled by JS */
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 5;
-            opacity: 0;
-            transition: opacity 1.5s ease;
-        }
-        #homeHubScreen.reveal {
-            opacity: 1;
-        }
-        .hub-title {
-            font-family: 'Dancing Script', cursive;
-            color: #ffd700;
-            font-size: 3.5rem;
-            margin-bottom: 40px;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
-        .hub-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 220px);
-            gap: 25px;
-        }
-        .hub-btn {
-            height: 130px;
-            background: linear-gradient(135deg, #4a154b, #3d0c3e);
-            border: 2px solid #ffd700;
-            border-radius: 16px;
-            color: #fff;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        .hub-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(255, 215, 0, 0.2);
-            background: linear-gradient(135deg, #591b5a, #4a154b);
-        }
-        .hub-icon {
-            font-size: 2rem;
-        }
-
         /* ================= CINEMATIC EXIT OVERLAY ================= */
         #exitOverlay {
             position: fixed;
@@ -461,7 +406,6 @@
 </head>
 <body>
 
-    <!-- DIARY CONTENT CONTAINER -->
     <div id="bookContainer">
         <!-- 1. ALBUM COVER -->
         <div id="cover" onclick="openDiary()">
@@ -595,6 +539,7 @@
                         <button class="btn-prev" onclick="turnBackward(4)">➔ Go Back</button>
                     </div>
                 </div>
+                <!-- FIXED: Made this back element completely blank to hide old reset buttons -->
                 <div class="page back">
                     <div class="page-content" style="justify-content: center; align-items: center;"></div>
                 </div>
@@ -603,30 +548,7 @@
         </div>
     </div>
 
-    <!-- ================= EMBEDDED REAL HOME SCREEN HUB ================= -->
-    <div id="homeHubScreen">
-        <h1 class="hub-title">Welcome to Our Place</h1>
-        <div class="hub-grid">
-            <button class="hub-btn" onclick="window.location.href='story.html'">
-                <span class="hub-icon">📖</span>
-                <span>Our Story</span>
-            </button>
-            <button class="hub-btn" onclick="window.location.href='gallery.html'">
-                <span class="hub-icon">🖼️</span>
-                <span>Our Gallery</span>
-            </button>
-            <button class="hub-btn" onclick="window.location.href='messages.html'">
-                <span class="hub-icon">💌</span>
-                <span>Love Letters</span>
-            </button>
-            <button class="hub-btn" onclick="window.location.href='playlist.html'">
-                <span class="hub-icon">🎵</span>
-                <span>Our Jukebox</span>
-            </button>
-        </div>
-    </div>
-
-    <!-- 3. THE CINEMATIC EXIT BLANKET OVERLAY -->
+    <!-- 3. THE CINEMATIC EXIT BLANKET OVERLAY (AUTOMATIC FLOW) -->
     <div id="exitOverlay">
         <div id="exitStars"></div>
         <div id="exitStoryContainer">
@@ -867,25 +789,15 @@
         exitStarsContainer.appendChild(star);
     }
 
-    // ================= FIXED IN-PLACE ROUTING FLOW =================
+    // ================= AUTOMATIC ROUTING ENGINE =================
     function handleYesClick() {
         if(currentAudio){
             currentAudio.pause();
         }
 
-        // 1. Hide the memory book container behind the black wall smoothly
-        document.getElementById("bookContainer").style.opacity = "0";
-        document.getElementById("bookContainer").style.transform = "scale(0.95)";
-        
-        // 2. Open up the black cinematic overlay wall
         document.getElementById("exitOverlay").classList.add("show");
         
         setTimeout(() => {
-            // Prep the home menu directly underneath it while it's black
-            const hub = document.getElementById("homeHubScreen");
-            hub.style.display = "flex";
-            document.getElementById("bookContainer").style.display = "none";
-            
             runCinematicExit(0);
         }, 2000);
     }
@@ -895,16 +807,8 @@
 
     function runCinematicExit(index) {
         if (index >= exitLines.length) {
-            // FIXED: Automatically drop the black window curtain down
-            const overlay = document.getElementById("exitOverlay");
-            overlay.style.opacity = "0";
-            overlay.style.pointerEvents = "none";
-            
-            // Simultaneously dissolve in the home page structure layout beautifully
-            setTimeout(() => {
-                overlay.style.display = "none";
-                document.getElementById("homeHubScreen").classList.add("reveal");
-            }, 1000);
+            localStorage.setItem("skipIntroTrailer", "true");
+            window.location.href = "index.html";
             return;
         }
 
