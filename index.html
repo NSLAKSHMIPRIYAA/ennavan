@@ -24,12 +24,13 @@ background:linear-gradient(
 #ffe8d6,
 #e8d6ff
 );
-overflow:hidden;
 overflow-x:hidden;
+overflow-y:auto; /* 🎯 FIX: Restores vertical scrolling so 4th button is accessible */
 display:flex;
 justify-content:center;
 align-items:center;
 text-align:center;
+padding:40px 0; /* Gives some breathing space when scrolling */
 }
 
 .container{
@@ -116,6 +117,7 @@ font-size:20px;
 animation:floatUp 8s linear infinite;
 opacity:0.7;
 display: none; /* Initially hidden */
+z-index: 1;
 }
 
 /* FADE IN */
@@ -131,10 +133,8 @@ transform:translateY(0);
 }
 
 #footer{
-position:fixed;
-bottom:15px;
-left:50%;
-transform:translateX(-50%);
+position:static; /* Changed to static so it stays naturally beneath elements when scrolling */
+margin-top: 40px;
 font-size:0.9rem;
 color:#7a5878;
 opacity: 0;
@@ -156,6 +156,7 @@ font-size:20px;
 opacity: 0;
 display: none;
 transition: opacity 2s ease;
+z-index: 10;
 }
 
 #secret.show {
@@ -174,6 +175,7 @@ pointer-events: none;
 opacity: 0;
 animation: sparkleAnim 2s linear forwards;
 box-shadow: 0 0 10px rgba(255,255,255,0.8);
+z-index: 1;
 }
 
 @keyframes floatUp{
@@ -229,7 +231,7 @@ pointer-events:none;
 position:relative;
 width:90%;
 max-width:800px;
-height: 350px; /* Constrains center stage height */
+height: 350px; 
 display: flex;
 justify-content: center;
 align-items: center;
@@ -250,7 +252,6 @@ text-shadow: 0 0 15px rgba(255,255,255,.35);
 pointer-events: none;
 }
 
-/* Cinematic Trailer Transition Classes */
 .storyLine.enter {
 opacity:1;
 transform:translateY(0);
@@ -261,7 +262,6 @@ opacity:0;
 transform:translateY(-25px);
 }
 
-/* Style special lines */
 .storyLine.title-line {
 font-size: 2.8rem;
 font-weight: 400;
@@ -333,8 +333,14 @@ animation:twinkle linear infinite;
 
 <body>
 
+<!-- Main background music system loop -->
 <audio id="bgMusic" loop>
     <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 🎵 NEW: Intro transition scene audio track -->
+<audio id="introMusic" loop>
+    <source src="song1.mp3" type="audio/mpeg">
 </audio>
 
 <!-- ================= CINEMATIC INTRO ================= -->
@@ -354,7 +360,6 @@ animation:twinkle linear infinite;
         <div class="storyLine">This is our story.</div>
         <div class="storyLine highlight-line">Let's relive it together. ❤️</div>
         
-        <!-- Action Trigger Button instead of automatic exit -->
         <button id="startBtn" onclick="beginJourney()">Shall we start?</button>
     </div>
 </div>
@@ -376,9 +381,11 @@ animation:twinkle linear infinite;
         <a class="card" href="memories.html">📸 Memories</a>
         <a class="card" href="story.html">📖 Our Story</a>
     </div>
+    
+    <!-- Relocated footer inside container context so layout wraps perfectly -->
+    <div id="footer">Made with ❤️ by Priyaa</div>
 </div>
 
-<div id="footer">Made with ❤️ by Priyaa</div>
 <div id="secret" onclick="secretMessage()">❤️</div>
 
 <script>
@@ -395,7 +402,6 @@ heart.classList.add("heart");
 heart.innerHTML="❤️";
 heart.style.left=Math.random()*100+"vw";
 heart.style.fontSize=(Math.random()*15+15)+"px";
-// Heart element must be displayed when active
 heart.style.display = "block";
 document.body.appendChild(heart);
 
@@ -404,7 +410,6 @@ heart.remove();
 },8000);
 }
 
-/* Sparkles generation */
 function createSparkle(){
 const sparkle = document.createElement("div");
 sparkle.classList.add("sparkle");
@@ -418,7 +423,6 @@ document.body.appendChild(sparkle);
 setTimeout(() => { sparkle.remove(); }, 2000);
 }
 
-/* Create Environment Stars Background */
 const stars = document.getElementById("stars");
 for(let i=0;i<140;i++){
     const star=document.createElement("div");
@@ -432,29 +436,29 @@ for(let i=0;i<140;i++){
 }
 
 /* =======================================================
-   TRAILER DIRECTED MOVIE INTRO CONFIGURATION
+   CINEMATIC INTRO CONFIGURATION
 ======================================================= */
 const storyLines = document.querySelectorAll(".storyLine");
-const displayTime = 3200; // How long each line stays clean on screen (ms)
+const displayTime = 3200; 
 
 function runCinematicIntro(index) {
     if (index >= storyLines.length) {
-        // Show the choice button at the end of text sequences
+        // 🎯 STOP INTRO MUSIC here when the button appears
+        const introMusic = document.getElementById("introMusic");
+        introMusic.pause();
+        introMusic.currentTime = 0;
+
         document.getElementById("startBtn").classList.add("show");
         return;
     }
 
     const currentLine = storyLines[index];
-    
-    // 1. Fade-in entry sequence
     currentLine.classList.add("enter");
 
-    // 2. Schedule exit sequence and loop ahead
     setTimeout(() => {
         currentLine.classList.remove("enter");
         currentLine.classList.add("exit");
         
-        // Wait for fade-out transition to complete cleanly before loading next line
         setTimeout(() => {
             runCinematicIntro(index + 1);
         }, 1500); 
@@ -462,33 +466,36 @@ function runCinematicIntro(index) {
     }, displayTime);
 }
 
-/* Triggered strictly by clicking "Shall we start?" */
 function beginJourney() {
-    // Dissolve the starry screen mask
     document.getElementById("introOverlay").classList.add("hide");
     
-    // Render and manifest main elements onto screen
     document.querySelector(".container").classList.add("show");
     document.getElementById("footer").classList.add("show");
     document.getElementById("secret").classList.add("show");
     document.getElementById("menu").classList.add("show");
 
-    // Activate core interaction intervals loop systems
+    // Play the main birthday song loop
+    const mainMusic = document.getElementById("bgMusic");
+    mainMusic.play().catch(e => console.log("Main music play interactive requirement catch."));
+
     setInterval(createHeart, 700);
     setInterval(createSparkle, 120);
 }
 
 window.onload=()=>{
-    const music=document.getElementById("bgMusic");
-    music.volume=0.45;
+    const introMusic = document.getElementById("introMusic");
+    introMusic.volume = 0.6;
     
-    music.play().catch(()=>{
+    const mainMusic = document.getElementById("bgMusic");
+    mainMusic.volume = 0.45;
+    
+    // Automatically attempt playing intro audio sequence tracking clicks cleanly
+    introMusic.play().catch(()=>{
         document.body.addEventListener("click",()=>{
-            music.play();
+            introMusic.play();
         },{once:true});
     });
 
-    // Fire off the trailer text loops
     runCinematicIntro(0);
 };
 </script>
